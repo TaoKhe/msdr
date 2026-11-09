@@ -7,8 +7,7 @@
       "name": "system",
       "rev_ctrl_bd_flag": "RevCtrlBdOff",
       "synth_flow_mode": "Hierarchical",
-      "tool_version": "2024.1",
-      "validated": "true"
+      "tool_version": "2024.1"
     },
     "design_tree": {
       "sys_ps8": "",
@@ -41,13 +40,7 @@
       "spi0_csn": {
         "direction": "O",
         "left": "2",
-        "right": "0",
-        "parameters": {
-          "PortWidth": {
-            "value": "3",
-            "value_src": "ip_prop"
-          }
-        }
+        "right": "0"
       },
       "spi0_sclk": {
         "direction": "O"
@@ -61,13 +54,7 @@
       "spi1_csn": {
         "direction": "O",
         "left": "2",
-        "right": "0",
-        "parameters": {
-          "PortWidth": {
-            "value": "3",
-            "value_src": "ip_prop"
-          }
-        }
+        "right": "0"
       },
       "spi1_sclk": {
         "direction": "O"
@@ -3581,11 +3568,6 @@
           "axi_quad_spi_lb/ext_spi_clk",
           "axi_quad_spi_hb/s_axi_aclk",
           "axi_quad_spi_hb/ext_spi_clk"
-        ]
-      },
-      "sys_cpu_reset": {
-        "ports": [
-          "sys_rstgen/peripheral_reset"
         ]
       },
       "sys_cpu_resetn": {

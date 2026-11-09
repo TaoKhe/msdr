@@ -112,3 +112,24 @@ open_run: Time (s): cpu = 00:01:07 ; elapsed = 00:00:35 . Memory (MB): peak = 11
 open_report: Time (s): cpu = 00:00:22 ; elapsed = 00:00:07 . Memory (MB): peak = 11647.176 ; gain = 0.000 ; free physical = 3108 ; free virtual = 27269
 open_bd_design {/home/taokhe/Projects/in/msdr/msdr_gen/msdr.srcs/sources_1/bd/system/system.bd}
 delete_bd_objs [get_bd_nets sys_cpu_reset]
+save_bd_design
+Wrote  : </home/taokhe/Projects/in/msdr/msdr_gen/msdr.srcs/sources_1/bd/system/system.bd> 
+Wrote  : </home/taokhe/Projects/in/msdr/msdr_gen/msdr.srcs/sources_1/bd/system/ui/bd_c954508f.ui> 
+regenerate_bd_layout
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 axi_gpio_0
+endgroup
+delete_bd_objs [get_bd_cells axi_gpio_0]
+save_bd_design
+Wrote  : </home/taokhe/Projects/in/msdr/msdr_gen/msdr.srcs/sources_1/bd/system/system.bd> 
+Wrote  : </home/taokhe/Projects/in/msdr/msdr_gen/msdr.srcs/sources_1/bd/system/ui/bd_c954508f.ui> 
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/taokhe/Projects/in/msdr/src/hdl/top/system_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/taokhe/Projects/in/msdr/src/ip/adi_hdl/library/common/ad_iobuf.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/taokhe/Projects/in/msdr/src/hdl/top/system_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/taokhe/Projects/in/msdr/src/hdl/top/system_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/taokhe/Projects/in/msdr/src/hdl/top/system_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/taokhe/Projects/in/msdr/src/ip/adi_hdl/library/common/ad_iobuf.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/taokhe/Projects/in/msdr/src/ip/adi_library/common/ad_iobuf.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/taokhe/Projects/in/msdr/src/ip/adi_library/common/ad_iobuf.v:]
+exit
+INFO: [Common 17-206] Exiting Vivado at Mon Nov  9 19:19:08 2026...

@@ -16,7 +16,7 @@ Makefile; framework and IP Tcl/XDC files remain with their corresponding
 framework or IP sources.
 
 Build the MSDR design with `make msdr` from this directory. The generated
-Vivado project is written under `msdr_gen/msdr/`.
+Vivado project is written under `msdr_gen_v4/msdr/`.
 
 `src/ip/quiet.mk` and `src/ip/scripts` are compatibility links to the local
 framework files in `src/ip/adi_hdl/`.

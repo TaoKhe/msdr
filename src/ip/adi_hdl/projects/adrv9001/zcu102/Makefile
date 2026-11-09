@@ -1,5 +1,5 @@
 MSDR_ROOT := $(abspath ../../../../../../)
-DIR_NAME ?= ../../../../../../msdr_gen
+DIR_NAME ?= ../../../../../../msdr_gen_v4
 
 PROJECT_NAME := msdr
 PROJECT_TCL := $(MSDR_ROOT)/scripts/system_project.tcl
