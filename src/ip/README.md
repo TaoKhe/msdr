@@ -1,15 +1,31 @@
 # IP sources
 
-`adi_library/` contains the ADI custom IP repository used by the Vivado build.
-`adi_hdl/` contains the local ADI HDL build framework; its `library` link points
-to `../adi_library` so the IP source is maintained only once. The board design
-Tcl is the source of truth for MSDR; Vivado generates `.xci` files under
-`msdr_gen/` during project creation. Do not copy generated files here as
-independent inputs.
+Each IP is a direct child of this directory, such as `axi_adrv9001/`,
+`axi_dmac/`, `util_cpack2/`, and `util_upack2/`. Shared HDL and constraints are
+kept in `common/`, `util_pack_common/`, and the vendor-specific directories.
+Bus interface XML is kept in `interfaces/` and `axi_dmac/interfaces/`.
 
-`quiet.mk` and `scripts/` at this directory level are compatibility links to
-the framework files under `adi_hdl/`. Keep these links in place unless the
-corresponding framework paths are updated together.
+IP-specific Tcl, TTcl templates, BD callbacks, and test runners stay inside
+their IP directory, alongside HDL and constraints. For example:
 
-The shared IP packaging helper normalizes source paths before adding them to
-Vivado so packaged files resolve correctly through the `adi_hdl/library` link.
+```text
+axi_adrv9001/
+  axi_adrv9001.v
+  axi_adrv9001_ip.tcl
+  axi_adrv9001_constr.ttcl
+axi_dmac/
+  axi_dmac.v
+  axi_dmac_ip.tcl
+  bd/bd.tcl
+  interfaces/interfaces_ip.tcl
+```
+
+Only project scripts and shared ADI helpers live in
+[`../../scripts/`](../../scripts/). The only build Makefile is
+[`../../Makefile`](../../Makefile).
+
+The build stages these sources and packages IP under `../../msdr_gen/ip/`.
+Generated component XML, XGUI/BD Tcl, projects, logs, and caches do not belong
+in this source directory. Authored BD callbacks are source files and stay
+with their IP. Test runners resolve fixture paths relative to their own
+location.

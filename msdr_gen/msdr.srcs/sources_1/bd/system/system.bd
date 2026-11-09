@@ -1,13 +1,14 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x3785535C53846776",
+      "boundary_crc": "0xFC2B29A23C52764E",
       "device": "xczu15eg-ffvb1156-2-i",
       "gen_directory": "../../../../msdr.gen/sources_1/bd/system",
       "name": "system",
       "rev_ctrl_bd_flag": "RevCtrlBdOff",
       "synth_flow_mode": "Hierarchical",
-      "tool_version": "2024.1"
+      "tool_version": "2024.1",
+      "validated": "true"
     },
     "design_tree": {
       "sys_ps8": "",
@@ -40,29 +41,41 @@
       "spi0_csn": {
         "direction": "O",
         "left": "2",
-        "right": "0"
+        "right": "0",
+        "parameters": {
+          "PortWidth": {
+            "value": "3",
+            "value_src": "ip_prop"
+          }
+        }
       },
-      "spi0_sclk": {
+      "spi_clk": {
         "direction": "O"
       },
-      "spi0_mosi": {
+      "spi_dio": {
         "direction": "O"
       },
-      "spi0_miso": {
+      "spi_do": {
         "direction": "I"
       },
       "spi1_csn": {
         "direction": "O",
         "left": "2",
-        "right": "0"
+        "right": "0",
+        "parameters": {
+          "PortWidth": {
+            "value": "3",
+            "value_src": "ip_prop"
+          }
+        }
       },
-      "spi1_sclk": {
+      "dcosc_sclk": {
         "direction": "O"
       },
-      "spi1_mosi": {
+      "dcosc_mosi": {
         "direction": "O"
       },
-      "spi1_miso": {
+      "dcosc_miso": {
         "direction": "I"
       },
       "t12_aux_gpio_i": {
@@ -126,7 +139,7 @@
       "tx_output_enable": {
         "direction": "I"
       },
-      "ref_clk": {
+      "fpga_ref_clk": {
         "direction": "I"
       },
       "mcs_in": {
@@ -1724,7 +1737,7 @@
         "inst_hier_path": "rom_sys_0",
         "parameters": {
           "PATH_TO_FILE": {
-            "value": "/home/taokhe/Projects/in/msdr/src/ip/adi_hdl/projects/adrv9001/zcu102/../../../../../../msdr_gen/mem_init_sys.txt"
+            "value": "/home/taokhe/Projects/in/msdr/msdr_gen/mem_init_sys.txt"
           },
           "ROM_ADDR_BITS": {
             "value": "9"
@@ -2247,7 +2260,7 @@
             },
             "parameters": {
               "master_id": {
-                "value": "1"
+                "value": "4"
               }
             }
           }
@@ -2326,7 +2339,7 @@
             },
             "parameters": {
               "master_id": {
-                "value": "2"
+                "value": "1"
               }
             }
           }
@@ -2484,7 +2497,7 @@
             },
             "parameters": {
               "master_id": {
-                "value": "4"
+                "value": "2"
               }
             }
           }
@@ -3395,7 +3408,7 @@
       },
       "ref_clk_1": {
         "ports": [
-          "ref_clk",
+          "fpga_ref_clk",
           "axi_adrv9001/ref_clk"
         ]
       },
@@ -3509,7 +3522,7 @@
       },
       "spi0_miso_1": {
         "ports": [
-          "spi0_miso",
+          "spi_do",
           "sys_ps8/emio_spi0_m_i"
         ]
       },
@@ -3521,7 +3534,7 @@
       },
       "spi1_miso_1": {
         "ports": [
-          "spi1_miso",
+          "dcosc_miso",
           "sys_ps8/emio_spi1_m_i"
         ]
       },
@@ -3570,6 +3583,11 @@
           "axi_quad_spi_hb/ext_spi_clk"
         ]
       },
+      "sys_cpu_reset": {
+        "ports": [
+          "sys_rstgen/peripheral_reset"
+        ]
+      },
       "sys_cpu_resetn": {
         "ports": [
           "sys_rstgen/peripheral_aresetn",
@@ -3606,13 +3624,13 @@
       "sys_ps8_emio_spi0_m_o": {
         "ports": [
           "sys_ps8/emio_spi0_m_o",
-          "spi0_mosi"
+          "spi_dio"
         ]
       },
       "sys_ps8_emio_spi0_sclk_o": {
         "ports": [
           "sys_ps8/emio_spi0_sclk_o",
-          "spi0_sclk"
+          "spi_clk"
         ]
       },
       "sys_ps8_emio_spi0_ss1_o_n": {
@@ -3636,13 +3654,13 @@
       "sys_ps8_emio_spi1_m_o": {
         "ports": [
           "sys_ps8/emio_spi1_m_o",
-          "spi1_mosi"
+          "dcosc_mosi"
         ]
       },
       "sys_ps8_emio_spi1_sclk_o": {
         "ports": [
           "sys_ps8/emio_spi1_sclk_o",
-          "spi1_sclk"
+          "dcosc_sclk"
         ]
       },
       "sys_ps8_emio_spi1_ss1_o_n": {

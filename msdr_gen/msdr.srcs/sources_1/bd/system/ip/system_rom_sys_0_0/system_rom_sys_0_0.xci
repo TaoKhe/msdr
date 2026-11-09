@@ -10,13 +10,13 @@
       "component_parameters": {
         "ROM_WIDTH": [ { "value": "32", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "ROM_ADDR_BITS": [ { "value": "9", "value_src": "user", "resolve_type": "user", "format": "long", "usage": "all" } ],
-        "PATH_TO_FILE": [ { "value": "/home/taokhe/Projects/in/msdr/src/ip/adi_hdl/projects/adrv9001/zcu102/../../../../../../msdr_gen/mem_init_sys.txt", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
+        "PATH_TO_FILE": [ { "value": "/home/taokhe/Projects/in/msdr/msdr_gen/mem_init_sys.txt", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
         "Component_Name": [ { "value": "system_rom_sys_0_0", "resolve_type": "user", "usage": "all" } ]
       },
       "model_parameters": {
         "ROM_WIDTH": [ { "value": "32", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "ROM_ADDR_BITS": [ { "value": "9", "resolve_type": "generated", "format": "long", "usage": "all" } ],
-        "PATH_TO_FILE": [ { "value": "/home/taokhe/Projects/in/msdr/src/ip/adi_hdl/projects/adrv9001/zcu102/../../../../../../msdr_gen/mem_init_sys.txt", "resolve_type": "generated", "usage": "all" } ]
+        "PATH_TO_FILE": [ { "value": "/home/taokhe/Projects/in/msdr/msdr_gen/mem_init_sys.txt", "resolve_type": "generated", "usage": "all" } ]
       },
       "project_parameters": {
         "ARCHITECTURE": [ { "value": "zynquplus" } ],

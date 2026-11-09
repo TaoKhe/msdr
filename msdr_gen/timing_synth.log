@@ -1,9 +1,9 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version      : Vivado v.2024.1 (lin64) Build 5076996 Wed May 22 18:36:09 MDT 2024
-| Date              : Mon Nov  9 18:31:00 2026
+| Date              : Tue Nov 10 01:09:18 2026
 | Host              : taokhe running 64-bit Ubuntu 22.04.5 LTS
-| Command           : report_timing_summary -file ../../../../../../msdr_gen/timing_synth.log
+| Command           : report_timing_summary -file msdr_gen/timing_synth.log
 | Design            : system_top
 | Device            : xczu15eg-ffvb1156
 | Speed File        : -2  PRODUCTION 1.30 05-15-2022
@@ -139,7 +139,7 @@ Table of Contents
 
     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-      0.663        0.000                      0                92198       -0.321    -1778.187                  44402                92043        0.023        0.000                       0                 43633  
+      0.663        0.000                      0                92205       -0.321    -1778.118                  44417                92050        0.023        0.000                       0                 43635  
 
 
 Timing constraints are not met.
@@ -175,7 +175,7 @@ tx2_dclk_out              {0.000 1.000}        2.000           500.000
 
 Clock                         WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
 -----                         -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-clk_pl_0                        7.331        0.000                      0                60321       -0.105    -1113.193                  25423                60321        1.000        0.000                       0                 23385  
+clk_pl_0                        7.331        0.000                      0                60328       -0.105    -1113.124                  25438                60328        1.000        0.000                       0                 23387  
 clk_pl_2                        1.461        0.000                      0                    4       -0.055       -0.172                      4                    4        0.437        0.000                       0                     6  
 ref_clk                         2.446        0.000                      0                  385       -0.220       -4.785                     62                  385        3.725        0.000                       0                   317  
 rx1_dclk_out                    1.190        0.000                      0                   30       -0.033       -0.446                     18                   30        0.037        0.000                       0                    32  
@@ -232,7 +232,7 @@ From Clock:  clk_pl_0
   To Clock:  clk_pl_0
 
 Setup :            0  Failing Endpoints,  Worst Slack        7.331ns,  Total Violation        0.000ns
-Hold  :        25423  Failing Endpoints,  Worst Slack       -0.105ns,  Total Violation    -1113.193ns
+Hold  :        25438  Failing Endpoints,  Worst Slack       -0.105ns,  Total Violation    -1113.124ns
 PW    :            0  Failing Endpoints,  Worst Slack        1.000ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
 
@@ -266,7 +266,7 @@ Slack (MET) :             7.331ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.135     0.135    i_system_wrapper/system_i/sys_ps8/inst/pl_clk_unbuffered[0]
                          BUFG_PS (Prop_BUFG_PS_I_O)
                                                       0.028     0.163 r  i_system_wrapper/system_i/sys_ps8/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
-                         net (fo=23385, unplaced)     2.544     2.707    i_system_wrapper/system_i/axi_hpm0_lpd_interconnect/inst/s00_entry_pipeline/s00_si_converter/inst/gen_axilite_conv.axilite_conv_inst/aclk
+                         net (fo=23387, unplaced)     2.544     2.707    i_system_wrapper/system_i/axi_hpm0_lpd_interconnect/inst/s00_entry_pipeline/s00_si_converter/inst/gen_axilite_conv.axilite_conv_inst/aclk
                          FDRE                                         r  i_system_wrapper/system_i/axi_hpm0_lpd_interconnect/inst/s00_entry_pipeline/s00_si_converter/inst/gen_axilite_conv.axilite_conv_inst/r_beats_reg[5]/C
   -------------------------------------------------------------------    -------------------
                          FDRE (Prop_FDRE_C_Q)         0.077     2.784 f  i_system_wrapper/system_i/axi_hpm0_lpd_interconnect/inst/s00_entry_pipeline/s00_si_converter/inst/gen_axilite_conv.axilite_conv_inst/r_beats_reg[5]/Q
@@ -288,7 +288,7 @@ Slack (MET) :             7.331ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.105    10.105    i_system_wrapper/system_i/sys_ps8/inst/pl_clk_unbuffered[0]
                          BUFG_PS (Prop_BUFG_PS_I_O)
                                                       0.025    10.130 r  i_system_wrapper/system_i/sys_ps8/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
-                         net (fo=23385, unplaced)     2.399    12.529    i_system_wrapper/system_i/sys_ps8/inst/maxihpm0_lpd_aclk
+                         net (fo=23387, unplaced)     2.399    12.529    i_system_wrapper/system_i/sys_ps8/inst/maxihpm0_lpd_aclk
                          PS8                                          r  i_system_wrapper/system_i/sys_ps8/inst/PS8_i/MAXIGP2ACLK
                          clock pessimism              0.033    12.562    
                          clock uncertainty           -0.160    12.402    
@@ -329,7 +329,7 @@ Slack (VIOLATED) :        -0.105ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.076     0.076    i_system_wrapper/system_i/sys_ps8/inst/pl_clk_unbuffered[0]
                          BUFG_PS (Prop_BUFG_PS_I_O)
                                                       0.017     0.093 r  i_system_wrapper/system_i/sys_ps8/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
-                         net (fo=23385, unplaced)     1.414     1.507    i_system_wrapper/system_i/axi_adrv9001_rx1_dma/inst/i_transfer/i_request_arb/i_req_gen/s_axi_aclk
+                         net (fo=23387, unplaced)     1.414     1.507    i_system_wrapper/system_i/axi_adrv9001_rx1_dma/inst/i_transfer/i_request_arb/i_req_gen/s_axi_aclk
                          FDRE                                         r  i_system_wrapper/system_i/axi_adrv9001_rx1_dma/inst/i_transfer/i_request_arb/i_req_gen/id_reg[3]/C
   -------------------------------------------------------------------    -------------------
                          FDRE (Prop_FDRE_C_Q)         0.038     1.545 r  i_system_wrapper/system_i/axi_adrv9001_rx1_dma/inst/i_transfer/i_request_arb/i_req_gen/id_reg[3]/Q
@@ -343,7 +343,7 @@ Slack (VIOLATED) :        -0.105ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.098     0.098    i_system_wrapper/system_i/sys_ps8/inst/pl_clk_unbuffered[0]
                          BUFG_PS (Prop_BUFG_PS_I_O)
                                                       0.018     0.116 r  i_system_wrapper/system_i/sys_ps8/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
-                         net (fo=23385, unplaced)     1.559     1.675    i_system_wrapper/system_i/axi_adrv9001_rx1_dma/inst/i_transfer/i_request_arb/eot_mem_src_reg_0_15_0_0/WCLK
+                         net (fo=23387, unplaced)     1.559     1.675    i_system_wrapper/system_i/axi_adrv9001_rx1_dma/inst/i_transfer/i_request_arb/eot_mem_src_reg_0_15_0_0/WCLK
                          RAMD32                                       r  i_system_wrapper/system_i/axi_adrv9001_rx1_dma/inst/i_transfer/i_request_arb/eot_mem_src_reg_0_15_0_0/DP/CLK
                          clock pessimism             -0.023     1.652    
                          RAMD32 (Hold_RAMD32_CLK_WADR3)
@@ -367,8 +367,8 @@ Sources:            { i_system_wrapper/system_i/sys_ps8/inst/PS8_i/PLCLK[0] }
 
 Check Type        Corner  Lib Pin  Reference Pin  Required(ns)  Actual(ns)  Slack(ns)  Location           Pin
 Min Period        n/a     FDRE/C   n/a            8.000         10.000      2.000      HDIOLOGIC_S_X0Y22  i_system_wrapper/system_i/axi_quad_spi_hb/U0/NO_DUAL_QUAD_MODE.QSPI_NORMAL/IO1_I_REG/C
-Low Pulse Width   Slow    FDRE/C   n/a            4.000         5.000       1.000      HDIOLOGIC_S_X0Y22  i_system_wrapper/system_i/axi_quad_spi_hb/U0/NO_DUAL_QUAD_MODE.QSPI_NORMAL/IO1_I_REG/C
-High Pulse Width  Slow    FDRE/C   n/a            4.000         5.000       1.000      HDIOLOGIC_S_X0Y22  i_system_wrapper/system_i/axi_quad_spi_hb/U0/NO_DUAL_QUAD_MODE.QSPI_NORMAL/IO1_I_REG/C
+Low Pulse Width   Slow    FDRE/C   n/a            4.000         5.000       1.000      HDIOLOGIC_M_X0Y21  i_system_wrapper/system_i/axi_quad_spi_hb/U0/NO_DUAL_QUAD_MODE.QSPI_NORMAL/QSPI_LEGACY_MD_GEN.QSPI_CORE_INTERFACE_I/LOGIC_FOR_MD_0_GEN.SPI_MODULE_I/RATIO_NOT_EQUAL_4_GENERATE.SCK_O_NQ_4_NO_STARTUP_USED.SCK_O_NE_4_FDRE_INST/C
+High Pulse Width  Slow    FDRE/C   n/a            4.000         5.000       1.000      HDIOLOGIC_M_X0Y21  i_system_wrapper/system_i/axi_quad_spi_hb/U0/NO_DUAL_QUAD_MODE.QSPI_NORMAL/QSPI_LEGACY_MD_GEN.QSPI_CORE_INTERFACE_I/LOGIC_FOR_MD_0_GEN.SPI_MODULE_I/RATIO_NOT_EQUAL_4_GENERATE.SCK_O_NQ_4_NO_STARTUP_USED.SCK_O_NE_4_FDRE_INST/C
 
 
 
@@ -1592,15 +1592,15 @@ Slack (MET) :             5.713ns  (required time - arrival time)
                          (clock rx1_dclk_out_DIV4_INV fall edge)
                                                       0.000     0.000 f  
                          clock source latency         0.100     0.100    
-    P11                                               0.000     0.100 r  rx1_dclk_in_p (IN)
+    P11                                               0.000     0.100 f  rx1_dclk_in_p (IN)
                          net (fo=0)                   0.000     0.100    i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_clk_in_ibuf/I
     HPIOBDIFFINBUF_X0Y84 DIFFINBUF (Prop_DIFFINBUF_HPIOBDIFFINBUF_DIFF_IN_P_O)
-                                                      0.620     0.720 r  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_clk_in_ibuf/DIFFINBUF_INST/O
+                                                      0.620     0.720 f  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_clk_in_ibuf/DIFFINBUF_INST/O
                          net (fo=1, estimated)        0.050     0.770    i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_clk_in_ibuf/OUT
     P11                  IBUFCTRL (Prop_IBUFCTRL_HPIOB_M_I_O)
-                                                      0.000     0.770 r  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_clk_in_ibuf/IBUFCTRL_INST/O
+                                                      0.000     0.770 f  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_clk_in_ibuf/IBUFCTRL_INST/O
                          net (fo=12, unplaced)        0.285     1.055    i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/clk_in_s
-                         BUFGCE (Prop_BUFGCE_I_O)     0.028     1.083 r  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_clk_buf_fast/O
+                         BUFGCE (Prop_BUFGCE_I_O)     0.028     1.083 f  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_clk_buf_fast/O
                          net (fo=20, unplaced)        2.178     3.261    i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_serdes/g_data[2].i_iserdes_4
     BITSLICE_RX_TX_X0Y203
                          ISERDESE3 (Prop_ISERDES_BITSLICE_COMPONENT_RX_TX_CLK_RX_DIV2_CLK_Q)
@@ -1670,15 +1670,15 @@ Slack (MET) :             0.225ns  (arrival time - required time)
                          (clock rx1_dclk_out_DIV4_INV fall edge)
                                                       0.000     0.000 f  
                          clock source latency        -0.100    -0.100    
-    P11                                               0.000    -0.100 r  rx1_dclk_in_p (IN)
+    P11                                               0.000    -0.100 f  rx1_dclk_in_p (IN)
                          net (fo=0)                   0.000    -0.100    i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_clk_in_ibuf/I
     HPIOBDIFFINBUF_X0Y84 DIFFINBUF (Prop_DIFFINBUF_HPIOBDIFFINBUF_DIFF_IN_P_O)
-                                                      0.286     0.186 r  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_clk_in_ibuf/DIFFINBUF_INST/O
+                                                      0.286     0.186 f  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_clk_in_ibuf/DIFFINBUF_INST/O
                          net (fo=1, estimated)        0.040     0.226    i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_clk_in_ibuf/OUT
     P11                  IBUFCTRL (Prop_IBUFCTRL_HPIOB_M_I_O)
-                                                      0.000     0.226 r  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_clk_in_ibuf/IBUFCTRL_INST/O
+                                                      0.000     0.226 f  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_clk_in_ibuf/IBUFCTRL_INST/O
                          net (fo=12, unplaced)        0.128     0.354    i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/clk_in_s
-                         BUFGCE (Prop_BUFGCE_I_O)     0.017     0.371 r  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_clk_buf_fast/O
+                         BUFGCE (Prop_BUFGCE_I_O)     0.017     0.371 f  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_clk_buf_fast/O
                          net (fo=20, unplaced)        1.177     1.548    i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_1_phy/i_serdes/g_data[2].i_iserdes_4
     BITSLICE_RX_TX_X0Y205
                          ISERDESE3 (Prop_ISERDES_BITSLICE_COMPONENT_RX_TX_CLK_RX_DIV2_CLK_Q)
@@ -2172,15 +2172,15 @@ Slack (MET) :             5.737ns  (required time - arrival time)
                          (clock rx2_dclk_out_DIV4_INV fall edge)
                                                       0.000     0.000 f  
                          clock source latency         0.100     0.100    
-    Y4                                                0.000     0.100 r  rx2_dclk_in_p (IN)
+    Y4                                                0.000     0.100 f  rx2_dclk_in_p (IN)
                          net (fo=0)                   0.000     0.100    i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_2_phy/i_clk_in_ibuf/I
     HPIOBDIFFINBUF_X0Y60 DIFFINBUF (Prop_DIFFINBUF_HPIOBDIFFINBUF_DIFF_IN_P_O)
-                                                      0.632     0.732 r  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_2_phy/i_clk_in_ibuf/DIFFINBUF_INST/O
+                                                      0.632     0.732 f  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_2_phy/i_clk_in_ibuf/DIFFINBUF_INST/O
                          net (fo=1, estimated)        0.050     0.782    i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_2_phy/i_clk_in_ibuf/OUT
     Y4                   IBUFCTRL (Prop_IBUFCTRL_HPIOB_M_I_O)
-                                                      0.000     0.782 r  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_2_phy/i_clk_in_ibuf/IBUFCTRL_INST/O
+                                                      0.000     0.782 f  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_2_phy/i_clk_in_ibuf/IBUFCTRL_INST/O
                          net (fo=12, unplaced)        0.285     1.067    i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_2_phy/clk_in_s
-                         BUFGCE (Prop_BUFGCE_I_O)     0.028     1.095 r  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_2_phy/i_clk_buf_fast/O
+                         BUFGCE (Prop_BUFGCE_I_O)     0.028     1.095 f  i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_2_phy/i_clk_buf_fast/O
                          net (fo=20, unplaced)        2.358     3.453    i_system_wrapper/system_i/axi_adrv9001/inst/i_if/i_rx_2_phy/i_serdes/g_data[2].i_iserdes_4
     BITSLICE_RX_TX_X0Y153
                          ISERDESE3 (Prop_ISERDES_BITSLICE_COMPONENT_RX_TX_CLK_RX_DIV2_CLK_Q)
@@ -2644,7 +2644,7 @@ Slack (MET) :             8.818ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.135     0.135    i_system_wrapper/system_i/sys_ps8/inst/pl_clk_unbuffered[0]
                          BUFG_PS (Prop_BUFG_PS_I_O)
                                                       0.028     0.163 r  i_system_wrapper/system_i/sys_ps8/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
-                         net (fo=23385, unplaced)     2.544     2.707    i_system_wrapper/system_i/sys_rstgen/U0/slowest_sync_clk
+                         net (fo=23387, unplaced)     2.544     2.707    i_system_wrapper/system_i/sys_rstgen/U0/slowest_sync_clk
                          FDRE                                         r  i_system_wrapper/system_i/sys_rstgen/U0/ACTIVE_LOW_PR_OUT_DFF[0].FDRE_PER_N/C
   -------------------------------------------------------------------    -------------------
                          FDRE (Prop_FDRE_C_Q)         0.077     2.784 r  i_system_wrapper/system_i/sys_rstgen/U0/ACTIVE_LOW_PR_OUT_DFF[0].FDRE_PER_N/Q
@@ -2660,7 +2660,7 @@ Slack (MET) :             8.818ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.105    10.105    i_system_wrapper/system_i/sys_ps8/inst/pl_clk_unbuffered[0]
                          BUFG_PS (Prop_BUFG_PS_I_O)
                                                       0.025    10.130 r  i_system_wrapper/system_i/sys_ps8/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
-                         net (fo=23385, unplaced)     2.399    12.529    i_system_wrapper/system_i/axi_adrv9001/inst/i_core/i_rx1/s_axi_aclk
+                         net (fo=23387, unplaced)     2.399    12.529    i_system_wrapper/system_i/axi_adrv9001/inst/i_core/i_rx1/s_axi_aclk
                          FDCE                                         r  i_system_wrapper/system_i/axi_adrv9001/inst/i_core/i_rx1/core_enabled.up_rack_reg/C
                          clock pessimism              0.033    12.562    
                          clock uncertainty           -0.160    12.402    
@@ -2700,7 +2700,7 @@ Slack (MET) :             0.261ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.076     0.076    i_system_wrapper/system_i/sys_ps8/inst/pl_clk_unbuffered[0]
                          BUFG_PS (Prop_BUFG_PS_I_O)
                                                       0.017     0.093 r  i_system_wrapper/system_i/sys_ps8/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
-                         net (fo=23385, unplaced)     1.414     1.507    i_system_wrapper/system_i/sys_rstgen/U0/slowest_sync_clk
+                         net (fo=23387, unplaced)     1.414     1.507    i_system_wrapper/system_i/sys_rstgen/U0/slowest_sync_clk
                          FDRE                                         r  i_system_wrapper/system_i/sys_rstgen/U0/ACTIVE_LOW_PR_OUT_DFF[0].FDRE_PER_N/C
   -------------------------------------------------------------------    -------------------
                          FDRE (Prop_FDRE_C_Q)         0.038     1.545 r  i_system_wrapper/system_i/sys_rstgen/U0/ACTIVE_LOW_PR_OUT_DFF[0].FDRE_PER_N/Q
@@ -2716,7 +2716,7 @@ Slack (MET) :             0.261ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.098     0.098    i_system_wrapper/system_i/sys_ps8/inst/pl_clk_unbuffered[0]
                          BUFG_PS (Prop_BUFG_PS_I_O)
                                                       0.018     0.116 r  i_system_wrapper/system_i/sys_ps8/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
-                         net (fo=23385, unplaced)     1.559     1.675    i_system_wrapper/system_i/axi_adrv9001/inst/i_core/i_rx1/s_axi_aclk
+                         net (fo=23387, unplaced)     1.559     1.675    i_system_wrapper/system_i/axi_adrv9001/inst/i_core/i_rx1/s_axi_aclk
                          FDCE                                         r  i_system_wrapper/system_i/axi_adrv9001/inst/i_core/i_rx1/core_enabled.up_rack_reg/C
                          clock pessimism             -0.023     1.652    
                          FDCE (Remov_FDCE_C_CLR)     -0.020     1.632    i_system_wrapper/system_i/axi_adrv9001/inst/i_core/i_rx1/core_enabled.up_rack_reg

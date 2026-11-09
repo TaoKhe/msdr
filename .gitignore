@@ -1,0 +1,31 @@
+# Vivado output
+/msdr_gen/
+/msdr_gen_v*/
+/.Xil/
+/vivado*.log
+/vivado*.jou
+/vivado*.str
+
+# Simulink generated output
+/simulink/**/slprj/
+/simulink/**/*.slxc
+/simulink/**/*.asv
+/simulink/**/*.autosave
+
+# Editor recovery and lock files
+*.bak
+*.bkp
+.~lock.*#
+*~
+
+# IP simulation output
+/src/ip/**/tb/run/
+/src/ip/**/tb/vcd/
+/src/ip/**/tb/.Xil/
+/src/ip/**/tb/xsim.dir/
+/src/ip/**/tb/work/
+/src/ip/**/tb/*.log
+/src/ip/**/tb/*.jou
+/src/ip/**/tb/*.pb
+/src/ip/**/tb/*.wdb
+/src/ip/**/tb/xsim_gui_cmd.tcl

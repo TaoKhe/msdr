@@ -2,10 +2,10 @@
 -- Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2024.1 (lin64) Build 5076996 Wed May 22 18:36:09 MDT 2024
--- Date        : Mon Nov  9 14:41:11 2026
+-- Date        : Tue Nov 10 01:01:16 2026
 -- Host        : taokhe running 64-bit Ubuntu 22.04.5 LTS
--- Command     : write_vhdl -force -mode funcsim -rename_top system_sys_ps8_0 -prefix
---               system_sys_ps8_0_ system_sys_ps8_0_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim
+--               /home/taokhe/Projects/in/msdr/msdr_gen/msdr.gen/sources_1/bd/system/ip/system_sys_ps8_0/system_sys_ps8_0_sim_netlist.vhdl
 -- Design      : system_sys_ps8_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -1585,6 +1585,8 @@ entity system_sys_ps8_0_zynq_ultra_ps_e_v3_5_3_zynq_ultra_ps_e is
   attribute C_USE_DIFF_RW_CLK_GP6 of system_sys_ps8_0_zynq_ultra_ps_e_v3_5_3_zynq_ultra_ps_e : entity is 0;
   attribute HW_HANDOFF : string;
   attribute HW_HANDOFF of system_sys_ps8_0_zynq_ultra_ps_e_v3_5_3_zynq_ultra_ps_e : entity is "system_sys_ps8_0.hwdef";
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_sys_ps8_0_zynq_ultra_ps_e_v3_5_3_zynq_ultra_ps_e : entity is "zynq_ultra_ps_e_v3_5_3_zynq_ultra_ps_e";
   attribute PSS_IO : string;
   attribute PSS_IO of system_sys_ps8_0_zynq_ultra_ps_e_v3_5_3_zynq_ultra_ps_e : entity is "Signal Name, DiffPair Type, DiffPair Signal,Direction, Site Type, IO Standard, Drive (mA), Slew Rate, Pull Type, IBIS Model, ODT, OUTPUT_IMPEDANCE " & LF &
  "QSPI_X4_SCLK_OUT, , , OUT, PS_MIO0_500, LVCMOS33, 12, FAST, PULLUP, PS_MIO_LVCMOS33_F_12,,  " & LF &

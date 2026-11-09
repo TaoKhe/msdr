@@ -1,9 +1,29 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon Nov  9 18:24:31 2026" VIVADOVERSION="2024.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Tue Nov 10 01:00:05 2026" VIVADOVERSION="2024.1">
 
   <SYSTEMINFO ARCH="zynquplus" DEVICE="xczu15eg" NAME="system" PACKAGE="ffvb1156" SPEEDGRADE="-2"/>
 
   <EXTERNALPORTS>
+    <PORT DIR="I" NAME="dcosc_miso" SIGIS="undef" SIGNAME="External_Ports_dcosc_miso">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="sys_ps8" PORT="emio_spi1_m_i"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="dcosc_mosi" SIGIS="undef" SIGNAME="sys_ps8_emio_spi1_m_o">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="sys_ps8" PORT="emio_spi1_m_o"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="dcosc_sclk" SIGIS="undef" SIGNAME="sys_ps8_emio_spi1_sclk_o">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="sys_ps8" PORT="emio_spi1_sclk_o"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="fpga_ref_clk" SIGIS="undef" SIGNAME="External_Ports_fpga_ref_clk">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="axi_adrv9001" PORT="ref_clk"/>
+      </CONNECTIONS>
+    </PORT>
     <PORT DIR="I" LEFT="94" NAME="gpio_i" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_gpio_i">
       <CONNECTIONS>
         <CONNECTION INSTANCE="sys_ps8" PORT="emio_gpio_i"/>
@@ -92,11 +112,6 @@
     <PORT DIR="I" NAME="mssi_sync" SIGIS="undef" SIGNAME="External_Ports_mssi_sync">
       <CONNECTIONS>
         <CONNECTION INSTANCE="axi_adrv9001" PORT="mssi_sync_in"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="ref_clk" SIGIS="undef" SIGNAME="External_Ports_ref_clk">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="axi_adrv9001" PORT="ref_clk"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="rx1_dclk_in_n" SIGIS="undef" SIGNAME="External_Ports_rx1_dclk_in_n">
@@ -194,39 +209,24 @@
         <CONNECTION INSTANCE="spi0_csn_concat" PORT="dout"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="I" NAME="spi0_miso" SIGIS="undef" SIGNAME="External_Ports_spi0_miso">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="sys_ps8" PORT="emio_spi0_m_i"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" NAME="spi0_mosi" SIGIS="undef" SIGNAME="sys_ps8_emio_spi0_m_o">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="sys_ps8" PORT="emio_spi0_m_o"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" NAME="spi0_sclk" SIGIS="undef" SIGNAME="sys_ps8_emio_spi0_sclk_o">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="sys_ps8" PORT="emio_spi0_sclk_o"/>
-      </CONNECTIONS>
-    </PORT>
     <PORT DIR="O" LEFT="2" NAME="spi1_csn" RIGHT="0" SIGIS="undef" SIGNAME="spi1_csn_concat_dout">
       <CONNECTIONS>
         <CONNECTION INSTANCE="spi1_csn_concat" PORT="dout"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="I" NAME="spi1_miso" SIGIS="undef" SIGNAME="External_Ports_spi1_miso">
+    <PORT DIR="O" NAME="spi_clk" SIGIS="undef" SIGNAME="sys_ps8_emio_spi0_sclk_o">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="sys_ps8" PORT="emio_spi1_m_i"/>
+        <CONNECTION INSTANCE="sys_ps8" PORT="emio_spi0_sclk_o"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" NAME="spi1_mosi" SIGIS="undef" SIGNAME="sys_ps8_emio_spi1_m_o">
+    <PORT DIR="O" NAME="spi_dio" SIGIS="undef" SIGNAME="sys_ps8_emio_spi0_m_o">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="sys_ps8" PORT="emio_spi1_m_o"/>
+        <CONNECTION INSTANCE="sys_ps8" PORT="emio_spi0_m_o"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" NAME="spi1_sclk" SIGIS="undef" SIGNAME="sys_ps8_emio_spi1_sclk_o">
+    <PORT DIR="I" NAME="spi_do" SIGIS="undef" SIGNAME="External_Ports_spi_do">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="sys_ps8" PORT="emio_spi1_sclk_o"/>
+        <CONNECTION INSTANCE="sys_ps8" PORT="emio_spi0_m_i"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" LEFT="16" NAME="t12_aux_gpio_i" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_t12_aux_gpio_i">
@@ -745,9 +745,9 @@
             <CONNECTION INSTANCE="External_Ports" PORT="mssi_sync"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="ref_clk" SIGIS="undef" SIGNAME="External_Ports_ref_clk">
+        <PORT DIR="I" NAME="ref_clk" SIGIS="undef" SIGNAME="External_Ports_fpga_ref_clk">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="ref_clk"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="fpga_ref_clk"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="rx1_dclk_in_n_NC" SIGIS="undef" SIGNAME="External_Ports_rx1_dclk_in_n">
@@ -8225,7 +8225,7 @@
     <MODULE COREREVISION="1" FULLNAME="/rom_sys_0" HWVERSION="1.0" INSTANCE="rom_sys_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="sysid_rom" VLNV="analog.com:user:sysid_rom:1.0">
       <DOCUMENTS/>
       <PARAMETERS>
-        <PARAMETER NAME="PATH_TO_FILE" VALUE="/home/taokhe/Projects/in/msdr/src/ip/adi_hdl/projects/adrv9001/zcu102/../../../../../../msdr_gen/mem_init_sys.txt"/>
+        <PARAMETER NAME="PATH_TO_FILE" VALUE="/home/taokhe/Projects/in/msdr/msdr_gen/mem_init_sys.txt"/>
         <PARAMETER NAME="ROM_ADDR_BITS" VALUE="9"/>
         <PARAMETER NAME="ROM_WIDTH" VALUE="32"/>
         <PARAMETER NAME="Component_Name" VALUE="system_rom_sys_0_0"/>
@@ -10698,14 +10698,14 @@
             <CONNECTION INSTANCE="External_Ports" PORT="gpio_t"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="emio_spi0_m_i" SIGIS="undef" SIGNAME="External_Ports_spi0_miso">
+        <PORT DIR="I" NAME="emio_spi0_m_i" SIGIS="undef" SIGNAME="External_Ports_spi_do">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="spi0_miso"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="spi_do"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="emio_spi0_m_o" SIGIS="undef" SIGNAME="sys_ps8_emio_spi0_m_o">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="spi0_mosi"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="spi_dio"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="emio_spi0_mo_t" SIGIS="undef"/>
@@ -10722,7 +10722,7 @@
         </PORT>
         <PORT DIR="O" NAME="emio_spi0_sclk_o" SIGIS="undef" SIGNAME="sys_ps8_emio_spi0_sclk_o">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="spi0_sclk"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="spi_clk"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="emio_spi0_sclk_t" SIGIS="undef"/>
@@ -10748,14 +10748,14 @@
             <CONNECTION INSTANCE="spi0_csn_concat" PORT="In0"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="emio_spi1_m_i" SIGIS="undef" SIGNAME="External_Ports_spi1_miso">
+        <PORT DIR="I" NAME="emio_spi1_m_i" SIGIS="undef" SIGNAME="External_Ports_dcosc_miso">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="spi1_miso"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="dcosc_miso"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="emio_spi1_m_o" SIGIS="undef" SIGNAME="sys_ps8_emio_spi1_m_o">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="spi1_mosi"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="dcosc_mosi"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="emio_spi1_mo_t" SIGIS="undef"/>
@@ -10772,7 +10772,7 @@
         </PORT>
         <PORT DIR="O" NAME="emio_spi1_sclk_o" SIGIS="undef" SIGNAME="sys_ps8_emio_spi1_sclk_o">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="spi1_sclk"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="dcosc_sclk"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="emio_spi1_sclk_t" SIGIS="undef"/>

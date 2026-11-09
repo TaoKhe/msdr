@@ -2,7 +2,7 @@
 //Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2024.1 (lin64) Build 5076996 Wed May 22 18:36:09 MDT 2024
-//Date        : Mon Nov  9 18:24:04 2026
+//Date        : Tue Nov 10 00:59:38 2026
 //Host        : taokhe running 64-bit Ubuntu 22.04.5 LTS
 //Command     : generate_target system.bd
 //Design      : system
@@ -12,7 +12,11 @@
 
 (* CORE_GENERATION_INFO = "system,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=system,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=25,numReposBlks=25,numNonXlnxBlks=11,numHierBlks=0,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,synth_mode=Hierarchical}" *) (* HW_HANDOFF = "system.hwdef" *) 
 module system
-   (gpio_i,
+   (dcosc_miso,
+    dcosc_mosi,
+    dcosc_sclk,
+    fpga_ref_clk,
+    gpio_i,
     gpio_o,
     gpio_rx1_enable_in,
     gpio_rx2_enable_in,
@@ -30,7 +34,6 @@ module system
     mcs_in,
     mcs_out,
     mssi_sync,
-    ref_clk,
     rx1_dclk_in_n,
     rx1_dclk_in_p,
     rx1_enable,
@@ -50,13 +53,10 @@ module system
     rx2_strobe_in_n,
     rx2_strobe_in_p,
     spi0_csn,
-    spi0_miso,
-    spi0_mosi,
-    spi0_sclk,
     spi1_csn,
-    spi1_miso,
-    spi1_mosi,
-    spi1_sclk,
+    spi_clk,
+    spi_dio,
+    spi_do,
     t12_aux_gpio_i,
     t12_aux_gpio_o,
     t12_aux_gpio_t,
@@ -91,6 +91,10 @@ module system
     tx2_strobe_out_n,
     tx2_strobe_out_p,
     tx_output_enable);
+  input dcosc_miso;
+  output dcosc_mosi;
+  output dcosc_sclk;
+  input fpga_ref_clk;
   input [94:0]gpio_i;
   output [94:0]gpio_o;
   input gpio_rx1_enable_in;
@@ -109,7 +113,6 @@ module system
   input mcs_in;
   output mcs_out;
   input mssi_sync;
-  input ref_clk;
   input rx1_dclk_in_n;
   input rx1_dclk_in_p;
   output rx1_enable;
@@ -129,13 +132,10 @@ module system
   input rx2_strobe_in_n;
   input rx2_strobe_in_p;
   output [2:0]spi0_csn;
-  input spi0_miso;
-  output spi0_mosi;
-  output spi0_sclk;
   output [2:0]spi1_csn;
-  input spi1_miso;
-  output spi1_mosi;
-  output spi1_sclk;
+  output spi_clk;
+  output spi_dio;
+  input spi_do;
   input [16:0]t12_aux_gpio_i;
   output [16:0]t12_aux_gpio_o;
   output [16:0]t12_aux_gpio_t;
@@ -639,6 +639,8 @@ module system
   wire util_dac_2_upack_fifo_rd_underflow;
 
   assign axi_t12_aux_gpio_gpio_io_i = t12_aux_gpio_i[16:0];
+  assign dcosc_mosi = sys_ps8_emio_spi1_m_o;
+  assign dcosc_sclk = sys_ps8_emio_spi1_sclk_o;
   assign gpio_i_1 = gpio_i[94:0];
   assign gpio_o[94:0] = sys_ps8_emio_gpio_o;
   assign gpio_rx1_enable_in_1 = gpio_rx1_enable_in;
@@ -649,7 +651,7 @@ module system
   assign mcs_in_1 = mcs_in;
   assign mcs_out = axi_adrv9001_mcs_out;
   assign mssi_sync_1 = mssi_sync;
-  assign ref_clk_1 = ref_clk;
+  assign ref_clk_1 = fpga_ref_clk;
   assign rx1_dclk_in_n_1 = rx1_dclk_in_n;
   assign rx1_dclk_in_p_1 = rx1_dclk_in_p;
   assign rx1_enable = axi_adrv9001_rx1_enable;
@@ -669,13 +671,11 @@ module system
   assign rx2_strobe_in_n_1 = rx2_strobe_in_n;
   assign rx2_strobe_in_p_1 = rx2_strobe_in_p;
   assign spi0_csn[2:0] = spi0_csn_concat_dout;
-  assign spi0_miso_1 = spi0_miso;
-  assign spi0_mosi = sys_ps8_emio_spi0_m_o;
-  assign spi0_sclk = sys_ps8_emio_spi0_sclk_o;
+  assign spi0_miso_1 = spi_do;
   assign spi1_csn[2:0] = spi1_csn_concat_dout;
-  assign spi1_miso_1 = spi1_miso;
-  assign spi1_mosi = sys_ps8_emio_spi1_m_o;
-  assign spi1_sclk = sys_ps8_emio_spi1_sclk_o;
+  assign spi1_miso_1 = dcosc_miso;
+  assign spi_clk = sys_ps8_emio_spi0_sclk_o;
+  assign spi_dio = sys_ps8_emio_spi0_m_o;
   assign t12_aux_gpio_o[16:0] = axi_t12_aux_gpio_gpio_io_o;
   assign t12_aux_gpio_t[16:0] = axi_t12_aux_gpio_gpio_io_t;
   assign t12_gpio0_i_1 = t12_gpio0_i[31:0];

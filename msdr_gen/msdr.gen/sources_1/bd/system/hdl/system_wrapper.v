@@ -2,7 +2,7 @@
 //Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2024.1 (lin64) Build 5076996 Wed May 22 18:36:09 MDT 2024
-//Date        : Mon Nov  9 18:24:04 2026
+//Date        : Tue Nov 10 00:59:38 2026
 //Host        : taokhe running 64-bit Ubuntu 22.04.5 LTS
 //Command     : generate_target system_wrapper.bd
 //Design      : system_wrapper
@@ -11,7 +11,11 @@
 `timescale 1 ps / 1 ps
 
 module system_wrapper
-   (gpio_i,
+   (dcosc_miso,
+    dcosc_mosi,
+    dcosc_sclk,
+    fpga_ref_clk,
+    gpio_i,
     gpio_o,
     gpio_rx1_enable_in,
     gpio_rx2_enable_in,
@@ -29,7 +33,6 @@ module system_wrapper
     mcs_in,
     mcs_out,
     mssi_sync,
-    ref_clk,
     rx1_dclk_in_n,
     rx1_dclk_in_p,
     rx1_enable,
@@ -49,13 +52,10 @@ module system_wrapper
     rx2_strobe_in_n,
     rx2_strobe_in_p,
     spi0_csn,
-    spi0_miso,
-    spi0_mosi,
-    spi0_sclk,
     spi1_csn,
-    spi1_miso,
-    spi1_mosi,
-    spi1_sclk,
+    spi_clk,
+    spi_dio,
+    spi_do,
     t12_aux_gpio_i,
     t12_aux_gpio_o,
     t12_aux_gpio_t,
@@ -90,6 +90,10 @@ module system_wrapper
     tx2_strobe_out_n,
     tx2_strobe_out_p,
     tx_output_enable);
+  input dcosc_miso;
+  output dcosc_mosi;
+  output dcosc_sclk;
+  input fpga_ref_clk;
   input [94:0]gpio_i;
   output [94:0]gpio_o;
   input gpio_rx1_enable_in;
@@ -108,7 +112,6 @@ module system_wrapper
   input mcs_in;
   output mcs_out;
   input mssi_sync;
-  input ref_clk;
   input rx1_dclk_in_n;
   input rx1_dclk_in_p;
   output rx1_enable;
@@ -128,13 +131,10 @@ module system_wrapper
   input rx2_strobe_in_n;
   input rx2_strobe_in_p;
   output [2:0]spi0_csn;
-  input spi0_miso;
-  output spi0_mosi;
-  output spi0_sclk;
   output [2:0]spi1_csn;
-  input spi1_miso;
-  output spi1_mosi;
-  output spi1_sclk;
+  output spi_clk;
+  output spi_dio;
+  input spi_do;
   input [16:0]t12_aux_gpio_i;
   output [16:0]t12_aux_gpio_o;
   output [16:0]t12_aux_gpio_t;
@@ -170,6 +170,10 @@ module system_wrapper
   output tx2_strobe_out_p;
   input tx_output_enable;
 
+  wire dcosc_miso;
+  wire dcosc_mosi;
+  wire dcosc_sclk;
+  wire fpga_ref_clk;
   wire [94:0]gpio_i;
   wire [94:0]gpio_o;
   wire gpio_rx1_enable_in;
@@ -188,7 +192,6 @@ module system_wrapper
   wire mcs_in;
   wire mcs_out;
   wire mssi_sync;
-  wire ref_clk;
   wire rx1_dclk_in_n;
   wire rx1_dclk_in_p;
   wire rx1_enable;
@@ -208,13 +211,10 @@ module system_wrapper
   wire rx2_strobe_in_n;
   wire rx2_strobe_in_p;
   wire [2:0]spi0_csn;
-  wire spi0_miso;
-  wire spi0_mosi;
-  wire spi0_sclk;
   wire [2:0]spi1_csn;
-  wire spi1_miso;
-  wire spi1_mosi;
-  wire spi1_sclk;
+  wire spi_clk;
+  wire spi_dio;
+  wire spi_do;
   wire [16:0]t12_aux_gpio_i;
   wire [16:0]t12_aux_gpio_o;
   wire [16:0]t12_aux_gpio_t;
@@ -251,7 +251,11 @@ module system_wrapper
   wire tx_output_enable;
 
   system system_i
-       (.gpio_i(gpio_i),
+       (.dcosc_miso(dcosc_miso),
+        .dcosc_mosi(dcosc_mosi),
+        .dcosc_sclk(dcosc_sclk),
+        .fpga_ref_clk(fpga_ref_clk),
+        .gpio_i(gpio_i),
         .gpio_o(gpio_o),
         .gpio_rx1_enable_in(gpio_rx1_enable_in),
         .gpio_rx2_enable_in(gpio_rx2_enable_in),
@@ -269,7 +273,6 @@ module system_wrapper
         .mcs_in(mcs_in),
         .mcs_out(mcs_out),
         .mssi_sync(mssi_sync),
-        .ref_clk(ref_clk),
         .rx1_dclk_in_n(rx1_dclk_in_n),
         .rx1_dclk_in_p(rx1_dclk_in_p),
         .rx1_enable(rx1_enable),
@@ -289,13 +292,10 @@ module system_wrapper
         .rx2_strobe_in_n(rx2_strobe_in_n),
         .rx2_strobe_in_p(rx2_strobe_in_p),
         .spi0_csn(spi0_csn),
-        .spi0_miso(spi0_miso),
-        .spi0_mosi(spi0_mosi),
-        .spi0_sclk(spi0_sclk),
         .spi1_csn(spi1_csn),
-        .spi1_miso(spi1_miso),
-        .spi1_mosi(spi1_mosi),
-        .spi1_sclk(spi1_sclk),
+        .spi_clk(spi_clk),
+        .spi_dio(spi_dio),
+        .spi_do(spi_do),
         .t12_aux_gpio_i(t12_aux_gpio_i),
         .t12_aux_gpio_o(t12_aux_gpio_o),
         .t12_aux_gpio_t(t12_aux_gpio_t),

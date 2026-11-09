@@ -2,10 +2,10 @@
 -- Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2024.1 (lin64) Build 5076996 Wed May 22 18:36:09 MDT 2024
--- Date        : Mon Nov  9 18:08:44 2026
+-- Date        : Tue Nov 10 01:02:16 2026
 -- Host        : taokhe running 64-bit Ubuntu 22.04.5 LTS
--- Command     : write_vhdl -force -mode funcsim -rename_top system_util_adc_1_pack_0 -prefix
---               system_util_adc_1_pack_0_ system_util_adc_1_pack_0_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim
+--               /home/taokhe/Projects/in/msdr/msdr_gen/msdr.gen/sources_1/bd/system/ip/system_util_adc_1_pack_0/system_util_adc_1_pack_0_sim_netlist.vhdl
 -- Design      : system_util_adc_1_pack_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -34,6 +34,8 @@ entity system_util_adc_1_pack_0_pack_network is
     fifo_wr_data_3 : in STD_LOGIC_VECTOR ( 15 downto 0 );
     fifo_wr_data_2 : in STD_LOGIC_VECTOR ( 15 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_util_adc_1_pack_0_pack_network : entity is "pack_network";
 end system_util_adc_1_pack_0_pack_network;
 
 architecture STRUCTURE of system_util_adc_1_pack_0_pack_network is
@@ -1503,6 +1505,8 @@ entity system_util_adc_1_pack_0_pack_shell is
     fifo_wr_data_3 : in STD_LOGIC_VECTOR ( 15 downto 0 );
     fifo_wr_data_2 : in STD_LOGIC_VECTOR ( 15 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_util_adc_1_pack_0_pack_shell : entity is "pack_shell";
 end system_util_adc_1_pack_0_pack_shell;
 
 architecture STRUCTURE of system_util_adc_1_pack_0_pack_shell is
@@ -2527,6 +2531,8 @@ entity system_util_adc_1_pack_0_util_cpack2_impl is
     fifo_wr_data_3 : in STD_LOGIC_VECTOR ( 15 downto 0 );
     fifo_wr_data_2 : in STD_LOGIC_VECTOR ( 15 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_util_adc_1_pack_0_util_cpack2_impl : entity is "util_cpack2_impl";
 end system_util_adc_1_pack_0_util_cpack2_impl;
 
 architecture STRUCTURE of system_util_adc_1_pack_0_util_cpack2_impl is
@@ -3305,6 +3311,8 @@ entity system_util_adc_1_pack_0_util_cpack2 is
     fifo_wr_data_3 : in STD_LOGIC_VECTOR ( 15 downto 0 );
     fifo_wr_data_2 : in STD_LOGIC_VECTOR ( 15 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_util_adc_1_pack_0_util_cpack2 : entity is "util_cpack2";
 end system_util_adc_1_pack_0_util_cpack2;
 
 architecture STRUCTURE of system_util_adc_1_pack_0_util_cpack2 is

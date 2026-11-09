@@ -2,10 +2,10 @@
 -- Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2024.1 (lin64) Build 5076996 Wed May 22 18:36:09 MDT 2024
--- Date        : Mon Nov  9 18:09:54 2026
+-- Date        : Tue Nov 10 01:03:24 2026
 -- Host        : taokhe running 64-bit Ubuntu 22.04.5 LTS
--- Command     : write_vhdl -force -mode synth_stub -rename_top system_axi_adrv9001_rx2_dma_0 -prefix
---               system_axi_adrv9001_rx2_dma_0_ system_axi_adrv9001_rx2_dma_0_stub.vhdl
+-- Command     : write_vhdl -force -mode synth_stub
+--               /home/taokhe/Projects/in/msdr/msdr_gen/msdr.gen/sources_1/bd/system/ip/system_axi_adrv9001_rx2_dma_0/system_axi_adrv9001_rx2_dma_0_stub.vhdl
 -- Design      : system_axi_adrv9001_rx2_dma_0
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xczu15eg-ffvb1156-2-i

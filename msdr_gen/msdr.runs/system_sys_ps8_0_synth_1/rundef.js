@@ -28,7 +28,7 @@ eval( EAInclude(ISEJScriptLib) );
 
 
 ISEStep( "vivado",
-         "-log system_sys_ps8_0.vds -m64 -tempDir ../../../../../../msdr_gen/.Xil -product Vivado -mode batch -messageDb vivado.pb -notrace -source system_sys_ps8_0.tcl" );
+         "-log system_sys_ps8_0.vds -m64 -tempDir msdr_gen/.Xil -product Vivado -mode batch -messageDb vivado.pb -notrace -source system_sys_ps8_0.tcl" );
 
 
 

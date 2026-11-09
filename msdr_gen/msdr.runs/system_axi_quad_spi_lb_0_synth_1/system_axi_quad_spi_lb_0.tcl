@@ -84,9 +84,9 @@ set_property parent.project_path /home/taokhe/Projects/in/msdr/msdr_gen/msdr.xpr
 set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property ip_repo_paths /home/taokhe/Projects/in/msdr/src/ip/adi_hdl/library [current_project]
+set_property ip_repo_paths /home/taokhe/Projects/in/msdr/msdr_gen/ip [current_project]
 update_ip_catalog
-set_property ip_output_repo /home/taokhe/Projects/in/msdr/src/ip/adi_hdl/ipcache [current_project]
+set_property ip_output_repo /home/taokhe/Projects/in/msdr/msdr_gen/ipcache [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }

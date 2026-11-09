@@ -37,4 +37,4 @@ EAStep()
      fi
 }
 
-EAStep vivado -log system_rom_sys_0_0.vds -m64 -tempDir ../../../../../../msdr_gen/.Xil -product Vivado -mode batch -messageDb vivado.pb -notrace -source system_rom_sys_0_0.tcl
+EAStep vivado -log system_rom_sys_0_0.vds -m64 -tempDir msdr_gen/.Xil -product Vivado -mode batch -messageDb vivado.pb -notrace -source system_rom_sys_0_0.tcl

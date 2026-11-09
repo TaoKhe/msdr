@@ -2,10 +2,10 @@
 // Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2024.1 (lin64) Build 5076996 Wed May 22 18:36:09 MDT 2024
-// Date        : Mon Nov  9 18:10:46 2026
+// Date        : Tue Nov 10 01:04:18 2026
 // Host        : taokhe running 64-bit Ubuntu 22.04.5 LTS
-// Command     : write_verilog -force -mode funcsim -rename_top system_axi_adrv9001_0 -prefix
-//               system_axi_adrv9001_0_ system_axi_adrv9001_0_sim_netlist.v
+// Command     : write_verilog -force -mode funcsim
+//               /home/taokhe/Projects/in/msdr/msdr_gen/msdr.gen/sources_1/bd/system/ip/system_axi_adrv9001_0/system_axi_adrv9001_0_sim_netlist.v
 // Design      : system_axi_adrv9001_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -13,6 +13,550 @@
 // --------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
+(* CHECK_LICENSE_TYPE = "system_axi_adrv9001_0,axi_adrv9001,{}" *) (* DowngradeIPIdentifiedWarnings = "yes" *) (* IP_DEFINITION_SOURCE = "package_project" *) 
+(* X_CORE_INFO = "axi_adrv9001,Vivado 2024.1" *) 
+(* NotValidForBitStream *)
+module system_axi_adrv9001_0
+   (mssi_sync_in,
+    ref_clk,
+    mcs_in,
+    mcs_out,
+    mcs_src,
+    tx_output_enable,
+    rx1_dclk_in_n_NC,
+    rx1_dclk_in_p_dclk_in,
+    rx1_idata_in_n_idata0,
+    rx1_idata_in_p_idata1,
+    rx1_qdata_in_n_qdata2,
+    rx1_qdata_in_p_qdata3,
+    rx1_strobe_in_n_NC,
+    rx1_strobe_in_p_strobe_in,
+    rx2_dclk_in_n_NC,
+    rx2_dclk_in_p_dclk_in,
+    rx2_idata_in_n_idata0,
+    rx2_idata_in_p_idata1,
+    rx2_qdata_in_n_qdata2,
+    rx2_qdata_in_p_qdata3,
+    rx2_strobe_in_n_NC,
+    rx2_strobe_in_p_strobe_in,
+    tx1_dclk_out_n_NC,
+    tx1_dclk_out_p_dclk_out,
+    tx1_dclk_in_n_NC,
+    tx1_dclk_in_p_dclk_in,
+    tx1_idata_out_n_idata0,
+    tx1_idata_out_p_idata1,
+    tx1_qdata_out_n_qdata2,
+    tx1_qdata_out_p_qdata3,
+    tx1_strobe_out_n_NC,
+    tx1_strobe_out_p_strobe_out,
+    tx2_dclk_out_n_NC,
+    tx2_dclk_out_p_dclk_out,
+    tx2_dclk_in_n_NC,
+    tx2_dclk_in_p_dclk_in,
+    tx2_idata_out_n_idata0,
+    tx2_idata_out_p_idata1,
+    tx2_qdata_out_n_qdata2,
+    tx2_qdata_out_p_qdata3,
+    tx2_strobe_out_n_NC,
+    tx2_strobe_out_p_strobe_out,
+    rx1_enable,
+    rx2_enable,
+    tx1_enable,
+    tx2_enable,
+    delay_clk,
+    adc_1_clk,
+    adc_1_rst,
+    adc_1_valid_i0,
+    adc_1_enable_i0,
+    adc_1_data_i0,
+    adc_1_valid_q0,
+    adc_1_enable_q0,
+    adc_1_data_q0,
+    adc_1_valid_i1,
+    adc_1_enable_i1,
+    adc_1_data_i1,
+    adc_1_valid_q1,
+    adc_1_enable_q1,
+    adc_1_data_q1,
+    adc_1_dovf,
+    adc_1_start_sync,
+    adc_2_clk,
+    adc_2_rst,
+    adc_2_valid_i0,
+    adc_2_enable_i0,
+    adc_2_data_i0,
+    adc_2_valid_q0,
+    adc_2_enable_q0,
+    adc_2_data_q0,
+    adc_2_dovf,
+    adc_2_start_sync,
+    dac_1_clk,
+    dac_1_rst,
+    dac_1_valid_i0,
+    dac_1_enable_i0,
+    dac_1_data_i0,
+    dac_1_valid_q0,
+    dac_1_enable_q0,
+    dac_1_data_q0,
+    dac_1_valid_i1,
+    dac_1_enable_i1,
+    dac_1_data_i1,
+    dac_1_valid_q1,
+    dac_1_enable_q1,
+    dac_1_data_q1,
+    dac_1_dunf,
+    dac_2_clk,
+    dac_2_rst,
+    dac_2_valid_i0,
+    dac_2_enable_i0,
+    dac_2_data_i0,
+    dac_2_valid_q0,
+    dac_2_enable_q0,
+    dac_2_data_q0,
+    dac_2_dunf,
+    tdd_sync,
+    tdd_sync_cntr,
+    gpio_rx1_enable_in,
+    gpio_rx2_enable_in,
+    gpio_tx1_enable_in,
+    gpio_tx2_enable_in,
+    s_axi_aclk,
+    s_axi_aresetn,
+    s_axi_awvalid,
+    s_axi_awaddr,
+    s_axi_awready,
+    s_axi_wvalid,
+    s_axi_wdata,
+    s_axi_wstrb,
+    s_axi_wready,
+    s_axi_bvalid,
+    s_axi_bresp,
+    s_axi_bready,
+    s_axi_arvalid,
+    s_axi_araddr,
+    s_axi_arready,
+    s_axi_rvalid,
+    s_axi_rresp,
+    s_axi_rdata,
+    s_axi_rready,
+    s_axi_awprot,
+    s_axi_arprot);
+  input mssi_sync_in;
+  input ref_clk;
+  input mcs_in;
+  output mcs_out;
+  output mcs_src;
+  input tx_output_enable;
+  input rx1_dclk_in_n_NC;
+  input rx1_dclk_in_p_dclk_in;
+  input rx1_idata_in_n_idata0;
+  input rx1_idata_in_p_idata1;
+  input rx1_qdata_in_n_qdata2;
+  input rx1_qdata_in_p_qdata3;
+  input rx1_strobe_in_n_NC;
+  input rx1_strobe_in_p_strobe_in;
+  input rx2_dclk_in_n_NC;
+  input rx2_dclk_in_p_dclk_in;
+  input rx2_idata_in_n_idata0;
+  input rx2_idata_in_p_idata1;
+  input rx2_qdata_in_n_qdata2;
+  input rx2_qdata_in_p_qdata3;
+  input rx2_strobe_in_n_NC;
+  input rx2_strobe_in_p_strobe_in;
+  output tx1_dclk_out_n_NC;
+  output tx1_dclk_out_p_dclk_out;
+  input tx1_dclk_in_n_NC;
+  input tx1_dclk_in_p_dclk_in;
+  output tx1_idata_out_n_idata0;
+  output tx1_idata_out_p_idata1;
+  output tx1_qdata_out_n_qdata2;
+  output tx1_qdata_out_p_qdata3;
+  output tx1_strobe_out_n_NC;
+  output tx1_strobe_out_p_strobe_out;
+  output tx2_dclk_out_n_NC;
+  output tx2_dclk_out_p_dclk_out;
+  input tx2_dclk_in_n_NC;
+  input tx2_dclk_in_p_dclk_in;
+  output tx2_idata_out_n_idata0;
+  output tx2_idata_out_p_idata1;
+  output tx2_qdata_out_n_qdata2;
+  output tx2_qdata_out_p_qdata3;
+  output tx2_strobe_out_n_NC;
+  output tx2_strobe_out_p_strobe_out;
+  output rx1_enable;
+  output rx2_enable;
+  output tx1_enable;
+  output tx2_enable;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 delay_clk CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME delay_clk, FREQ_HZ 499999969, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN system_sys_ps8_0_pl_clk2, INSERT_VIP 0" *) input delay_clk;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 adc_1_clk CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME adc_1_clk, ASSOCIATED_RESET adc_1_rst, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN system_axi_adrv9001_0_adc_1_clk, INSERT_VIP 0" *) output adc_1_clk;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 adc_1_rst RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME adc_1_rst, INSERT_VIP 0" *) output adc_1_rst;
+  output adc_1_valid_i0;
+  output adc_1_enable_i0;
+  output [15:0]adc_1_data_i0;
+  output adc_1_valid_q0;
+  output adc_1_enable_q0;
+  output [15:0]adc_1_data_q0;
+  output adc_1_valid_i1;
+  output adc_1_enable_i1;
+  output [15:0]adc_1_data_i1;
+  output adc_1_valid_q1;
+  output adc_1_enable_q1;
+  output [15:0]adc_1_data_q1;
+  input adc_1_dovf;
+  output adc_1_start_sync;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 adc_2_clk CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME adc_2_clk, ASSOCIATED_RESET adc_2_rst, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN system_axi_adrv9001_0_adc_2_clk, INSERT_VIP 0" *) output adc_2_clk;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 adc_2_rst RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME adc_2_rst, INSERT_VIP 0" *) output adc_2_rst;
+  output adc_2_valid_i0;
+  output adc_2_enable_i0;
+  output [15:0]adc_2_data_i0;
+  output adc_2_valid_q0;
+  output adc_2_enable_q0;
+  output [15:0]adc_2_data_q0;
+  input adc_2_dovf;
+  output adc_2_start_sync;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 dac_1_clk CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME dac_1_clk, ASSOCIATED_RESET dac_1_rst, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN system_axi_adrv9001_0_dac_1_clk, INSERT_VIP 0" *) output dac_1_clk;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 dac_1_rst RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME dac_1_rst, INSERT_VIP 0" *) output dac_1_rst;
+  output dac_1_valid_i0;
+  output dac_1_enable_i0;
+  input [15:0]dac_1_data_i0;
+  output dac_1_valid_q0;
+  output dac_1_enable_q0;
+  input [15:0]dac_1_data_q0;
+  output dac_1_valid_i1;
+  output dac_1_enable_i1;
+  input [15:0]dac_1_data_i1;
+  output dac_1_valid_q1;
+  output dac_1_enable_q1;
+  input [15:0]dac_1_data_q1;
+  input dac_1_dunf;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 dac_2_clk CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME dac_2_clk, ASSOCIATED_RESET dac_2_rst, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN system_axi_adrv9001_0_dac_2_clk, INSERT_VIP 0" *) output dac_2_clk;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 dac_2_rst RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME dac_2_rst, INSERT_VIP 0" *) output dac_2_rst;
+  output dac_2_valid_i0;
+  output dac_2_enable_i0;
+  input [15:0]dac_2_data_i0;
+  output dac_2_valid_q0;
+  output dac_2_enable_q0;
+  input [15:0]dac_2_data_q0;
+  input dac_2_dunf;
+  input tdd_sync;
+  output tdd_sync_cntr;
+  input gpio_rx1_enable_in;
+  input gpio_rx2_enable_in;
+  input gpio_tx1_enable_in;
+  input gpio_tx2_enable_in;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 s_axi_aclk CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s_axi_aclk, ASSOCIATED_BUSIF s_axi, ASSOCIATED_RESET s_axi_aresetn, FREQ_HZ 99999992, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN system_sys_ps8_0_pl_clk0, INSERT_VIP 0" *) input s_axi_aclk;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 s_axi_aresetn RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s_axi_aresetn, POLARITY ACTIVE_LOW, INSERT_VIP 0" *) input s_axi_aresetn;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi AWVALID" *) input s_axi_awvalid;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi AWADDR" *) input [15:0]s_axi_awaddr;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi AWREADY" *) output s_axi_awready;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi WVALID" *) input s_axi_wvalid;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi WDATA" *) input [31:0]s_axi_wdata;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi WSTRB" *) input [3:0]s_axi_wstrb;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi WREADY" *) output s_axi_wready;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi BVALID" *) output s_axi_bvalid;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi BRESP" *) output [1:0]s_axi_bresp;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi BREADY" *) input s_axi_bready;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi ARVALID" *) input s_axi_arvalid;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi ARADDR" *) input [15:0]s_axi_araddr;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi ARREADY" *) output s_axi_arready;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi RVALID" *) output s_axi_rvalid;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi RRESP" *) output [1:0]s_axi_rresp;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi RDATA" *) output [31:0]s_axi_rdata;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi RREADY" *) input s_axi_rready;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi AWPROT" *) input [2:0]s_axi_awprot;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi ARPROT" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s_axi, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 99999992, ID_WIDTH 0, ADDR_WIDTH 16, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.0, CLK_DOMAIN system_sys_ps8_0_pl_clk0, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *) input [2:0]s_axi_arprot;
+
+  wire \<const0> ;
+  wire \<const1> ;
+  wire adc_1_clk;
+  wire [15:0]adc_1_data_i0;
+  wire [15:0]adc_1_data_i1;
+  wire [15:0]adc_1_data_q0;
+  wire [15:0]adc_1_data_q1;
+  wire adc_1_dovf;
+  wire adc_1_enable_i0;
+  wire adc_1_enable_i1;
+  wire adc_1_enable_q0;
+  wire adc_1_enable_q1;
+  wire adc_1_rst;
+  wire adc_1_valid_i0;
+  wire adc_1_valid_i1;
+  wire adc_1_valid_q0;
+  wire adc_1_valid_q1;
+  wire adc_2_clk;
+  wire [15:0]adc_2_data_i0;
+  wire [15:0]adc_2_data_q0;
+  wire adc_2_dovf;
+  wire adc_2_enable_i0;
+  wire adc_2_enable_q0;
+  wire adc_2_rst;
+  wire adc_2_valid_i0;
+  wire adc_2_valid_q0;
+  wire dac_1_clk;
+  wire [15:0]dac_1_data_i0;
+  wire [15:0]dac_1_data_i1;
+  wire [15:0]dac_1_data_q0;
+  wire [15:0]dac_1_data_q1;
+  wire dac_1_dunf;
+  wire dac_1_enable_i0;
+  wire dac_1_enable_i1;
+  wire dac_1_enable_q0;
+  wire dac_1_enable_q1;
+  wire dac_1_rst;
+  wire dac_1_valid_i0;
+  wire dac_1_valid_i1;
+  wire dac_1_valid_q0;
+  wire dac_1_valid_q1;
+  wire dac_2_clk;
+  wire [15:0]dac_2_data_i0;
+  wire [15:0]dac_2_data_q0;
+  wire dac_2_dunf;
+  wire dac_2_enable_i0;
+  wire dac_2_enable_q0;
+  wire dac_2_rst;
+  wire dac_2_valid_i0;
+  wire dac_2_valid_q0;
+  wire delay_clk;
+  wire gpio_rx1_enable_in;
+  wire gpio_rx2_enable_in;
+  wire gpio_tx1_enable_in;
+  wire gpio_tx2_enable_in;
+  wire mcs_in;
+  wire mcs_out;
+  wire mcs_src;
+  wire mssi_sync_in;
+  wire ref_clk;
+  (* IBUF_LOW_PWR *) wire rx1_dclk_in_n_NC;
+  (* IBUF_LOW_PWR *) wire rx1_dclk_in_p_dclk_in;
+  wire rx1_enable;
+  (* IBUF_LOW_PWR *) wire rx1_idata_in_n_idata0;
+  (* IBUF_LOW_PWR *) wire rx1_idata_in_p_idata1;
+  (* IBUF_LOW_PWR *) wire rx1_qdata_in_n_qdata2;
+  (* IBUF_LOW_PWR *) wire rx1_qdata_in_p_qdata3;
+  (* IBUF_LOW_PWR *) wire rx1_strobe_in_n_NC;
+  (* IBUF_LOW_PWR *) wire rx1_strobe_in_p_strobe_in;
+  (* IBUF_LOW_PWR *) wire rx2_dclk_in_n_NC;
+  (* IBUF_LOW_PWR *) wire rx2_dclk_in_p_dclk_in;
+  wire rx2_enable;
+  (* IBUF_LOW_PWR *) wire rx2_idata_in_n_idata0;
+  (* IBUF_LOW_PWR *) wire rx2_idata_in_p_idata1;
+  (* IBUF_LOW_PWR *) wire rx2_qdata_in_n_qdata2;
+  (* IBUF_LOW_PWR *) wire rx2_qdata_in_p_qdata3;
+  (* IBUF_LOW_PWR *) wire rx2_strobe_in_n_NC;
+  (* IBUF_LOW_PWR *) wire rx2_strobe_in_p_strobe_in;
+  wire s_axi_aclk;
+  wire [15:0]s_axi_araddr;
+  wire s_axi_aresetn;
+  wire s_axi_arready;
+  wire s_axi_arvalid;
+  wire [15:0]s_axi_awaddr;
+  wire s_axi_awready;
+  wire s_axi_awvalid;
+  wire s_axi_bready;
+  wire s_axi_bvalid;
+  wire [31:0]s_axi_rdata;
+  wire s_axi_rready;
+  wire s_axi_rvalid;
+  wire [31:0]s_axi_wdata;
+  wire s_axi_wready;
+  wire s_axi_wvalid;
+  wire tdd_sync;
+  wire tdd_sync_cntr;
+  (* IBUF_LOW_PWR *) wire tx1_dclk_in_n_NC;
+  (* IBUF_LOW_PWR *) wire tx1_dclk_in_p_dclk_in;
+  (* SLEW = "SLOW" *) wire tx1_dclk_out_n_NC;
+  (* SLEW = "SLOW" *) wire tx1_dclk_out_p_dclk_out;
+  wire tx1_enable;
+  (* SLEW = "SLOW" *) wire tx1_idata_out_n_idata0;
+  (* SLEW = "SLOW" *) wire tx1_idata_out_p_idata1;
+  (* SLEW = "SLOW" *) wire tx1_qdata_out_n_qdata2;
+  (* SLEW = "SLOW" *) wire tx1_qdata_out_p_qdata3;
+  (* SLEW = "SLOW" *) wire tx1_strobe_out_n_NC;
+  (* SLEW = "SLOW" *) wire tx1_strobe_out_p_strobe_out;
+  (* IBUF_LOW_PWR *) wire tx2_dclk_in_n_NC;
+  (* IBUF_LOW_PWR *) wire tx2_dclk_in_p_dclk_in;
+  (* SLEW = "SLOW" *) wire tx2_dclk_out_n_NC;
+  (* SLEW = "SLOW" *) wire tx2_dclk_out_p_dclk_out;
+  wire tx2_enable;
+  (* SLEW = "SLOW" *) wire tx2_idata_out_n_idata0;
+  (* SLEW = "SLOW" *) wire tx2_idata_out_p_idata1;
+  (* SLEW = "SLOW" *) wire tx2_qdata_out_n_qdata2;
+  (* SLEW = "SLOW" *) wire tx2_qdata_out_p_qdata3;
+  (* SLEW = "SLOW" *) wire tx2_strobe_out_n_NC;
+  (* SLEW = "SLOW" *) wire tx2_strobe_out_p_strobe_out;
+  wire tx_output_enable;
+  wire NLW_inst_adc_1_start_sync_UNCONNECTED;
+  wire NLW_inst_adc_2_start_sync_UNCONNECTED;
+  wire [1:0]NLW_inst_s_axi_bresp_UNCONNECTED;
+  wire [1:0]NLW_inst_s_axi_rresp_UNCONNECTED;
+
+  assign adc_1_start_sync = \<const1> ;
+  assign adc_2_start_sync = \<const1> ;
+  assign s_axi_bresp[1] = \<const0> ;
+  assign s_axi_bresp[0] = \<const0> ;
+  assign s_axi_rresp[1] = \<const0> ;
+  assign s_axi_rresp[0] = \<const0> ;
+  GND GND
+       (.G(\<const0> ));
+  VCC VCC
+       (.P(\<const1> ));
+  (* CMOS_LVDS_N = "0" *) 
+  (* COMMON_2R2T_SUPPORT = "1" *) 
+  (* DDS_DISABLE = "0" *) 
+  (* DEV_PACKAGE = "3" *) 
+  (* DISABLE_RX1_SSI = "1'b0" *) 
+  (* DISABLE_RX2_SSI = "1'b0" *) 
+  (* DISABLE_TX1_SSI = "0" *) 
+  (* DISABLE_TX2_SSI = "0" *) 
+  (* DRP_WIDTH = "9" *) 
+  (* ENABLE_REF_CLK_MON = "0" *) 
+  (* EN_RX_MCS_TO_STRB_M = "0" *) 
+  (* EXT_SYNC = "0" *) 
+  (* FPGA_FAMILY = "4" *) 
+  (* FPGA_TECHNOLOGY = "3" *) 
+  (* ID = "0" *) 
+  (* INDEPENDENT_1R1T_SUPPORT = "1" *) 
+  (* IODELAY_CTRL = "1" *) 
+  (* IODELAY_ENABLE = "1" *) 
+  (* IO_DELAY_GROUP = "dev_if_delay_group" *) 
+  (* NUM_LANES = "3" *) 
+  (* RX_USE_BUFG = "0" *) 
+  (* SEVEN_SERIES = "1" *) 
+  (* SPEED_GRADE = "20" *) 
+  (* TDD_DISABLE = "0" *) 
+  (* TX_USE_BUFG = "0" *) 
+  (* ULTRASCALE = "2" *) 
+  (* ULTRASCALE_PLUS = "3" *) 
+  (* USE_RX_CLK_FOR_TX1 = "2" *) 
+  (* USE_RX_CLK_FOR_TX2 = "2" *) 
+  system_axi_adrv9001_0_axi_adrv9001 inst
+       (.adc_1_clk(adc_1_clk),
+        .adc_1_data_i0(adc_1_data_i0),
+        .adc_1_data_i1(adc_1_data_i1),
+        .adc_1_data_q0(adc_1_data_q0),
+        .adc_1_data_q1(adc_1_data_q1),
+        .adc_1_dovf(adc_1_dovf),
+        .adc_1_enable_i0(adc_1_enable_i0),
+        .adc_1_enable_i1(adc_1_enable_i1),
+        .adc_1_enable_q0(adc_1_enable_q0),
+        .adc_1_enable_q1(adc_1_enable_q1),
+        .adc_1_rst(adc_1_rst),
+        .adc_1_start_sync(NLW_inst_adc_1_start_sync_UNCONNECTED),
+        .adc_1_valid_i0(adc_1_valid_i0),
+        .adc_1_valid_i1(adc_1_valid_i1),
+        .adc_1_valid_q0(adc_1_valid_q0),
+        .adc_1_valid_q1(adc_1_valid_q1),
+        .adc_2_clk(adc_2_clk),
+        .adc_2_data_i0(adc_2_data_i0),
+        .adc_2_data_q0(adc_2_data_q0),
+        .adc_2_dovf(adc_2_dovf),
+        .adc_2_enable_i0(adc_2_enable_i0),
+        .adc_2_enable_q0(adc_2_enable_q0),
+        .adc_2_rst(adc_2_rst),
+        .adc_2_start_sync(NLW_inst_adc_2_start_sync_UNCONNECTED),
+        .adc_2_valid_i0(adc_2_valid_i0),
+        .adc_2_valid_q0(adc_2_valid_q0),
+        .dac_1_clk(dac_1_clk),
+        .dac_1_data_i0(dac_1_data_i0),
+        .dac_1_data_i1(dac_1_data_i1),
+        .dac_1_data_q0(dac_1_data_q0),
+        .dac_1_data_q1(dac_1_data_q1),
+        .dac_1_dunf(dac_1_dunf),
+        .dac_1_enable_i0(dac_1_enable_i0),
+        .dac_1_enable_i1(dac_1_enable_i1),
+        .dac_1_enable_q0(dac_1_enable_q0),
+        .dac_1_enable_q1(dac_1_enable_q1),
+        .dac_1_rst(dac_1_rst),
+        .dac_1_valid_i0(dac_1_valid_i0),
+        .dac_1_valid_i1(dac_1_valid_i1),
+        .dac_1_valid_q0(dac_1_valid_q0),
+        .dac_1_valid_q1(dac_1_valid_q1),
+        .dac_2_clk(dac_2_clk),
+        .dac_2_data_i0(dac_2_data_i0),
+        .dac_2_data_q0(dac_2_data_q0),
+        .dac_2_dunf(dac_2_dunf),
+        .dac_2_enable_i0(dac_2_enable_i0),
+        .dac_2_enable_q0(dac_2_enable_q0),
+        .dac_2_rst(dac_2_rst),
+        .dac_2_valid_i0(dac_2_valid_i0),
+        .dac_2_valid_q0(dac_2_valid_q0),
+        .delay_clk(delay_clk),
+        .gpio_rx1_enable_in(gpio_rx1_enable_in),
+        .gpio_rx2_enable_in(gpio_rx2_enable_in),
+        .gpio_tx1_enable_in(gpio_tx1_enable_in),
+        .gpio_tx2_enable_in(gpio_tx2_enable_in),
+        .mcs_in(mcs_in),
+        .mcs_out(mcs_out),
+        .mcs_src(mcs_src),
+        .mssi_sync_in(mssi_sync_in),
+        .ref_clk(ref_clk),
+        .rx1_dclk_in_n_NC(rx1_dclk_in_n_NC),
+        .rx1_dclk_in_p_dclk_in(rx1_dclk_in_p_dclk_in),
+        .rx1_enable(rx1_enable),
+        .rx1_idata_in_n_idata0(rx1_idata_in_n_idata0),
+        .rx1_idata_in_p_idata1(rx1_idata_in_p_idata1),
+        .rx1_qdata_in_n_qdata2(rx1_qdata_in_n_qdata2),
+        .rx1_qdata_in_p_qdata3(rx1_qdata_in_p_qdata3),
+        .rx1_strobe_in_n_NC(rx1_strobe_in_n_NC),
+        .rx1_strobe_in_p_strobe_in(rx1_strobe_in_p_strobe_in),
+        .rx2_dclk_in_n_NC(rx2_dclk_in_n_NC),
+        .rx2_dclk_in_p_dclk_in(rx2_dclk_in_p_dclk_in),
+        .rx2_enable(rx2_enable),
+        .rx2_idata_in_n_idata0(rx2_idata_in_n_idata0),
+        .rx2_idata_in_p_idata1(rx2_idata_in_p_idata1),
+        .rx2_qdata_in_n_qdata2(rx2_qdata_in_n_qdata2),
+        .rx2_qdata_in_p_qdata3(rx2_qdata_in_p_qdata3),
+        .rx2_strobe_in_n_NC(rx2_strobe_in_n_NC),
+        .rx2_strobe_in_p_strobe_in(rx2_strobe_in_p_strobe_in),
+        .s_axi_aclk(s_axi_aclk),
+        .s_axi_araddr({1'b0,s_axi_araddr[14:2],1'b0,1'b0}),
+        .s_axi_aresetn(s_axi_aresetn),
+        .s_axi_arprot({1'b0,1'b0,1'b0}),
+        .s_axi_arready(s_axi_arready),
+        .s_axi_arvalid(s_axi_arvalid),
+        .s_axi_awaddr({1'b0,s_axi_awaddr[14:2],1'b0,1'b0}),
+        .s_axi_awprot({1'b0,1'b0,1'b0}),
+        .s_axi_awready(s_axi_awready),
+        .s_axi_awvalid(s_axi_awvalid),
+        .s_axi_bready(s_axi_bready),
+        .s_axi_bresp(NLW_inst_s_axi_bresp_UNCONNECTED[1:0]),
+        .s_axi_bvalid(s_axi_bvalid),
+        .s_axi_rdata(s_axi_rdata),
+        .s_axi_rready(s_axi_rready),
+        .s_axi_rresp(NLW_inst_s_axi_rresp_UNCONNECTED[1:0]),
+        .s_axi_rvalid(s_axi_rvalid),
+        .s_axi_wdata(s_axi_wdata),
+        .s_axi_wready(s_axi_wready),
+        .s_axi_wstrb({1'b0,1'b0,1'b0,1'b0}),
+        .s_axi_wvalid(s_axi_wvalid),
+        .tdd_sync(tdd_sync),
+        .tdd_sync_cntr(tdd_sync_cntr),
+        .tx1_dclk_in_n_NC(tx1_dclk_in_n_NC),
+        .tx1_dclk_in_p_dclk_in(tx1_dclk_in_p_dclk_in),
+        .tx1_dclk_out_n_NC(tx1_dclk_out_n_NC),
+        .tx1_dclk_out_p_dclk_out(tx1_dclk_out_p_dclk_out),
+        .tx1_enable(tx1_enable),
+        .tx1_idata_out_n_idata0(tx1_idata_out_n_idata0),
+        .tx1_idata_out_p_idata1(tx1_idata_out_p_idata1),
+        .tx1_qdata_out_n_qdata2(tx1_qdata_out_n_qdata2),
+        .tx1_qdata_out_p_qdata3(tx1_qdata_out_p_qdata3),
+        .tx1_strobe_out_n_NC(tx1_strobe_out_n_NC),
+        .tx1_strobe_out_p_strobe_out(tx1_strobe_out_p_strobe_out),
+        .tx2_dclk_in_n_NC(tx2_dclk_in_n_NC),
+        .tx2_dclk_in_p_dclk_in(tx2_dclk_in_p_dclk_in),
+        .tx2_dclk_out_n_NC(tx2_dclk_out_n_NC),
+        .tx2_dclk_out_p_dclk_out(tx2_dclk_out_p_dclk_out),
+        .tx2_enable(tx2_enable),
+        .tx2_idata_out_n_idata0(tx2_idata_out_n_idata0),
+        .tx2_idata_out_p_idata1(tx2_idata_out_p_idata1),
+        .tx2_qdata_out_n_qdata2(tx2_qdata_out_n_qdata2),
+        .tx2_qdata_out_p_qdata3(tx2_qdata_out_p_qdata3),
+        .tx2_strobe_out_n_NC(tx2_strobe_out_n_NC),
+        .tx2_strobe_out_p_strobe_out(tx2_strobe_out_p_strobe_out),
+        .tx_output_enable(tx_output_enable));
+endmodule
+
+(* ORIG_REF_NAME = "ad_addsub" *) 
 module system_axi_adrv9001_0_ad_addsub
    (counter_at_tdd_rx_off_10,
     \out_reg[23]_0 ,
@@ -15924,6 +16468,7 @@ module system_axi_adrv9001_0_ad_addsub_287
         .R(1'b0));
 endmodule
 
+(* ORIG_REF_NAME = "ad_datafmt" *) 
 module system_axi_adrv9001_0_ad_datafmt
    (E,
     adc_2_data_q0,
@@ -16881,6 +17426,7 @@ module system_axi_adrv9001_0_ad_datafmt_308
         .R(1'b0));
 endmodule
 
+(* ORIG_REF_NAME = "ad_dds" *) 
 module system_axi_adrv9001_0_ad_dds
    (dac_dds_data_s,
     \dds_data_int_reg[6] ,
@@ -20013,6 +20559,7 @@ module system_axi_adrv9001_0_ad_dds
         .O(i___99_n_0));
 endmodule
 
+(* ORIG_REF_NAME = "ad_dds_1" *) 
 module system_axi_adrv9001_0_ad_dds_1
    (\dds_data_reg[19]_0 ,
     out,
@@ -35458,6 +36005,7 @@ module system_axi_adrv9001_0_ad_dds_1_85
         .\z0_reg[17]_0 (\z0_reg[17] ));
 endmodule
 
+(* ORIG_REF_NAME = "ad_dds_2" *) 
 module system_axi_adrv9001_0_ad_dds_2
    (dds_data_width,
     dds_data_out,
@@ -59312,6 +59860,7 @@ module system_axi_adrv9001_0_ad_dds_82
         .O(i___99_n_0));
 endmodule
 
+(* ORIG_REF_NAME = "ad_dds_cordic_pipe" *) 
 module system_axi_adrv9001_0_ad_dds_cordic_pipe
    (\y0_reg[0] ,
     out,
@@ -307999,6 +308548,7 @@ module system_axi_adrv9001_0_ad_dds_cordic_pipe__parameterized9_89
         .O(\rotation[10].pipen_0_9 ));
 endmodule
 
+(* ORIG_REF_NAME = "ad_dds_sine_cordic" *) 
 module system_axi_adrv9001_0_ad_dds_sine_cordic
    (\y0_reg[0]_0 ,
     out,
@@ -321330,6 +321880,7 @@ module system_axi_adrv9001_0_ad_dds_sine_cordic_87
         .R(1'b0));
 endmodule
 
+(* ORIG_REF_NAME = "ad_mul" *) 
 module system_axi_adrv9001_0_ad_mul
    (D,
     Q,
@@ -321605,6 +322156,7 @@ module system_axi_adrv9001_0_ad_mul_86
         .\dds_data_reg[19]_0 (\dds_data_reg[19]_0 ));
 endmodule
 
+(* ORIG_REF_NAME = "ad_pngen" *) 
 module system_axi_adrv9001_0_ad_pngen
    (\pn_state_reg[15]_0 ,
     \pn_state_reg[2]_0 ,
@@ -328958,6 +329510,7 @@ module system_axi_adrv9001_0_ad_pngen__parameterized0_80
         .S(SS));
 endmodule
 
+(* ORIG_REF_NAME = "ad_pnmon" *) 
 module system_axi_adrv9001_0_ad_pnmon
    (adc_pn_oos_s,
     adc_pn_err_s,
@@ -330271,6 +330824,7 @@ module system_axi_adrv9001_0_ad_rst__xdcDup__8
         .Q(rst_sync));
 endmodule
 
+(* ORIG_REF_NAME = "ad_serdes_in" *) 
 module system_axi_adrv9001_0_ad_serdes_in
    (\g_data[2].i_iserdes_0 ,
     Q,
@@ -331824,6 +332378,7 @@ module system_axi_adrv9001_0_ad_serdes_in__parameterized0
         .R(serdes_reset));
 endmodule
 
+(* ORIG_REF_NAME = "ad_serdes_out" *) 
 module system_axi_adrv9001_0_ad_serdes_out
    (data_out_p,
     data_out_n,
@@ -332229,6 +332784,7 @@ module system_axi_adrv9001_0_ad_serdes_out_3
         .R(SS));
 endmodule
 
+(* ORIG_REF_NAME = "ad_tdd_control" *) 
 module system_axi_adrv9001_0_ad_tdd_control
    (tdd_tx_dp_en_s,
     tdd_rx_dp_en_s,
@@ -335966,6 +336522,7 @@ module system_axi_adrv9001_0_ad_tdd_control_275
         .R(1'b0));
 endmodule
 
+(* ORIG_REF_NAME = "adrv9001_aligner8" *) 
 module system_axi_adrv9001_0_adrv9001_aligner8
    (E,
     \phase_reg[0]_0 ,
@@ -337625,6 +338182,7 @@ module system_axi_adrv9001_0_adrv9001_aligner8_8
         .R(1'b0));
 endmodule
 
+(* ORIG_REF_NAME = "adrv9001_pack" *) 
 module system_axi_adrv9001_0_adrv9001_pack
    (ovalid_reg_0,
     D,
@@ -339481,6 +340039,7 @@ module system_axi_adrv9001_0_adrv9001_pack__parameterized0_9
         .R(\sof_d_reg[0]_0 ));
 endmodule
 
+(* ORIG_REF_NAME = "adrv9001_rx" *) 
 module system_axi_adrv9001_0_adrv9001_rx
    (\g_data[2].i_iserdes ,
     D,
@@ -340472,6 +341031,7 @@ module system_axi_adrv9001_0_adrv9001_rx__parameterized0
         .Q(\state_cnt_reg_n_0_[2] ));
 endmodule
 
+(* ORIG_REF_NAME = "adrv9001_rx_link" *) 
 module system_axi_adrv9001_0_adrv9001_rx_link
    (adc_valid_A00_out,
     \odata_reg[31] ,
@@ -341051,6 +341611,7 @@ module system_axi_adrv9001_0_adrv9001_rx_link_0
         .\odata_reg[7]_3 (i_rx_aligner8_0_n_1));
 endmodule
 
+(* ORIG_REF_NAME = "adrv9001_tx" *) 
 module system_axi_adrv9001_0_adrv9001_tx
    (data_out_p,
     data_out_n,
@@ -341904,6 +342465,7 @@ module system_axi_adrv9001_0_adrv9001_tx_2
         .Q(\state_cnt_reg_n_0_[2] ));
 endmodule
 
+(* ORIG_REF_NAME = "adrv9001_tx_link" *) 
 module system_axi_adrv9001_0_adrv9001_tx_link
    (\data16_0_reg[11]_0 ,
     data16_1,
@@ -343289,10 +343851,10 @@ endmodule
 (* ENABLE_REF_CLK_MON = "0" *) (* EN_RX_MCS_TO_STRB_M = "0" *) (* EXT_SYNC = "0" *) 
 (* FPGA_FAMILY = "4" *) (* FPGA_TECHNOLOGY = "3" *) (* ID = "0" *) 
 (* INDEPENDENT_1R1T_SUPPORT = "1" *) (* IODELAY_CTRL = "1" *) (* IODELAY_ENABLE = "1" *) 
-(* IO_DELAY_GROUP = "dev_if_delay_group" *) (* NUM_LANES = "3" *) (* RX_USE_BUFG = "0" *) 
-(* SEVEN_SERIES = "1" *) (* SPEED_GRADE = "20" *) (* TDD_DISABLE = "0" *) 
-(* TX_USE_BUFG = "0" *) (* ULTRASCALE = "2" *) (* ULTRASCALE_PLUS = "3" *) 
-(* USE_RX_CLK_FOR_TX1 = "2" *) (* USE_RX_CLK_FOR_TX2 = "2" *) 
+(* IO_DELAY_GROUP = "dev_if_delay_group" *) (* NUM_LANES = "3" *) (* ORIG_REF_NAME = "axi_adrv9001" *) 
+(* RX_USE_BUFG = "0" *) (* SEVEN_SERIES = "1" *) (* SPEED_GRADE = "20" *) 
+(* TDD_DISABLE = "0" *) (* TX_USE_BUFG = "0" *) (* ULTRASCALE = "2" *) 
+(* ULTRASCALE_PLUS = "3" *) (* USE_RX_CLK_FOR_TX1 = "2" *) (* USE_RX_CLK_FOR_TX2 = "2" *) 
 module system_axi_adrv9001_0_axi_adrv9001
    (mssi_sync_in,
     ref_clk,
@@ -348993,6 +349555,7 @@ module system_axi_adrv9001_0_axi_adrv9001
         .up_xfer_done_s_58(\i_tx2/core_enabled.i_up_dac_common/up_xfer_done_s ));
 endmodule
 
+(* ORIG_REF_NAME = "axi_adrv9001_core" *) 
 module system_axi_adrv9001_0_axi_adrv9001_core
    (S,
     Q,
@@ -355849,6 +356412,7 @@ module system_axi_adrv9001_0_axi_adrv9001_core
         .Q(up_wack_s));
 endmodule
 
+(* ORIG_REF_NAME = "axi_adrv9001_if" *) 
 module system_axi_adrv9001_0_axi_adrv9001_if
    (CLK,
     i_div_clk_buf,
@@ -356609,6 +357173,7 @@ module system_axi_adrv9001_0_axi_adrv9001_if
         .tx2_dclk_in_p_dclk_in(tx2_dclk_in_p_dclk_in));
 endmodule
 
+(* ORIG_REF_NAME = "axi_adrv9001_rx" *) 
 module system_axi_adrv9001_0_axi_adrv9001_rx
    (up_adc_lb_enb,
     up_adc_dfmt_type_reg,
@@ -359117,6 +359682,7 @@ module system_axi_adrv9001_0_axi_adrv9001_rx__parameterized0
         .O(up_wack0_n_0));
 endmodule
 
+(* ORIG_REF_NAME = "axi_adrv9001_rx_channel" *) 
 module system_axi_adrv9001_0_axi_adrv9001_rx_channel
    (up_adc_lb_enb,
     up_adc_dfmt_type_reg,
@@ -364765,6 +365331,7 @@ module system_axi_adrv9001_0_axi_adrv9001_rx_channel__parameterized4
         .up_rreq_s_71(up_rreq_s_71));
 endmodule
 
+(* ORIG_REF_NAME = "axi_adrv9001_sync" *) 
 module system_axi_adrv9001_0_axi_adrv9001_sync
    (request_m1,
     mssi_sync,
@@ -367108,6 +367675,7 @@ module system_axi_adrv9001_0_axi_adrv9001_sync
         .R(1'b0));
 endmodule
 
+(* ORIG_REF_NAME = "axi_adrv9001_sync_ctrl" *) 
 module system_axi_adrv9001_0_axi_adrv9001_sync_ctrl
    (up_wack_s__0__0,
     up_rack_s__0__0,
@@ -370534,6 +371102,7 @@ module system_axi_adrv9001_0_axi_adrv9001_sync_ctrl
         .Q(up_wack_s__0__0));
 endmodule
 
+(* ORIG_REF_NAME = "axi_adrv9001_tdd" *) 
 module system_axi_adrv9001_0_axi_adrv9001_tdd
    (up_tdd_terminal_type_reg,
     tdd_tx1_valid,
@@ -372451,6 +373020,7 @@ module system_axi_adrv9001_0_axi_adrv9001_tdd__parameterized0
         .R(1'b0));
 endmodule
 
+(* ORIG_REF_NAME = "axi_adrv9001_tx" *) 
 module system_axi_adrv9001_0_axi_adrv9001_tx
    (S,
     Q,
@@ -376671,6 +377241,7 @@ module system_axi_adrv9001_0_axi_adrv9001_tx__parameterized0
         .O(\core_enabled.up_rdata_reg[9]_0 ));
 endmodule
 
+(* ORIG_REF_NAME = "axi_adrv9001_tx_channel" *) 
 module system_axi_adrv9001_0_axi_adrv9001_tx_channel
    (S,
     \dds_data_int_reg[19] ,
@@ -381116,6 +381687,7 @@ module system_axi_adrv9001_0_axi_adrv9001_tx_channel__parameterized4
         .\up_xfer_count_reg[0] (\up_xfer_count_reg[0] ));
 endmodule
 
+(* ORIG_REF_NAME = "sync_bits" *) 
 module system_axi_adrv9001_0_sync_bits
    (out_toggle,
     load_out,
@@ -382001,6 +382573,7 @@ module system_axi_adrv9001_0_sync_bits__xdcDup__9
         .O(\in_event_sticky_reg[0] ));
 endmodule
 
+(* ORIG_REF_NAME = "sync_event" *) 
 module system_axi_adrv9001_0_sync_event
    (I316,
     CLK,
@@ -382414,549 +382987,7 @@ module system_axi_adrv9001_0_sync_event__xdcDup__5
         .R(1'b0));
 endmodule
 
-(* CHECK_LICENSE_TYPE = "system_axi_adrv9001_0,axi_adrv9001,{}" *) (* DowngradeIPIdentifiedWarnings = "yes" *) (* IP_DEFINITION_SOURCE = "package_project" *) 
-(* X_CORE_INFO = "axi_adrv9001,Vivado 2024.1" *) 
-(* NotValidForBitStream *)
-module system_axi_adrv9001_0
-   (mssi_sync_in,
-    ref_clk,
-    mcs_in,
-    mcs_out,
-    mcs_src,
-    tx_output_enable,
-    rx1_dclk_in_n_NC,
-    rx1_dclk_in_p_dclk_in,
-    rx1_idata_in_n_idata0,
-    rx1_idata_in_p_idata1,
-    rx1_qdata_in_n_qdata2,
-    rx1_qdata_in_p_qdata3,
-    rx1_strobe_in_n_NC,
-    rx1_strobe_in_p_strobe_in,
-    rx2_dclk_in_n_NC,
-    rx2_dclk_in_p_dclk_in,
-    rx2_idata_in_n_idata0,
-    rx2_idata_in_p_idata1,
-    rx2_qdata_in_n_qdata2,
-    rx2_qdata_in_p_qdata3,
-    rx2_strobe_in_n_NC,
-    rx2_strobe_in_p_strobe_in,
-    tx1_dclk_out_n_NC,
-    tx1_dclk_out_p_dclk_out,
-    tx1_dclk_in_n_NC,
-    tx1_dclk_in_p_dclk_in,
-    tx1_idata_out_n_idata0,
-    tx1_idata_out_p_idata1,
-    tx1_qdata_out_n_qdata2,
-    tx1_qdata_out_p_qdata3,
-    tx1_strobe_out_n_NC,
-    tx1_strobe_out_p_strobe_out,
-    tx2_dclk_out_n_NC,
-    tx2_dclk_out_p_dclk_out,
-    tx2_dclk_in_n_NC,
-    tx2_dclk_in_p_dclk_in,
-    tx2_idata_out_n_idata0,
-    tx2_idata_out_p_idata1,
-    tx2_qdata_out_n_qdata2,
-    tx2_qdata_out_p_qdata3,
-    tx2_strobe_out_n_NC,
-    tx2_strobe_out_p_strobe_out,
-    rx1_enable,
-    rx2_enable,
-    tx1_enable,
-    tx2_enable,
-    delay_clk,
-    adc_1_clk,
-    adc_1_rst,
-    adc_1_valid_i0,
-    adc_1_enable_i0,
-    adc_1_data_i0,
-    adc_1_valid_q0,
-    adc_1_enable_q0,
-    adc_1_data_q0,
-    adc_1_valid_i1,
-    adc_1_enable_i1,
-    adc_1_data_i1,
-    adc_1_valid_q1,
-    adc_1_enable_q1,
-    adc_1_data_q1,
-    adc_1_dovf,
-    adc_1_start_sync,
-    adc_2_clk,
-    adc_2_rst,
-    adc_2_valid_i0,
-    adc_2_enable_i0,
-    adc_2_data_i0,
-    adc_2_valid_q0,
-    adc_2_enable_q0,
-    adc_2_data_q0,
-    adc_2_dovf,
-    adc_2_start_sync,
-    dac_1_clk,
-    dac_1_rst,
-    dac_1_valid_i0,
-    dac_1_enable_i0,
-    dac_1_data_i0,
-    dac_1_valid_q0,
-    dac_1_enable_q0,
-    dac_1_data_q0,
-    dac_1_valid_i1,
-    dac_1_enable_i1,
-    dac_1_data_i1,
-    dac_1_valid_q1,
-    dac_1_enable_q1,
-    dac_1_data_q1,
-    dac_1_dunf,
-    dac_2_clk,
-    dac_2_rst,
-    dac_2_valid_i0,
-    dac_2_enable_i0,
-    dac_2_data_i0,
-    dac_2_valid_q0,
-    dac_2_enable_q0,
-    dac_2_data_q0,
-    dac_2_dunf,
-    tdd_sync,
-    tdd_sync_cntr,
-    gpio_rx1_enable_in,
-    gpio_rx2_enable_in,
-    gpio_tx1_enable_in,
-    gpio_tx2_enable_in,
-    s_axi_aclk,
-    s_axi_aresetn,
-    s_axi_awvalid,
-    s_axi_awaddr,
-    s_axi_awready,
-    s_axi_wvalid,
-    s_axi_wdata,
-    s_axi_wstrb,
-    s_axi_wready,
-    s_axi_bvalid,
-    s_axi_bresp,
-    s_axi_bready,
-    s_axi_arvalid,
-    s_axi_araddr,
-    s_axi_arready,
-    s_axi_rvalid,
-    s_axi_rresp,
-    s_axi_rdata,
-    s_axi_rready,
-    s_axi_awprot,
-    s_axi_arprot);
-  input mssi_sync_in;
-  input ref_clk;
-  input mcs_in;
-  output mcs_out;
-  output mcs_src;
-  input tx_output_enable;
-  input rx1_dclk_in_n_NC;
-  input rx1_dclk_in_p_dclk_in;
-  input rx1_idata_in_n_idata0;
-  input rx1_idata_in_p_idata1;
-  input rx1_qdata_in_n_qdata2;
-  input rx1_qdata_in_p_qdata3;
-  input rx1_strobe_in_n_NC;
-  input rx1_strobe_in_p_strobe_in;
-  input rx2_dclk_in_n_NC;
-  input rx2_dclk_in_p_dclk_in;
-  input rx2_idata_in_n_idata0;
-  input rx2_idata_in_p_idata1;
-  input rx2_qdata_in_n_qdata2;
-  input rx2_qdata_in_p_qdata3;
-  input rx2_strobe_in_n_NC;
-  input rx2_strobe_in_p_strobe_in;
-  output tx1_dclk_out_n_NC;
-  output tx1_dclk_out_p_dclk_out;
-  input tx1_dclk_in_n_NC;
-  input tx1_dclk_in_p_dclk_in;
-  output tx1_idata_out_n_idata0;
-  output tx1_idata_out_p_idata1;
-  output tx1_qdata_out_n_qdata2;
-  output tx1_qdata_out_p_qdata3;
-  output tx1_strobe_out_n_NC;
-  output tx1_strobe_out_p_strobe_out;
-  output tx2_dclk_out_n_NC;
-  output tx2_dclk_out_p_dclk_out;
-  input tx2_dclk_in_n_NC;
-  input tx2_dclk_in_p_dclk_in;
-  output tx2_idata_out_n_idata0;
-  output tx2_idata_out_p_idata1;
-  output tx2_qdata_out_n_qdata2;
-  output tx2_qdata_out_p_qdata3;
-  output tx2_strobe_out_n_NC;
-  output tx2_strobe_out_p_strobe_out;
-  output rx1_enable;
-  output rx2_enable;
-  output tx1_enable;
-  output tx2_enable;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 delay_clk CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME delay_clk, FREQ_HZ 499999969, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN system_sys_ps8_0_pl_clk2, INSERT_VIP 0" *) input delay_clk;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 adc_1_clk CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME adc_1_clk, ASSOCIATED_RESET adc_1_rst, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN system_axi_adrv9001_0_adc_1_clk, INSERT_VIP 0" *) output adc_1_clk;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 adc_1_rst RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME adc_1_rst, INSERT_VIP 0" *) output adc_1_rst;
-  output adc_1_valid_i0;
-  output adc_1_enable_i0;
-  output [15:0]adc_1_data_i0;
-  output adc_1_valid_q0;
-  output adc_1_enable_q0;
-  output [15:0]adc_1_data_q0;
-  output adc_1_valid_i1;
-  output adc_1_enable_i1;
-  output [15:0]adc_1_data_i1;
-  output adc_1_valid_q1;
-  output adc_1_enable_q1;
-  output [15:0]adc_1_data_q1;
-  input adc_1_dovf;
-  output adc_1_start_sync;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 adc_2_clk CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME adc_2_clk, ASSOCIATED_RESET adc_2_rst, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN system_axi_adrv9001_0_adc_2_clk, INSERT_VIP 0" *) output adc_2_clk;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 adc_2_rst RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME adc_2_rst, INSERT_VIP 0" *) output adc_2_rst;
-  output adc_2_valid_i0;
-  output adc_2_enable_i0;
-  output [15:0]adc_2_data_i0;
-  output adc_2_valid_q0;
-  output adc_2_enable_q0;
-  output [15:0]adc_2_data_q0;
-  input adc_2_dovf;
-  output adc_2_start_sync;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 dac_1_clk CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME dac_1_clk, ASSOCIATED_RESET dac_1_rst, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN system_axi_adrv9001_0_dac_1_clk, INSERT_VIP 0" *) output dac_1_clk;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 dac_1_rst RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME dac_1_rst, INSERT_VIP 0" *) output dac_1_rst;
-  output dac_1_valid_i0;
-  output dac_1_enable_i0;
-  input [15:0]dac_1_data_i0;
-  output dac_1_valid_q0;
-  output dac_1_enable_q0;
-  input [15:0]dac_1_data_q0;
-  output dac_1_valid_i1;
-  output dac_1_enable_i1;
-  input [15:0]dac_1_data_i1;
-  output dac_1_valid_q1;
-  output dac_1_enable_q1;
-  input [15:0]dac_1_data_q1;
-  input dac_1_dunf;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 dac_2_clk CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME dac_2_clk, ASSOCIATED_RESET dac_2_rst, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN system_axi_adrv9001_0_dac_2_clk, INSERT_VIP 0" *) output dac_2_clk;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 dac_2_rst RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME dac_2_rst, INSERT_VIP 0" *) output dac_2_rst;
-  output dac_2_valid_i0;
-  output dac_2_enable_i0;
-  input [15:0]dac_2_data_i0;
-  output dac_2_valid_q0;
-  output dac_2_enable_q0;
-  input [15:0]dac_2_data_q0;
-  input dac_2_dunf;
-  input tdd_sync;
-  output tdd_sync_cntr;
-  input gpio_rx1_enable_in;
-  input gpio_rx2_enable_in;
-  input gpio_tx1_enable_in;
-  input gpio_tx2_enable_in;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 s_axi_aclk CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s_axi_aclk, ASSOCIATED_BUSIF s_axi, ASSOCIATED_RESET s_axi_aresetn, FREQ_HZ 99999992, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN system_sys_ps8_0_pl_clk0, INSERT_VIP 0" *) input s_axi_aclk;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 s_axi_aresetn RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s_axi_aresetn, POLARITY ACTIVE_LOW, INSERT_VIP 0" *) input s_axi_aresetn;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi AWVALID" *) input s_axi_awvalid;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi AWADDR" *) input [15:0]s_axi_awaddr;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi AWREADY" *) output s_axi_awready;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi WVALID" *) input s_axi_wvalid;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi WDATA" *) input [31:0]s_axi_wdata;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi WSTRB" *) input [3:0]s_axi_wstrb;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi WREADY" *) output s_axi_wready;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi BVALID" *) output s_axi_bvalid;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi BRESP" *) output [1:0]s_axi_bresp;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi BREADY" *) input s_axi_bready;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi ARVALID" *) input s_axi_arvalid;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi ARADDR" *) input [15:0]s_axi_araddr;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi ARREADY" *) output s_axi_arready;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi RVALID" *) output s_axi_rvalid;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi RRESP" *) output [1:0]s_axi_rresp;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi RDATA" *) output [31:0]s_axi_rdata;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi RREADY" *) input s_axi_rready;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi AWPROT" *) input [2:0]s_axi_awprot;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 s_axi ARPROT" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s_axi, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 99999992, ID_WIDTH 0, ADDR_WIDTH 16, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.0, CLK_DOMAIN system_sys_ps8_0_pl_clk0, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *) input [2:0]s_axi_arprot;
-
-  wire \<const0> ;
-  wire \<const1> ;
-  wire adc_1_clk;
-  wire [15:0]adc_1_data_i0;
-  wire [15:0]adc_1_data_i1;
-  wire [15:0]adc_1_data_q0;
-  wire [15:0]adc_1_data_q1;
-  wire adc_1_dovf;
-  wire adc_1_enable_i0;
-  wire adc_1_enable_i1;
-  wire adc_1_enable_q0;
-  wire adc_1_enable_q1;
-  wire adc_1_rst;
-  wire adc_1_valid_i0;
-  wire adc_1_valid_i1;
-  wire adc_1_valid_q0;
-  wire adc_1_valid_q1;
-  wire adc_2_clk;
-  wire [15:0]adc_2_data_i0;
-  wire [15:0]adc_2_data_q0;
-  wire adc_2_dovf;
-  wire adc_2_enable_i0;
-  wire adc_2_enable_q0;
-  wire adc_2_rst;
-  wire adc_2_valid_i0;
-  wire adc_2_valid_q0;
-  wire dac_1_clk;
-  wire [15:0]dac_1_data_i0;
-  wire [15:0]dac_1_data_i1;
-  wire [15:0]dac_1_data_q0;
-  wire [15:0]dac_1_data_q1;
-  wire dac_1_dunf;
-  wire dac_1_enable_i0;
-  wire dac_1_enable_i1;
-  wire dac_1_enable_q0;
-  wire dac_1_enable_q1;
-  wire dac_1_rst;
-  wire dac_1_valid_i0;
-  wire dac_1_valid_i1;
-  wire dac_1_valid_q0;
-  wire dac_1_valid_q1;
-  wire dac_2_clk;
-  wire [15:0]dac_2_data_i0;
-  wire [15:0]dac_2_data_q0;
-  wire dac_2_dunf;
-  wire dac_2_enable_i0;
-  wire dac_2_enable_q0;
-  wire dac_2_rst;
-  wire dac_2_valid_i0;
-  wire dac_2_valid_q0;
-  wire delay_clk;
-  wire gpio_rx1_enable_in;
-  wire gpio_rx2_enable_in;
-  wire gpio_tx1_enable_in;
-  wire gpio_tx2_enable_in;
-  wire mcs_in;
-  wire mcs_out;
-  wire mcs_src;
-  wire mssi_sync_in;
-  wire ref_clk;
-  (* IBUF_LOW_PWR *) wire rx1_dclk_in_n_NC;
-  (* IBUF_LOW_PWR *) wire rx1_dclk_in_p_dclk_in;
-  wire rx1_enable;
-  (* IBUF_LOW_PWR *) wire rx1_idata_in_n_idata0;
-  (* IBUF_LOW_PWR *) wire rx1_idata_in_p_idata1;
-  (* IBUF_LOW_PWR *) wire rx1_qdata_in_n_qdata2;
-  (* IBUF_LOW_PWR *) wire rx1_qdata_in_p_qdata3;
-  (* IBUF_LOW_PWR *) wire rx1_strobe_in_n_NC;
-  (* IBUF_LOW_PWR *) wire rx1_strobe_in_p_strobe_in;
-  (* IBUF_LOW_PWR *) wire rx2_dclk_in_n_NC;
-  (* IBUF_LOW_PWR *) wire rx2_dclk_in_p_dclk_in;
-  wire rx2_enable;
-  (* IBUF_LOW_PWR *) wire rx2_idata_in_n_idata0;
-  (* IBUF_LOW_PWR *) wire rx2_idata_in_p_idata1;
-  (* IBUF_LOW_PWR *) wire rx2_qdata_in_n_qdata2;
-  (* IBUF_LOW_PWR *) wire rx2_qdata_in_p_qdata3;
-  (* IBUF_LOW_PWR *) wire rx2_strobe_in_n_NC;
-  (* IBUF_LOW_PWR *) wire rx2_strobe_in_p_strobe_in;
-  wire s_axi_aclk;
-  wire [15:0]s_axi_araddr;
-  wire s_axi_aresetn;
-  wire s_axi_arready;
-  wire s_axi_arvalid;
-  wire [15:0]s_axi_awaddr;
-  wire s_axi_awready;
-  wire s_axi_awvalid;
-  wire s_axi_bready;
-  wire s_axi_bvalid;
-  wire [31:0]s_axi_rdata;
-  wire s_axi_rready;
-  wire s_axi_rvalid;
-  wire [31:0]s_axi_wdata;
-  wire s_axi_wready;
-  wire s_axi_wvalid;
-  wire tdd_sync;
-  wire tdd_sync_cntr;
-  (* IBUF_LOW_PWR *) wire tx1_dclk_in_n_NC;
-  (* IBUF_LOW_PWR *) wire tx1_dclk_in_p_dclk_in;
-  (* SLEW = "SLOW" *) wire tx1_dclk_out_n_NC;
-  (* SLEW = "SLOW" *) wire tx1_dclk_out_p_dclk_out;
-  wire tx1_enable;
-  (* SLEW = "SLOW" *) wire tx1_idata_out_n_idata0;
-  (* SLEW = "SLOW" *) wire tx1_idata_out_p_idata1;
-  (* SLEW = "SLOW" *) wire tx1_qdata_out_n_qdata2;
-  (* SLEW = "SLOW" *) wire tx1_qdata_out_p_qdata3;
-  (* SLEW = "SLOW" *) wire tx1_strobe_out_n_NC;
-  (* SLEW = "SLOW" *) wire tx1_strobe_out_p_strobe_out;
-  (* IBUF_LOW_PWR *) wire tx2_dclk_in_n_NC;
-  (* IBUF_LOW_PWR *) wire tx2_dclk_in_p_dclk_in;
-  (* SLEW = "SLOW" *) wire tx2_dclk_out_n_NC;
-  (* SLEW = "SLOW" *) wire tx2_dclk_out_p_dclk_out;
-  wire tx2_enable;
-  (* SLEW = "SLOW" *) wire tx2_idata_out_n_idata0;
-  (* SLEW = "SLOW" *) wire tx2_idata_out_p_idata1;
-  (* SLEW = "SLOW" *) wire tx2_qdata_out_n_qdata2;
-  (* SLEW = "SLOW" *) wire tx2_qdata_out_p_qdata3;
-  (* SLEW = "SLOW" *) wire tx2_strobe_out_n_NC;
-  (* SLEW = "SLOW" *) wire tx2_strobe_out_p_strobe_out;
-  wire tx_output_enable;
-  wire NLW_inst_adc_1_start_sync_UNCONNECTED;
-  wire NLW_inst_adc_2_start_sync_UNCONNECTED;
-  wire [1:0]NLW_inst_s_axi_bresp_UNCONNECTED;
-  wire [1:0]NLW_inst_s_axi_rresp_UNCONNECTED;
-
-  assign adc_1_start_sync = \<const1> ;
-  assign adc_2_start_sync = \<const1> ;
-  assign s_axi_bresp[1] = \<const0> ;
-  assign s_axi_bresp[0] = \<const0> ;
-  assign s_axi_rresp[1] = \<const0> ;
-  assign s_axi_rresp[0] = \<const0> ;
-  GND GND
-       (.G(\<const0> ));
-  VCC VCC
-       (.P(\<const1> ));
-  (* CMOS_LVDS_N = "0" *) 
-  (* COMMON_2R2T_SUPPORT = "1" *) 
-  (* DDS_DISABLE = "0" *) 
-  (* DEV_PACKAGE = "3" *) 
-  (* DISABLE_RX1_SSI = "1'b0" *) 
-  (* DISABLE_RX2_SSI = "1'b0" *) 
-  (* DISABLE_TX1_SSI = "0" *) 
-  (* DISABLE_TX2_SSI = "0" *) 
-  (* DRP_WIDTH = "9" *) 
-  (* ENABLE_REF_CLK_MON = "0" *) 
-  (* EN_RX_MCS_TO_STRB_M = "0" *) 
-  (* EXT_SYNC = "0" *) 
-  (* FPGA_FAMILY = "4" *) 
-  (* FPGA_TECHNOLOGY = "3" *) 
-  (* ID = "0" *) 
-  (* INDEPENDENT_1R1T_SUPPORT = "1" *) 
-  (* IODELAY_CTRL = "1" *) 
-  (* IODELAY_ENABLE = "1" *) 
-  (* IO_DELAY_GROUP = "dev_if_delay_group" *) 
-  (* NUM_LANES = "3" *) 
-  (* RX_USE_BUFG = "0" *) 
-  (* SEVEN_SERIES = "1" *) 
-  (* SPEED_GRADE = "20" *) 
-  (* TDD_DISABLE = "0" *) 
-  (* TX_USE_BUFG = "0" *) 
-  (* ULTRASCALE = "2" *) 
-  (* ULTRASCALE_PLUS = "3" *) 
-  (* USE_RX_CLK_FOR_TX1 = "2" *) 
-  (* USE_RX_CLK_FOR_TX2 = "2" *) 
-  system_axi_adrv9001_0_axi_adrv9001 inst
-       (.adc_1_clk(adc_1_clk),
-        .adc_1_data_i0(adc_1_data_i0),
-        .adc_1_data_i1(adc_1_data_i1),
-        .adc_1_data_q0(adc_1_data_q0),
-        .adc_1_data_q1(adc_1_data_q1),
-        .adc_1_dovf(adc_1_dovf),
-        .adc_1_enable_i0(adc_1_enable_i0),
-        .adc_1_enable_i1(adc_1_enable_i1),
-        .adc_1_enable_q0(adc_1_enable_q0),
-        .adc_1_enable_q1(adc_1_enable_q1),
-        .adc_1_rst(adc_1_rst),
-        .adc_1_start_sync(NLW_inst_adc_1_start_sync_UNCONNECTED),
-        .adc_1_valid_i0(adc_1_valid_i0),
-        .adc_1_valid_i1(adc_1_valid_i1),
-        .adc_1_valid_q0(adc_1_valid_q0),
-        .adc_1_valid_q1(adc_1_valid_q1),
-        .adc_2_clk(adc_2_clk),
-        .adc_2_data_i0(adc_2_data_i0),
-        .adc_2_data_q0(adc_2_data_q0),
-        .adc_2_dovf(adc_2_dovf),
-        .adc_2_enable_i0(adc_2_enable_i0),
-        .adc_2_enable_q0(adc_2_enable_q0),
-        .adc_2_rst(adc_2_rst),
-        .adc_2_start_sync(NLW_inst_adc_2_start_sync_UNCONNECTED),
-        .adc_2_valid_i0(adc_2_valid_i0),
-        .adc_2_valid_q0(adc_2_valid_q0),
-        .dac_1_clk(dac_1_clk),
-        .dac_1_data_i0(dac_1_data_i0),
-        .dac_1_data_i1(dac_1_data_i1),
-        .dac_1_data_q0(dac_1_data_q0),
-        .dac_1_data_q1(dac_1_data_q1),
-        .dac_1_dunf(dac_1_dunf),
-        .dac_1_enable_i0(dac_1_enable_i0),
-        .dac_1_enable_i1(dac_1_enable_i1),
-        .dac_1_enable_q0(dac_1_enable_q0),
-        .dac_1_enable_q1(dac_1_enable_q1),
-        .dac_1_rst(dac_1_rst),
-        .dac_1_valid_i0(dac_1_valid_i0),
-        .dac_1_valid_i1(dac_1_valid_i1),
-        .dac_1_valid_q0(dac_1_valid_q0),
-        .dac_1_valid_q1(dac_1_valid_q1),
-        .dac_2_clk(dac_2_clk),
-        .dac_2_data_i0(dac_2_data_i0),
-        .dac_2_data_q0(dac_2_data_q0),
-        .dac_2_dunf(dac_2_dunf),
-        .dac_2_enable_i0(dac_2_enable_i0),
-        .dac_2_enable_q0(dac_2_enable_q0),
-        .dac_2_rst(dac_2_rst),
-        .dac_2_valid_i0(dac_2_valid_i0),
-        .dac_2_valid_q0(dac_2_valid_q0),
-        .delay_clk(delay_clk),
-        .gpio_rx1_enable_in(gpio_rx1_enable_in),
-        .gpio_rx2_enable_in(gpio_rx2_enable_in),
-        .gpio_tx1_enable_in(gpio_tx1_enable_in),
-        .gpio_tx2_enable_in(gpio_tx2_enable_in),
-        .mcs_in(mcs_in),
-        .mcs_out(mcs_out),
-        .mcs_src(mcs_src),
-        .mssi_sync_in(mssi_sync_in),
-        .ref_clk(ref_clk),
-        .rx1_dclk_in_n_NC(rx1_dclk_in_n_NC),
-        .rx1_dclk_in_p_dclk_in(rx1_dclk_in_p_dclk_in),
-        .rx1_enable(rx1_enable),
-        .rx1_idata_in_n_idata0(rx1_idata_in_n_idata0),
-        .rx1_idata_in_p_idata1(rx1_idata_in_p_idata1),
-        .rx1_qdata_in_n_qdata2(rx1_qdata_in_n_qdata2),
-        .rx1_qdata_in_p_qdata3(rx1_qdata_in_p_qdata3),
-        .rx1_strobe_in_n_NC(rx1_strobe_in_n_NC),
-        .rx1_strobe_in_p_strobe_in(rx1_strobe_in_p_strobe_in),
-        .rx2_dclk_in_n_NC(rx2_dclk_in_n_NC),
-        .rx2_dclk_in_p_dclk_in(rx2_dclk_in_p_dclk_in),
-        .rx2_enable(rx2_enable),
-        .rx2_idata_in_n_idata0(rx2_idata_in_n_idata0),
-        .rx2_idata_in_p_idata1(rx2_idata_in_p_idata1),
-        .rx2_qdata_in_n_qdata2(rx2_qdata_in_n_qdata2),
-        .rx2_qdata_in_p_qdata3(rx2_qdata_in_p_qdata3),
-        .rx2_strobe_in_n_NC(rx2_strobe_in_n_NC),
-        .rx2_strobe_in_p_strobe_in(rx2_strobe_in_p_strobe_in),
-        .s_axi_aclk(s_axi_aclk),
-        .s_axi_araddr({1'b0,s_axi_araddr[14:2],1'b0,1'b0}),
-        .s_axi_aresetn(s_axi_aresetn),
-        .s_axi_arprot({1'b0,1'b0,1'b0}),
-        .s_axi_arready(s_axi_arready),
-        .s_axi_arvalid(s_axi_arvalid),
-        .s_axi_awaddr({1'b0,s_axi_awaddr[14:2],1'b0,1'b0}),
-        .s_axi_awprot({1'b0,1'b0,1'b0}),
-        .s_axi_awready(s_axi_awready),
-        .s_axi_awvalid(s_axi_awvalid),
-        .s_axi_bready(s_axi_bready),
-        .s_axi_bresp(NLW_inst_s_axi_bresp_UNCONNECTED[1:0]),
-        .s_axi_bvalid(s_axi_bvalid),
-        .s_axi_rdata(s_axi_rdata),
-        .s_axi_rready(s_axi_rready),
-        .s_axi_rresp(NLW_inst_s_axi_rresp_UNCONNECTED[1:0]),
-        .s_axi_rvalid(s_axi_rvalid),
-        .s_axi_wdata(s_axi_wdata),
-        .s_axi_wready(s_axi_wready),
-        .s_axi_wstrb({1'b0,1'b0,1'b0,1'b0}),
-        .s_axi_wvalid(s_axi_wvalid),
-        .tdd_sync(tdd_sync),
-        .tdd_sync_cntr(tdd_sync_cntr),
-        .tx1_dclk_in_n_NC(tx1_dclk_in_n_NC),
-        .tx1_dclk_in_p_dclk_in(tx1_dclk_in_p_dclk_in),
-        .tx1_dclk_out_n_NC(tx1_dclk_out_n_NC),
-        .tx1_dclk_out_p_dclk_out(tx1_dclk_out_p_dclk_out),
-        .tx1_enable(tx1_enable),
-        .tx1_idata_out_n_idata0(tx1_idata_out_n_idata0),
-        .tx1_idata_out_p_idata1(tx1_idata_out_p_idata1),
-        .tx1_qdata_out_n_qdata2(tx1_qdata_out_n_qdata2),
-        .tx1_qdata_out_p_qdata3(tx1_qdata_out_p_qdata3),
-        .tx1_strobe_out_n_NC(tx1_strobe_out_n_NC),
-        .tx1_strobe_out_p_strobe_out(tx1_strobe_out_p_strobe_out),
-        .tx2_dclk_in_n_NC(tx2_dclk_in_n_NC),
-        .tx2_dclk_in_p_dclk_in(tx2_dclk_in_p_dclk_in),
-        .tx2_dclk_out_n_NC(tx2_dclk_out_n_NC),
-        .tx2_dclk_out_p_dclk_out(tx2_dclk_out_p_dclk_out),
-        .tx2_enable(tx2_enable),
-        .tx2_idata_out_n_idata0(tx2_idata_out_n_idata0),
-        .tx2_idata_out_p_idata1(tx2_idata_out_p_idata1),
-        .tx2_qdata_out_n_qdata2(tx2_qdata_out_n_qdata2),
-        .tx2_qdata_out_p_qdata3(tx2_qdata_out_p_qdata3),
-        .tx2_strobe_out_n_NC(tx2_strobe_out_n_NC),
-        .tx2_strobe_out_p_strobe_out(tx2_strobe_out_p_strobe_out),
-        .tx_output_enable(tx_output_enable));
-endmodule
-
+(* ORIG_REF_NAME = "up_adc_channel" *) 
 module system_axi_adrv9001_0_up_adc_channel
    (up_adc_lb_enb,
     up_adc_dfmt_type_reg_0,
@@ -386724,6 +386755,7 @@ module system_axi_adrv9001_0_up_adc_channel__parameterized4
         .R(\up_data_status_int_reg[33] ));
 endmodule
 
+(* ORIG_REF_NAME = "up_adc_common" *) 
 module system_axi_adrv9001_0_up_adc_common
    (up_adc_r1_mode_reg_0,
     up_adc_sdr_ddr_n_reg_0,
@@ -390624,6 +390656,7 @@ module system_axi_adrv9001_0_up_adc_common__parameterized0
         .R(up_xfer_toggle_m1_reg));
 endmodule
 
+(* ORIG_REF_NAME = "up_axi" *) 
 module system_axi_adrv9001_0_up_axi
    (s_axi_bvalid,
     s_axi_awready,
@@ -415343,6 +415376,7 @@ module system_axi_adrv9001_0_up_axi
         .S(clear));
 endmodule
 
+(* ORIG_REF_NAME = "up_clock_mon" *) 
 module system_axi_adrv9001_0_up_clock_mon
    (\up_dac_custom_wr_reg[9] ,
     \up_dac_custom_wr_reg[6] ,
@@ -420392,6 +420426,7 @@ module system_axi_adrv9001_0_up_clock_mon__xdcDup__3
         .O(\up_dac_custom_wr_reg[9] ));
 endmodule
 
+(* ORIG_REF_NAME = "up_dac_channel" *) 
 module system_axi_adrv9001_0_up_dac_channel
    (s_axi_aresetn_0,
     \up_dac_dds_incr_1_reg[0]_0 ,
@@ -440289,6 +440324,7 @@ module system_axi_adrv9001_0_up_dac_channel__parameterized4
         .Q(up_wack_int_reg_0));
 endmodule
 
+(* ORIG_REF_NAME = "up_dac_common" *) 
 module system_axi_adrv9001_0_up_dac_common
    (up_dac_sdr_ddr_n_reg_0,
     up_tx1_r1_mode,
@@ -445235,6 +445271,7 @@ module system_axi_adrv9001_0_up_dac_common__parameterized0
         .Q(\core_enabled.up_wack_s__0 ));
 endmodule
 
+(* ORIG_REF_NAME = "up_delay_cntrl" *) 
 module system_axi_adrv9001_0_up_delay_cntrl
    (up_wack_s_0,
     up_rack_s_1,
@@ -446182,6 +446219,7 @@ module system_axi_adrv9001_0_up_delay_cntrl__parameterized0
         .R(up_rack_int_reg_0));
 endmodule
 
+(* ORIG_REF_NAME = "up_tdd_cntrl" *) 
 module system_axi_adrv9001_0_up_tdd_cntrl
    (up_tdd_terminal_type_reg_0,
     \up_raddr_int_reg[5]_rep__0 ,
@@ -462882,6 +462920,7 @@ module system_axi_adrv9001_0_up_tdd_cntrl__parameterized0
         .Q(up_wack_s__0));
 endmodule
 
+(* ORIG_REF_NAME = "up_xfer_cntrl" *) 
 module system_axi_adrv9001_0_up_xfer_cntrl
    (E,
     \dac_data_in_2d_reg[0] ,
@@ -513149,6 +513188,7 @@ module system_axi_adrv9001_0_up_xfer_cntrl__xdcDup__5
         .O(E[1]));
 endmodule
 
+(* ORIG_REF_NAME = "up_xfer_status" *) 
 module system_axi_adrv9001_0_up_xfer_status
    (E,
     Q,
@@ -516068,6 +516108,7 @@ module system_axi_adrv9001_0_up_xfer_status__xdcDup__5
         .R(\up_data_status_int_reg[33]_0 ));
 endmodule
 
+(* ORIG_REF_NAME = "xil_internal_svlib_MULT_MACRO" *) 
 module system_axi_adrv9001_0_xil_internal_svlib_MULT_MACRO
    (D,
     Q,

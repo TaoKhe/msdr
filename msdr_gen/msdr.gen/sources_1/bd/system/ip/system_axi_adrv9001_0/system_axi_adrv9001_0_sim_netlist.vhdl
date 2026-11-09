@@ -2,10 +2,10 @@
 -- Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2024.1 (lin64) Build 5076996 Wed May 22 18:36:09 MDT 2024
--- Date        : Mon Nov  9 18:10:49 2026
+-- Date        : Tue Nov 10 01:04:20 2026
 -- Host        : taokhe running 64-bit Ubuntu 22.04.5 LTS
--- Command     : write_vhdl -force -mode funcsim -rename_top system_axi_adrv9001_0 -prefix
---               system_axi_adrv9001_0_ system_axi_adrv9001_0_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim
+--               /home/taokhe/Projects/in/msdr/msdr_gen/msdr.gen/sources_1/bd/system/ip/system_axi_adrv9001_0/system_axi_adrv9001_0_sim_netlist.vhdl
 -- Design      : system_axi_adrv9001_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -22,6 +22,8 @@ entity system_axi_adrv9001_0_ad_addsub is
     \out_reg[0]_0\ : in STD_LOGIC;
     Q : in STD_LOGIC_VECTOR ( 23 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_ad_addsub : entity is "ad_addsub";
 end system_axi_adrv9001_0_ad_addsub;
 
 architecture STRUCTURE of system_axi_adrv9001_0_ad_addsub is
@@ -20085,6 +20087,8 @@ entity system_axi_adrv9001_0_ad_datafmt is
     valid_int_reg_1 : in STD_LOGIC;
     D : in STD_LOGIC_VECTOR ( 15 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_ad_datafmt : entity is "ad_datafmt";
 end system_axi_adrv9001_0_ad_datafmt;
 
 architecture STRUCTURE of system_axi_adrv9001_0_ad_datafmt is
@@ -21345,6 +21349,8 @@ entity system_axi_adrv9001_0_ad_dds_cordic_pipe is
     \result_z_reg[7]_0\ : in STD_LOGIC;
     \result_z_reg[7]_1\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_ad_dds_cordic_pipe : entity is "ad_dds_cordic_pipe";
 end system_axi_adrv9001_0_ad_dds_cordic_pipe;
 
 architecture STRUCTURE of system_axi_adrv9001_0_ad_dds_cordic_pipe is
@@ -378165,6 +378171,8 @@ entity system_axi_adrv9001_0_ad_pngen is
     SS : in STD_LOGIC_VECTOR ( 0 to 0 );
     \pn_state_reg[2]_1\ : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_ad_pngen : entity is "ad_pngen";
 end system_axi_adrv9001_0_ad_pngen;
 
 architecture STRUCTURE of system_axi_adrv9001_0_ad_pngen is
@@ -387738,6 +387746,8 @@ entity system_axi_adrv9001_0_ad_pnmon is
     adc_valid_zero : in STD_LOGIC;
     E : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_ad_pnmon : entity is "ad_pnmon";
 end system_axi_adrv9001_0_ad_pnmon;
 
 architecture STRUCTURE of system_axi_adrv9001_0_ad_pnmon is
@@ -389400,6 +389410,8 @@ entity system_axi_adrv9001_0_ad_serdes_out is
     dac_data_strb : in STD_LOGIC_VECTOR ( 1 downto 0 );
     SS : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_ad_serdes_out : entity is "ad_serdes_out";
 end system_axi_adrv9001_0_ad_serdes_out;
 
 architecture STRUCTURE of system_axi_adrv9001_0_ad_serdes_out is
@@ -389903,6 +389915,8 @@ entity system_axi_adrv9001_0_adrv9001_aligner8 is
     SS : in STD_LOGIC_VECTOR ( 0 to 0 );
     \idata_d_reg[7]_0\ : in STD_LOGIC_VECTOR ( 7 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_adrv9001_aligner8 : entity is "adrv9001_aligner8";
 end system_axi_adrv9001_0_adrv9001_aligner8;
 
 architecture STRUCTURE of system_axi_adrv9001_0_adrv9001_aligner8 is
@@ -391992,6 +392006,8 @@ entity system_axi_adrv9001_0_adrv9001_pack is
     \idata_d_reg[7]_0\ : in STD_LOGIC_VECTOR ( 0 to 0 );
     \odata_reg[7]_0\ : in STD_LOGIC_VECTOR ( 7 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_adrv9001_pack : entity is "adrv9001_pack";
 end system_axi_adrv9001_0_adrv9001_pack;
 
 architecture STRUCTURE of system_axi_adrv9001_0_adrv9001_pack is
@@ -394397,6 +394413,8 @@ entity system_axi_adrv9001_0_adrv9001_tx_link is
     \g_data[0].i_serdes\ : in STD_LOGIC_VECTOR ( 2 downto 0 );
     \data32_reg[31]_0\ : in STD_LOGIC_VECTOR ( 15 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_adrv9001_tx_link : entity is "adrv9001_tx_link";
 end system_axi_adrv9001_0_adrv9001_tx_link;
 
 architecture STRUCTURE of system_axi_adrv9001_0_adrv9001_tx_link is
@@ -395993,6 +396011,8 @@ entity system_axi_adrv9001_0_axi_adrv9001_sync is
     \mcs_sync_pulse_delay_cnt_reg[1]_0\ : in STD_LOGIC;
     \mcs_sync_pulse_delay_cnt_reg[0]_0\ : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_axi_adrv9001_sync : entity is "axi_adrv9001_sync";
 end system_axi_adrv9001_0_axi_adrv9001_sync;
 
 architecture STRUCTURE of system_axi_adrv9001_0_axi_adrv9001_sync is
@@ -399122,6 +399142,8 @@ entity system_axi_adrv9001_0_sync_bits is
     CLK : in STD_LOGIC;
     out_toggle_d1 : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_sync_bits : entity is "sync_bits";
 end system_axi_adrv9001_0_sync_bits;
 
 architecture STRUCTURE of system_axi_adrv9001_0_sync_bits is
@@ -401221,6 +401243,8 @@ entity system_axi_adrv9001_0_up_axi is
     \up_rdata_int_reg[31]_32\ : in STD_LOGIC;
     up_dlocked : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_up_axi : entity is "up_axi";
 end system_axi_adrv9001_0_up_axi;
 
 architecture STRUCTURE of system_axi_adrv9001_0_up_axi is
@@ -429845,6 +429869,8 @@ entity system_axi_adrv9001_0_up_clock_mon is
     \up_rdata_int_reg[7]_1\ : in STD_LOGIC;
     s_axi_aresetn : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_up_clock_mon : entity is "up_clock_mon";
 end system_axi_adrv9001_0_up_clock_mon;
 
 architecture STRUCTURE of system_axi_adrv9001_0_up_clock_mon is
@@ -436752,6 +436778,8 @@ entity system_axi_adrv9001_0_up_delay_cntrl is
     \up_dwdata_int_reg[18]_0\ : in STD_LOGIC_VECTOR ( 0 to 0 );
     \up_rdata_int_reg[31]_0\ : in STD_LOGIC_VECTOR ( 9 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_up_delay_cntrl : entity is "up_delay_cntrl";
 end system_axi_adrv9001_0_up_delay_cntrl;
 
 architecture STRUCTURE of system_axi_adrv9001_0_up_delay_cntrl is
@@ -437348,6 +437376,8 @@ entity system_axi_adrv9001_0_up_xfer_cntrl is
     \adc_pn_match_d_i_17__4_0\ : in STD_LOGIC_VECTOR ( 15 downto 0 );
     \up_xfer_data_reg[77]_0\ : in STD_LOGIC_VECTOR ( 10 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_up_xfer_cntrl : entity is "up_xfer_cntrl";
 end system_axi_adrv9001_0_up_xfer_cntrl;
 
 architecture STRUCTURE of system_axi_adrv9001_0_up_xfer_cntrl is
@@ -503491,6 +503521,8 @@ entity system_axi_adrv9001_0_up_xfer_status is
     s_axi_aclk : in STD_LOGIC;
     D : in STD_LOGIC_VECTOR ( 1 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_up_xfer_status : entity is "up_xfer_status";
 end system_axi_adrv9001_0_up_xfer_status;
 
 architecture STRUCTURE of system_axi_adrv9001_0_up_xfer_status is
@@ -507300,6 +507332,8 @@ entity system_axi_adrv9001_0_xil_internal_svlib_MULT_MACRO is
     \dds_data_reg[19]\ : in STD_LOGIC_VECTOR ( 15 downto 0 );
     \dds_data_reg[19]_0\ : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_xil_internal_svlib_MULT_MACRO : entity is "xil_internal_svlib_MULT_MACRO";
 end system_axi_adrv9001_0_xil_internal_svlib_MULT_MACRO;
 
 architecture STRUCTURE of system_axi_adrv9001_0_xil_internal_svlib_MULT_MACRO is
@@ -509383,6 +509417,8 @@ entity system_axi_adrv9001_0_ad_dds_sine_cordic is
     \z0_reg[17]_0\ : in STD_LOGIC_VECTOR ( 15 downto 0 );
     \x0_reg[18]_0\ : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_ad_dds_sine_cordic : entity is "ad_dds_sine_cordic";
 end system_axi_adrv9001_0_ad_dds_sine_cordic;
 
 architecture STRUCTURE of system_axi_adrv9001_0_ad_dds_sine_cordic is
@@ -520604,6 +520640,8 @@ entity system_axi_adrv9001_0_ad_mul is
     \dds_data_reg[19]\ : in STD_LOGIC_VECTOR ( 15 downto 0 );
     \dds_data_reg[19]_0\ : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_ad_mul : entity is "ad_mul";
 end system_axi_adrv9001_0_ad_mul;
 
 architecture STRUCTURE of system_axi_adrv9001_0_ad_mul is
@@ -520938,6 +520976,8 @@ entity system_axi_adrv9001_0_ad_tdd_control is
     tdd_tx1_rf_en : in STD_LOGIC;
     gpio_tx2_enable_in : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_ad_tdd_control : entity is "ad_tdd_control";
 end system_axi_adrv9001_0_ad_tdd_control;
 
 architecture STRUCTURE of system_axi_adrv9001_0_ad_tdd_control is
@@ -526505,6 +526545,8 @@ entity system_axi_adrv9001_0_adrv9001_rx_link is
     \idata_d_reg[7]_0\ : in STD_LOGIC_VECTOR ( 7 downto 0 );
     \idata_d_reg[7]_1\ : in STD_LOGIC_VECTOR ( 7 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_adrv9001_rx_link : entity is "adrv9001_rx_link";
 end system_axi_adrv9001_0_adrv9001_rx_link;
 
 architecture STRUCTURE of system_axi_adrv9001_0_adrv9001_rx_link is
@@ -527281,6 +527323,8 @@ entity system_axi_adrv9001_0_adrv9001_tx is
     mssi_sync : in STD_LOGIC;
     serdes_next_reset_reg_0 : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_adrv9001_tx : entity is "adrv9001_tx";
 end system_axi_adrv9001_0_adrv9001_tx;
 
 architecture STRUCTURE of system_axi_adrv9001_0_adrv9001_tx is
@@ -528483,6 +528527,8 @@ entity system_axi_adrv9001_0_axi_adrv9001_sync_ctrl is
     \up_sync_config_reg[2]_0\ : in STD_LOGIC_VECTOR ( 0 to 0 );
     \up_rdata_int_reg[31]_0\ : in STD_LOGIC_VECTOR ( 31 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_axi_adrv9001_sync_ctrl : entity is "axi_adrv9001_sync_ctrl";
 end system_axi_adrv9001_0_axi_adrv9001_sync_ctrl;
 
 architecture STRUCTURE of system_axi_adrv9001_0_axi_adrv9001_sync_ctrl is
@@ -532590,6 +532636,8 @@ entity system_axi_adrv9001_0_sync_event is
     s_axi_aclk : in STD_LOGIC;
     in_toggle_d1_reg_0 : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_sync_event : entity is "sync_event";
 end system_axi_adrv9001_0_sync_event;
 
 architecture STRUCTURE of system_axi_adrv9001_0_sync_event is
@@ -533139,6 +533187,8 @@ entity system_axi_adrv9001_0_up_adc_channel is
     SR : in STD_LOGIC_VECTOR ( 0 to 0 );
     \up_rdata_int_reg[24]_1\ : in STD_LOGIC_VECTOR ( 13 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_up_adc_channel : entity is "up_adc_channel";
 end system_axi_adrv9001_0_up_adc_channel;
 
 architecture STRUCTURE of system_axi_adrv9001_0_up_adc_channel is
@@ -537431,6 +537481,8 @@ entity system_axi_adrv9001_0_up_adc_common is
     \core_enabled.up_status_pn_oos_reg_1\ : in STD_LOGIC;
     \core_enabled.up_status_pn_oos_reg_2\ : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_up_adc_common : entity is "up_adc_common";
 end system_axi_adrv9001_0_up_adc_common;
 
 architecture STRUCTURE of system_axi_adrv9001_0_up_adc_common is
@@ -542366,6 +542418,8 @@ entity system_axi_adrv9001_0_up_dac_channel is
     \core_enabled.up_rdata_reg[31]_1\ : in STD_LOGIC_VECTOR ( 31 downto 0 );
     \core_enabled.up_rdata_reg[31]_2\ : in STD_LOGIC_VECTOR ( 31 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_up_dac_channel : entity is "up_dac_channel";
 end system_axi_adrv9001_0_up_dac_channel;
 
 architecture STRUCTURE of system_axi_adrv9001_0_up_dac_channel is
@@ -567889,6 +567943,8 @@ entity system_axi_adrv9001_0_up_dac_common is
     \up_scratch_reg[31]_1\ : in STD_LOGIC_VECTOR ( 0 to 0 );
     \up_rdata_int_reg[31]_1\ : in STD_LOGIC_VECTOR ( 31 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_up_dac_common : entity is "up_dac_common";
 end system_axi_adrv9001_0_up_dac_common;
 
 architecture STRUCTURE of system_axi_adrv9001_0_up_dac_common is
@@ -574486,6 +574542,8 @@ entity system_axi_adrv9001_0_up_tdd_cntrl is
     gpio_tx1_enable_in : in STD_LOGIC;
     tdd_tx1_rf_en : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_up_tdd_cntrl : entity is "up_tdd_cntrl";
 end system_axi_adrv9001_0_up_tdd_cntrl;
 
 architecture STRUCTURE of system_axi_adrv9001_0_up_tdd_cntrl is
@@ -595662,6 +595720,8 @@ entity system_axi_adrv9001_0_ad_dds_1 is
     \z0_reg[17]_0\ : in STD_LOGIC_VECTOR ( 15 downto 0 );
     \x0_reg[18]\ : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_ad_dds_1 : entity is "ad_dds_1";
 end system_axi_adrv9001_0_ad_dds_1;
 
 architecture STRUCTURE of system_axi_adrv9001_0_ad_dds_1 is
@@ -601535,6 +601595,8 @@ entity system_axi_adrv9001_0_ad_serdes_in is
     in_toggle_d1_reg : in STD_LOGIC_VECTOR ( 2 downto 0 );
     s_axi_aclk : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_ad_serdes_in : entity is "ad_serdes_in";
 end system_axi_adrv9001_0_ad_serdes_in;
 
 architecture STRUCTURE of system_axi_adrv9001_0_ad_serdes_in is
@@ -603476,6 +603538,8 @@ entity system_axi_adrv9001_0_axi_adrv9001_rx_channel is
     \up_rdata_int_reg[24]_0\ : in STD_LOGIC_VECTOR ( 0 to 0 );
     \up_rdata_int_reg[19]\ : in STD_LOGIC_VECTOR ( 12 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_axi_adrv9001_rx_channel : entity is "axi_adrv9001_rx_channel";
 end system_axi_adrv9001_0_axi_adrv9001_rx_channel;
 
 architecture STRUCTURE of system_axi_adrv9001_0_axi_adrv9001_rx_channel is
@@ -610753,6 +610817,8 @@ entity system_axi_adrv9001_0_axi_adrv9001_tdd is
     rf_enable_s : in STD_LOGIC;
     gpio_tx1_enable_in : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_axi_adrv9001_tdd : entity is "axi_adrv9001_tdd";
 end system_axi_adrv9001_0_axi_adrv9001_tdd;
 
 architecture STRUCTURE of system_axi_adrv9001_0_axi_adrv9001_tdd is
@@ -612208,6 +612274,8 @@ entity system_axi_adrv9001_0_ad_dds_2 is
     \z0_reg[17]_2\ : in STD_LOGIC_VECTOR ( 15 downto 0 );
     \x0_reg[18]_0\ : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_ad_dds_2 : entity is "ad_dds_2";
 end system_axi_adrv9001_0_ad_dds_2;
 
 architecture STRUCTURE of system_axi_adrv9001_0_ad_dds_2 is
@@ -624716,6 +624784,8 @@ entity system_axi_adrv9001_0_adrv9001_rx is
     rx1_dclk_in_n_NC : in STD_LOGIC;
     mssi_sync : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_adrv9001_rx : entity is "adrv9001_rx";
 end system_axi_adrv9001_0_adrv9001_rx;
 
 architecture STRUCTURE of system_axi_adrv9001_0_adrv9001_rx is
@@ -626120,6 +626190,8 @@ entity system_axi_adrv9001_0_axi_adrv9001_rx is
     \up_rdata_int_reg[31]\ : in STD_LOGIC_VECTOR ( 0 to 0 );
     \up_rdata_int_reg[31]_0\ : in STD_LOGIC_VECTOR ( 31 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_axi_adrv9001_rx : entity is "axi_adrv9001_rx";
 end system_axi_adrv9001_0_axi_adrv9001_rx;
 
 architecture STRUCTURE of system_axi_adrv9001_0_axi_adrv9001_rx is
@@ -628234,6 +628306,8 @@ entity system_axi_adrv9001_0_ad_dds is
     \dds_phase[1].dac_dds_phase_0_reg[1][0]_0\ : in STD_LOGIC_VECTOR ( 0 to 0 );
     E : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_ad_dds : entity is "ad_dds";
 end system_axi_adrv9001_0_ad_dds;
 
 architecture STRUCTURE of system_axi_adrv9001_0_ad_dds is
@@ -653800,6 +653874,8 @@ entity system_axi_adrv9001_0_axi_adrv9001_if is
     tx1_dclk_in_n_NC : in STD_LOGIC;
     serdes_next_reset_reg_1 : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_axi_adrv9001_if : entity is "axi_adrv9001_if";
 end system_axi_adrv9001_0_axi_adrv9001_if;
 
 architecture STRUCTURE of system_axi_adrv9001_0_axi_adrv9001_if is
@@ -654222,6 +654298,8 @@ entity system_axi_adrv9001_0_axi_adrv9001_tx_channel is
     \core_enabled.up_rdata_reg[31]_1\ : in STD_LOGIC_VECTOR ( 31 downto 0 );
     \core_enabled.up_rdata_reg[31]_2\ : in STD_LOGIC_VECTOR ( 31 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_axi_adrv9001_tx_channel : entity is "axi_adrv9001_tx_channel";
 end system_axi_adrv9001_0_axi_adrv9001_tx_channel;
 
 architecture STRUCTURE of system_axi_adrv9001_0_axi_adrv9001_tx_channel is
@@ -659028,6 +659106,8 @@ entity system_axi_adrv9001_0_axi_adrv9001_tx is
     dac_1_data_q1 : in STD_LOGIC_VECTOR ( 15 downto 0 );
     tdd_tx1_valid : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_axi_adrv9001_tx : entity is "axi_adrv9001_tx";
 end system_axi_adrv9001_0_axi_adrv9001_tx;
 
 architecture STRUCTURE of system_axi_adrv9001_0_axi_adrv9001_tx is
@@ -663324,6 +663404,8 @@ entity system_axi_adrv9001_0_axi_adrv9001_core is
     gpio_tx1_enable_in : in STD_LOGIC;
     adc_2_dovf : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_axi_adrv9001_core : entity is "axi_adrv9001_core";
 end system_axi_adrv9001_0_axi_adrv9001_core;
 
 architecture STRUCTURE of system_axi_adrv9001_0_axi_adrv9001_core is
@@ -666785,6 +666867,8 @@ entity system_axi_adrv9001_0_axi_adrv9001 is
   attribute IO_DELAY_GROUP of system_axi_adrv9001_0_axi_adrv9001 : entity is "dev_if_delay_group";
   attribute NUM_LANES : integer;
   attribute NUM_LANES of system_axi_adrv9001_0_axi_adrv9001 : entity is 3;
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of system_axi_adrv9001_0_axi_adrv9001 : entity is "axi_adrv9001";
   attribute RX_USE_BUFG : integer;
   attribute RX_USE_BUFG of system_axi_adrv9001_0_axi_adrv9001 : entity is 0;
   attribute SEVEN_SERIES : integer;

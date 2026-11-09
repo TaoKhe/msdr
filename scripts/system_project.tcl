@@ -4,9 +4,9 @@
 ###############################################################################
 
 set t12_root [file normalize [file join [file dirname [info script]] ..]]
-source [file join $t12_root src ip adi_hdl scripts adi_env.tcl]
-source $ad_hdl_dir/projects/scripts/adi_project_xilinx.tcl
-source $ad_hdl_dir/projects/scripts/adi_board.tcl
+source [file join $t12_root scripts adi_env.tcl]
+source $ad_script_dir/adi_project_xilinx.tcl
+source $ad_script_dir/adi_board.tcl
 
 # The get_env_param procedure retrieves parameter value from the environment if exists,
 # other case returns the default value specified in its second parameter field.
@@ -34,7 +34,7 @@ adi_project_create msdr 0 {} xczu15eg-ffvb1156-2-i
 adi_project_files {} [list \
   [file join $t12_root src hdl top system_top.v] \
   [file join $t12_root src xdc system_constr.xdc] \
-  "$ad_hdl_dir/library/common/ad_iobuf.v" \
+  [file join $t12_root src ip common ad_iobuf.v] \
   [file join $t12_root src xdc lvds_constr.xdc] ]
 
 adi_project_run msdr

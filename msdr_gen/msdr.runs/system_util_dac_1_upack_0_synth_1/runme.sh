@@ -37,4 +37,4 @@ EAStep()
      fi
 }
 
-EAStep vivado -log system_util_dac_1_upack_0.vds -m64 -tempDir ../../../../../../msdr_gen/.Xil -product Vivado -mode batch -messageDb vivado.pb -notrace -source system_util_dac_1_upack_0.tcl
+EAStep vivado -log system_util_dac_1_upack_0.vds -m64 -tempDir msdr_gen/.Xil -product Vivado -mode batch -messageDb vivado.pb -notrace -source system_util_dac_1_upack_0.tcl

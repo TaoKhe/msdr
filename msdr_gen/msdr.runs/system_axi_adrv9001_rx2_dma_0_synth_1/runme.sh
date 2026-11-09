@@ -37,4 +37,4 @@ EAStep()
      fi
 }
 
-EAStep vivado -log system_axi_adrv9001_rx2_dma_0.vds -m64 -tempDir ../../../../../../msdr_gen/.Xil -product Vivado -mode batch -messageDb vivado.pb -notrace -source system_axi_adrv9001_rx2_dma_0.tcl
+EAStep vivado -log system_axi_adrv9001_rx2_dma_0.vds -m64 -tempDir msdr_gen/.Xil -product Vivado -mode batch -messageDb vivado.pb -notrace -source system_axi_adrv9001_rx2_dma_0.tcl

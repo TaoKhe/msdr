@@ -3,7 +3,7 @@
 ### SPDX short identifier: ADIBSD
 ###############################################################################
 
-source $ad_hdl_dir/projects/scripts/adi_pd.tcl
+source $ad_script_dir/adi_pd.tcl
 sysid_gen_sys_init_file LVDS
 
 set t12_root [file normalize [file join [file dirname [info script]] ..]]
