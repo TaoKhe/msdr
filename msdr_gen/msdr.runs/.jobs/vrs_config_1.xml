@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<Runs Version="1" Minor="0">
+	<Run Id="system_sys_ps8_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_sys_ps8_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_sys_rstgen_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_sys_rstgen_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_axi_sysid_0_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_sysid_0_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_rom_sys_0_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_rom_sys_0_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_axi_hpm0_lpd_interconnect_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_hpm0_lpd_interconnect_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_axi_adrv9001_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_adrv9001_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_axi_adrv9001_rx1_dma_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_adrv9001_rx1_dma_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_util_adc_1_pack_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_util_adc_1_pack_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_axi_adrv9001_rx2_dma_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_adrv9001_rx2_dma_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_util_adc_2_pack_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_util_adc_2_pack_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_axi_adrv9001_tx1_dma_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_adrv9001_tx1_dma_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_util_dac_1_upack_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_util_dac_1_upack_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_axi_adrv9001_tx2_dma_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_adrv9001_tx2_dma_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_util_dac_2_upack_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_util_dac_2_upack_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_axi_hpc0_interconnect_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_hpc0_interconnect_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_axi_t12_gpio_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_t12_gpio_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_axi_t12_aux_gpio_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_t12_aux_gpio_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_axi_quad_spi_lb_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_quad_spi_lb_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="system_axi_quad_spi_hb_0_synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_quad_spi_hb_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="synth_1" LaunchDir="/home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado">
+		<Parent Id="system_sys_ps8_0_synth_1"/>
+		<Parent Id="system_sys_rstgen_0_synth_1"/>
+		<Parent Id="system_axi_sysid_0_0_synth_1"/>
+		<Parent Id="system_rom_sys_0_0_synth_1"/>
+		<Parent Id="system_axi_hpm0_lpd_interconnect_0_synth_1"/>
+		<Parent Id="system_axi_adrv9001_0_synth_1"/>
+		<Parent Id="system_axi_adrv9001_rx1_dma_0_synth_1"/>
+		<Parent Id="system_util_adc_1_pack_0_synth_1"/>
+		<Parent Id="system_axi_adrv9001_rx2_dma_0_synth_1"/>
+		<Parent Id="system_util_adc_2_pack_0_synth_1"/>
+		<Parent Id="system_axi_adrv9001_tx1_dma_0_synth_1"/>
+		<Parent Id="system_util_dac_1_upack_0_synth_1"/>
+		<Parent Id="system_axi_adrv9001_tx2_dma_0_synth_1"/>
+		<Parent Id="system_util_dac_2_upack_0_synth_1"/>
+		<Parent Id="system_axi_hpc0_interconnect_0_synth_1"/>
+		<Parent Id="system_axi_t12_gpio_0_synth_1"/>
+		<Parent Id="system_axi_t12_aux_gpio_0_synth_1"/>
+		<Parent Id="system_axi_quad_spi_lb_0_synth_1"/>
+		<Parent Id="system_axi_quad_spi_hb_0_synth_1"/>
+	</Run>
+	<Parameters>
+		<Parameter Name="runs.monitorLSFJobs" Val="true" Type="bool"/>
+		<Parameter Name="runs.enableClusterConf" Val="true" Type="bool"/>
+		<Parameter Name="general.ignorePathLengthChecks" Val="true" Type="bool"/>
+		<Parameter Name="general.shortenLongPath" Val="true" Type="bool"/>
+	</Parameters>
+	<ProductInfo Name="vivado"/>
+</Runs>
+

@@ -1,0 +1,37 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:36:09 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Mon Nov  9 18:25:47 2026
+# Process ID: 31784
+# Current directory: /home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_adrv9001_tx2_dma_0_synth_1
+# Command line: vivado -log system_axi_adrv9001_tx2_dma_0.vds -tempDir ../../../../../../msdr_gen/.Xil -product Vivado -mode batch -messageDb vivado.pb -notrace -source system_axi_adrv9001_tx2_dma_0.tcl
+# Log file: /home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_adrv9001_tx2_dma_0_synth_1/system_axi_adrv9001_tx2_dma_0.vds
+# Journal file: /home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_adrv9001_tx2_dma_0_synth_1/vivado.jou
+# Running On        :taokhe
+# Platform          :Ubuntu
+# Operating System  :Ubuntu 22.04.5 LTS
+# Processor Detail  :Intel(R) Core(TM) Ultra 5 135H
+# CPU Frequency     :1783.401 MHz
+# CPU Physical cores:14
+# CPU Logical cores :18
+# Host memory       :15618 MB
+# Swap memory       :24576 MB
+# Total Virtual     :40194 MB
+# Available Virtual :30700 MB
+#-----------------------------------------------------------
+source system_axi_adrv9001_tx2_dma_0.tcl -notrace
+create_project: Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1458.395 ; gain = 43.836 ; free physical = 3704 ; free virtual = 28101
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/taokhe/Projects/in/msdr/src/ip/adi_hdl/library'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/taokhe/Tools/Xilinx/Vivado/2024.1/data/ip'.
+INFO: [IP_Flow 19-6924] IPCACHE: Running cache check for IP inst: system_axi_adrv9001_tx2_dma_0
+INFO: [IP_Flow 19-6922] IPCACHE: Exporting cached entry 86808299c0955185 to dir: /home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_adrv9001_tx2_dma_0_synth_1
+INFO: [IP_Flow 19-6928] IPCACHE: copied cached file /home/taokhe/Projects/in/msdr/src/ip/adi_hdl/ipcache/8/6/86808299c0955185/system_axi_adrv9001_tx2_dma_0_sim_netlist.vhdl to /home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_adrv9001_tx2_dma_0_synth_1/system_axi_adrv9001_tx2_dma_0_sim_netlist.vhdl.
+INFO: [IP_Flow 19-6928] IPCACHE: copied cached file /home/taokhe/Projects/in/msdr/src/ip/adi_hdl/ipcache/8/6/86808299c0955185/system_axi_adrv9001_tx2_dma_0_stub.v to /home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_adrv9001_tx2_dma_0_synth_1/system_axi_adrv9001_tx2_dma_0_stub.v.
+INFO: [IP_Flow 19-6928] IPCACHE: copied cached file /home/taokhe/Projects/in/msdr/src/ip/adi_hdl/ipcache/8/6/86808299c0955185/system_axi_adrv9001_tx2_dma_0.dcp to /home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_adrv9001_tx2_dma_0_synth_1/system_axi_adrv9001_tx2_dma_0.dcp.
+INFO: [IP_Flow 19-6928] IPCACHE: copied cached file /home/taokhe/Projects/in/msdr/src/ip/adi_hdl/ipcache/8/6/86808299c0955185/system_axi_adrv9001_tx2_dma_0_sim_netlist.v to /home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_adrv9001_tx2_dma_0_synth_1/system_axi_adrv9001_tx2_dma_0_sim_netlist.v.
+INFO: [IP_Flow 19-6928] IPCACHE: copied cached file /home/taokhe/Projects/in/msdr/src/ip/adi_hdl/ipcache/8/6/86808299c0955185/system_axi_adrv9001_tx2_dma_0_stub.vhdl to /home/taokhe/Projects/in/msdr/msdr_gen/msdr.runs/system_axi_adrv9001_tx2_dma_0_synth_1/system_axi_adrv9001_tx2_dma_0_stub.vhdl.
+INFO: [IP_Flow 19-4838] Using cached IP synthesis design for IP system_axi_adrv9001_tx2_dma_0, cache-ID = 86808299c0955185.
+INFO: [Common 17-206] Exiting Vivado at Mon Nov  9 18:26:04 2026...

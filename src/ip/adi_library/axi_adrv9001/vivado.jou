@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:36:09 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Mon Nov  2 16:55:07 2026
+# Process ID: 166012
+# Current directory: /home/taokhe/Projects/in/msdr/src/ip/adi_library/axi_adrv9001
+# Command line: vivado -mode batch -source axi_adrv9001_ip.tcl
+# Log file: /home/taokhe/Projects/in/msdr/src/ip/adi_library/axi_adrv9001/vivado.log
+# Journal file: /home/taokhe/Projects/in/msdr/src/ip/adi_library/axi_adrv9001/vivado.jou
+# Running On        :taokhe
+# Platform          :Ubuntu
+# Operating System  :Ubuntu 22.04.5 LTS
+# Processor Detail  :Intel(R) Core(TM) Ultra 5 135H
+# CPU Frequency     :2529.676 MHz
+# CPU Physical cores:14
+# CPU Logical cores :18
+# Host memory       :15618 MB
+# Swap memory       :24576 MB
+# Total Virtual     :40194 MB
+# Available Virtual :12791 MB
+#-----------------------------------------------------------
+source axi_adrv9001_ip.tcl
