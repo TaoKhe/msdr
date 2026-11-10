@@ -3,8 +3,8 @@
 # SW Build 5076996 on Wed May 22 18:36:09 MDT 2024
 # IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
 # SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
-# Start of session at: Tue Nov 10 00:59:10 2026
-# Process ID: 81840
+# Start of session at: Tue Nov 10 08:21:40 2026
+# Process ID: 260957
 # Current directory: /home/taokhe/Projects/in/msdr
 # Command line: vivado -mode batch -notrace -log msdr_gen/vivado.log -journal msdr_gen/vivado.jou -tempDir msdr_gen/.Xil -source /home/taokhe/Projects/in/msdr/scripts/system_project.tcl
 # Log file: /home/taokhe/Projects/in/msdr/msdr_gen/vivado.log
@@ -13,12 +13,12 @@
 # Platform          :Ubuntu
 # Operating System  :Ubuntu 22.04.5 LTS
 # Processor Detail  :Intel(R) Core(TM) Ultra 5 135H
-# CPU Frequency     :1545.369 MHz
+# CPU Frequency     :1900.000 MHz
 # CPU Physical cores:14
 # CPU Logical cores :18
 # Host memory       :15618 MB
 # Swap memory       :24576 MB
 # Total Virtual     :40194 MB
-# Available Virtual :27992 MB
+# Available Virtual :23190 MB
 #-----------------------------------------------------------
 source /home/taokhe/Projects/in/msdr/scripts/system_project.tcl -notrace

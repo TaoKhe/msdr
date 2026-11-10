@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2024.1 (lin64) Build 5076996 Wed May 22 18:36:09 MDT 2024
-| Date             : Tue Nov 10 01:14:34 2026
+| Date             : Tue Nov 10 08:37:33 2026
 | Host             : taokhe running 64-bit Ubuntu 22.04.5 LTS
 | Command          : report_power -file system_top_power_routed.rpt -pb system_top_power_summary_routed.pb -rpx system_top_power_routed.rpx
 | Design           : system_top
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 3.531        |
+| Total On-Chip Power (W)  | 3.534        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 2.687        |
+| Dynamic (W)              | 2.690        |
 | Device Static (W)        | 0.844        |
 | Effective TJA (C/W)      | 1.0          |
 | Max Ambient (C)          | 96.5         |
@@ -53,23 +53,23 @@ Table of Contents
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
 | Clocks                   |     0.144 |       16 |       --- |             --- |
-| CLB Logic                |     0.246 |    73946 |       --- |             --- |
-|   LUT as Logic           |     0.170 |    24853 |    341280 |            7.28 |
+| CLB Logic                |     0.245 |    73945 |       --- |             --- |
+|   LUT as Logic           |     0.170 |    24855 |    341280 |            7.28 |
 |   LUT as Distributed RAM |     0.029 |     1032 |    184320 |            0.56 |
 |   Register               |     0.023 |    37826 |    682560 |            5.54 |
 |   CARRY8                 |     0.015 |     1964 |     42660 |            4.60 |
 |   LUT as Shift Register  |     0.008 |      799 |    184320 |            0.43 |
 |   Others                 |     0.000 |     2482 |       --- |             --- |
 |   F7/F8 Muxes            |     0.000 |      135 |    341280 |            0.04 |
-| Signals                  |     0.165 |    48773 |       --- |             --- |
+| Signals                  |     0.169 |    48772 |       --- |             --- |
 | Block RAM                |     0.006 |        4 |       744 |            0.54 |
 | DSPs                     |     0.009 |       12 |      3528 |            0.34 |
 | I/O                      |     0.096 |      147 |       328 |           44.82 |
 | PS8                      |     2.022 |        1 |       --- |             --- |
 | Static Power             |     0.844 |          |           |                 |
 |   PS Static              |     0.101 |          |           |                 |
-|   PL Static              |     0.742 |          |           |                 |
-| Total                    |     3.531 |          |           |                 |
+|   PL Static              |     0.743 |          |           |                 |
+| Total                    |     3.534 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -79,7 +79,7 @@ Table of Contents
 +-----------------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source          | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint          |       0.850 |     0.910 |       0.669 |      0.241 |       NA    | Unspecified | NA         |
+| Vccint          |       0.850 |     0.914 |       0.673 |      0.241 |       NA    | Unspecified | NA         |
 | Vccint_io       |       0.850 |     0.056 |       0.020 |      0.036 |       NA    | Unspecified | NA         |
 | Vccbram         |       0.850 |     0.005 |       0.001 |      0.004 |       NA    | Unspecified | NA         |
 | Vccaux          |       1.800 |     0.224 |       0.000 |      0.224 |       NA    | Unspecified | NA         |
@@ -174,7 +174,7 @@ Table of Contents
 +---------------------------------+-----------+
 | Name                            | Power (W) |
 +---------------------------------+-----------+
-| system_top                      |     2.687 |
+| system_top                      |     2.690 |
 |   dgpio_0_IOBUF_inst            |     0.001 |
 |   dgpio_10_IOBUF_inst           |     0.001 |
 |   dgpio_11_IOBUF_inst           |     0.001 |
@@ -188,9 +188,9 @@ Table of Contents
 |   dgpio_8_IOBUF_inst            |     0.001 |
 |   dgpio_9_IOBUF_inst            |     0.001 |
 |   gp_int_IOBUF_inst             |     0.001 |
-|   i_system_wrapper              |     2.631 |
-|     system_i                    |     2.631 |
-|       axi_adrv9001              |     0.474 |
+|   i_system_wrapper              |     2.634 |
+|     system_i                    |     2.634 |
+|       axi_adrv9001              |     0.478 |
 |       axi_adrv9001_rx1_dma      |     0.006 |
 |       axi_adrv9001_rx2_dma      |     0.005 |
 |       axi_adrv9001_tx1_dma      |     0.006 |

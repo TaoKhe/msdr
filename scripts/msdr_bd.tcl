@@ -141,6 +141,7 @@ analog.com:user:axi_dmac:1.0\
 analog.com:user:util_cpack2:1.0\
 analog.com:user:util_upack2:1.0\
 xilinx.com:ip:axi_gpio:2.0\
+xilinx.com:ip:axi_quad_spi:3.2\
 "
 
    set list_ips_missing ""
@@ -173,7 +174,7 @@ if { $bCheckIPsPassed != 1 } {
 
 # Procedure to create entire design; Provide argument to make
 # procedure reusable. If parentCell is "", will use root.
-proc create_root_design { parentCell sysid_directory } {
+proc create_root_design { parentCell } {
 
   variable script_folder
   variable design_name
@@ -207,13 +208,13 @@ proc create_root_design { parentCell sysid_directory } {
 
   # Create ports
   set spi0_csn [ create_bd_port -dir O -from 2 -to 0 spi0_csn ]
-  set spi0_sclk [ create_bd_port -dir O spi_clk ]
-  set spi0_mosi [ create_bd_port -dir O spi_dio ]
-  set spi0_miso [ create_bd_port -dir I spi_do ]
+  set spi_clk [ create_bd_port -dir O spi_clk ]
+  set spi_dio [ create_bd_port -dir O spi_dio ]
+  set spi_do [ create_bd_port -dir I spi_do ]
   set spi1_csn [ create_bd_port -dir O -from 2 -to 0 spi1_csn ]
-  set spi1_sclk [ create_bd_port -dir O dcosc_sclk ]
-  set spi1_mosi [ create_bd_port -dir O dcosc_mosi ]
-  set spi1_miso [ create_bd_port -dir I dcosc_miso ]
+  set dcosc_sclk [ create_bd_port -dir O dcosc_sclk ]
+  set dcosc_mosi [ create_bd_port -dir O dcosc_mosi ]
+  set dcosc_miso [ create_bd_port -dir I dcosc_miso ]
   set t12_aux_gpio_i [ create_bd_port -dir I -from 16 -to 0 t12_aux_gpio_i ]
   set t12_aux_gpio_o [ create_bd_port -dir O -from 16 -to 0 t12_aux_gpio_o ]
   set t12_aux_gpio_t [ create_bd_port -dir O -from 16 -to 0 t12_aux_gpio_t ]
@@ -229,7 +230,7 @@ proc create_root_design { parentCell sysid_directory } {
   set gpio_o [ create_bd_port -dir O -from 94 -to 0 gpio_o ]
   set gpio_t [ create_bd_port -dir O -from 94 -to 0 gpio_t ]
   set tx_output_enable [ create_bd_port -dir I tx_output_enable ]
-  set ref_clk [ create_bd_port -dir I fpga_ref_clk ]
+  set fpga_ref_clk [ create_bd_port -dir I fpga_ref_clk ]
   set mcs_in [ create_bd_port -dir I mcs_in ]
   set mcs_out [ create_bd_port -dir O mcs_out ]
   set mssi_sync [ create_bd_port -dir I mssi_sync ]
@@ -743,7 +744,7 @@ Port;FD4A0000;FD4AFFFF;0|FPD;DPDMA;FD4C0000;FD4CFFFF;0|FPD;DDR_XMPU5_CFG;FD05000
   # Create instance: rom_sys_0, and set properties
   set rom_sys_0 [ create_bd_cell -type ip -vlnv analog.com:user:sysid_rom:1.0 rom_sys_0 ]
   set_property -dict [list \
-    CONFIG.PATH_TO_FILE [file join $sysid_directory mem_init_sys.txt] \
+    CONFIG.PATH_TO_FILE {/home/taokhe/Projects/in/msdr/msdr_gen/mem_init_sys.txt} \
     CONFIG.ROM_ADDR_BITS {9} \
   ] $rom_sys_0
 
@@ -896,7 +897,8 @@ Port;FD4A0000;FD4AFFFF;0|FPD;DPDMA;FD4C0000;FD4CFFFF;0|FPD;DDR_XMPU5_CFG;FD05000
     CONFIG.C_TRI_DEFAULT_2 {0xFFFFFFFF} \
   ] $axi_t12_gpio
 
-  # Auxiliary control lines: DSA interfaces, BBU GPIO, TRX header, and TFT SFL.
+
+  # Create instance: axi_t12_aux_gpio, and set properties
   set axi_t12_aux_gpio [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 axi_t12_aux_gpio ]
   set_property -dict [list \
     CONFIG.C_ALL_INPUTS {0} \
@@ -907,7 +909,8 @@ Port;FD4A0000;FD4AFFFF;0|FPD;DPDMA;FD4C0000;FD4CFFFF;0|FPD;DDR_XMPU5_CFG;FD05000
     CONFIG.C_TRI_DEFAULT {0x0001FFFF} \
   ] $axi_t12_aux_gpio
 
-  # Standard-mode master controllers; SCK ratio 16 starts conservatively.
+
+  # Create instance: axi_quad_spi_lb, and set properties
   set axi_quad_spi_lb [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_quad_spi:3.2 axi_quad_spi_lb ]
   set_property -dict [list \
     CONFIG.C_FIFO_DEPTH {16} \
@@ -920,6 +923,8 @@ Port;FD4A0000;FD4AFFFF;0|FPD;DPDMA;FD4C0000;FD4CFFFF;0|FPD;DDR_XMPU5_CFG;FD05000
     CONFIG.Master_mode {1} \
   ] $axi_quad_spi_lb
 
+
+  # Create instance: axi_quad_spi_hb, and set properties
   set axi_quad_spi_hb [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_quad_spi:3.2 axi_quad_spi_hb ]
   set_property -dict [list \
     CONFIG.C_FIFO_DEPTH {16} \
@@ -994,14 +999,6 @@ Port;FD4A0000;FD4AFFFF;0|FPD;DPDMA;FD4C0000;FD4CFFFF;0|FPD;DDR_XMPU5_CFG;FD05000
   connect_bd_net -net axi_adrv9001_rx2_dma_irq [get_bd_pins axi_adrv9001_rx2_dma/irq] [get_bd_pins sys_concat_intc_1/In4]
   connect_bd_net -net axi_adrv9001_rx2_enable [get_bd_pins axi_adrv9001/rx2_enable] [get_bd_ports rx2_enable]
   connect_bd_net -net axi_adrv9001_tdd_sync_cntr [get_bd_pins axi_adrv9001/tdd_sync_cntr] [get_bd_ports tdd_sync_cntr]
-  connect_bd_net -net lb_tft_sclk [get_bd_pins axi_quad_spi_lb/sck_o] [get_bd_ports lb_tft_sclk]
-  connect_bd_net -net lb_tft_mosi [get_bd_pins axi_quad_spi_lb/io0_o] [get_bd_ports lb_tft_mosi]
-  connect_bd_net -net lb_tft_miso [get_bd_ports lb_tft_miso] [get_bd_pins axi_quad_spi_lb/io1_i]
-  connect_bd_net -net lb_tft_csn [get_bd_pins axi_quad_spi_lb/ss_o] [get_bd_ports lb_tft_csn]
-  connect_bd_net -net hb_tft_sclk [get_bd_pins axi_quad_spi_hb/sck_o] [get_bd_ports hb_tft_sclk]
-  connect_bd_net -net hb_tft_mosi [get_bd_pins axi_quad_spi_hb/io0_o] [get_bd_ports hb_tft_mosi]
-  connect_bd_net -net hb_tft_miso [get_bd_ports hb_tft_miso] [get_bd_pins axi_quad_spi_hb/io1_i]
-  connect_bd_net -net hb_tft_csn [get_bd_pins axi_quad_spi_hb/ss_o] [get_bd_ports hb_tft_csn]
   connect_bd_net -net axi_adrv9001_tx1_dclk_out_n_NC [get_bd_pins axi_adrv9001/tx1_dclk_out_n_NC] [get_bd_ports tx1_dclk_out_n]
   connect_bd_net -net axi_adrv9001_tx1_dclk_out_p_dclk_out [get_bd_pins axi_adrv9001/tx1_dclk_out_p_dclk_out] [get_bd_ports tx1_dclk_out_p]
   connect_bd_net -net axi_adrv9001_tx1_dma_irq [get_bd_pins axi_adrv9001_tx1_dma/irq] [get_bd_pins sys_concat_intc_1/In1]
@@ -1023,18 +1020,26 @@ Port;FD4A0000;FD4AFFFF;0|FPD;DPDMA;FD4C0000;FD4CFFFF;0|FPD;DDR_XMPU5_CFG;FD05000
   connect_bd_net -net axi_adrv9001_tx2_strobe_out_n_NC [get_bd_pins axi_adrv9001/tx2_strobe_out_n_NC] [get_bd_ports tx2_strobe_out_n]
   connect_bd_net -net axi_adrv9001_tx2_strobe_out_p_strobe_out [get_bd_pins axi_adrv9001/tx2_strobe_out_p_strobe_out] [get_bd_ports tx2_strobe_out_p]
   connect_bd_net -net axi_sysid_0_rom_addr [get_bd_pins axi_sysid_0/rom_addr] [get_bd_pins rom_sys_0/rom_addr]
+  connect_bd_net -net axi_t12_aux_gpio_gpio_io_i [get_bd_ports t12_aux_gpio_i] [get_bd_pins axi_t12_aux_gpio/gpio_io_i]
+  connect_bd_net -net axi_t12_aux_gpio_gpio_io_o [get_bd_pins axi_t12_aux_gpio/gpio_io_o] [get_bd_ports t12_aux_gpio_o]
+  connect_bd_net -net axi_t12_aux_gpio_gpio_io_t [get_bd_pins axi_t12_aux_gpio/gpio_io_t] [get_bd_ports t12_aux_gpio_t]
   connect_bd_net -net axi_t12_gpio_gpio2_io_o [get_bd_pins axi_t12_gpio/gpio2_io_o] [get_bd_ports t12_gpio1_o]
   connect_bd_net -net axi_t12_gpio_gpio2_io_t [get_bd_pins axi_t12_gpio/gpio2_io_t] [get_bd_ports t12_gpio1_t]
   connect_bd_net -net axi_t12_gpio_gpio_io_o [get_bd_pins axi_t12_gpio/gpio_io_o] [get_bd_ports t12_gpio0_o]
   connect_bd_net -net axi_t12_gpio_gpio_io_t [get_bd_pins axi_t12_gpio/gpio_io_t] [get_bd_ports t12_gpio0_t]
-  connect_bd_net -net axi_t12_aux_gpio_gpio_io_i [get_bd_ports t12_aux_gpio_i] [get_bd_pins axi_t12_aux_gpio/gpio_io_i]
-  connect_bd_net -net axi_t12_aux_gpio_gpio_io_o [get_bd_pins axi_t12_aux_gpio/gpio_io_o] [get_bd_ports t12_aux_gpio_o]
-  connect_bd_net -net axi_t12_aux_gpio_gpio_io_t [get_bd_pins axi_t12_aux_gpio/gpio_io_t] [get_bd_ports t12_aux_gpio_t]
   connect_bd_net -net gpio_i_1 [get_bd_ports gpio_i] [get_bd_pins sys_ps8/emio_gpio_i]
   connect_bd_net -net gpio_rx1_enable_in_1 [get_bd_ports gpio_rx1_enable_in] [get_bd_pins axi_adrv9001/gpio_rx1_enable_in]
   connect_bd_net -net gpio_rx2_enable_in_1 [get_bd_ports gpio_rx2_enable_in] [get_bd_pins axi_adrv9001/gpio_rx2_enable_in]
   connect_bd_net -net gpio_tx1_enable_in_1 [get_bd_ports gpio_tx1_enable_in] [get_bd_pins axi_adrv9001/gpio_tx1_enable_in]
   connect_bd_net -net gpio_tx2_enable_in_1 [get_bd_ports gpio_tx2_enable_in] [get_bd_pins axi_adrv9001/gpio_tx2_enable_in]
+  connect_bd_net -net hb_tft_csn [get_bd_pins axi_quad_spi_hb/ss_o] [get_bd_ports hb_tft_csn]
+  connect_bd_net -net hb_tft_miso [get_bd_ports hb_tft_miso] [get_bd_pins axi_quad_spi_hb/io1_i]
+  connect_bd_net -net hb_tft_mosi [get_bd_pins axi_quad_spi_hb/io0_o] [get_bd_ports hb_tft_mosi]
+  connect_bd_net -net hb_tft_sclk [get_bd_pins axi_quad_spi_hb/sck_o] [get_bd_ports hb_tft_sclk]
+  connect_bd_net -net lb_tft_csn [get_bd_pins axi_quad_spi_lb/ss_o] [get_bd_ports lb_tft_csn]
+  connect_bd_net -net lb_tft_miso [get_bd_ports lb_tft_miso] [get_bd_pins axi_quad_spi_lb/io1_i]
+  connect_bd_net -net lb_tft_mosi [get_bd_pins axi_quad_spi_lb/io0_o] [get_bd_ports lb_tft_mosi]
+  connect_bd_net -net lb_tft_sclk [get_bd_pins axi_quad_spi_lb/sck_o] [get_bd_ports lb_tft_sclk]
   connect_bd_net -net mcs_in_1 [get_bd_ports mcs_in] [get_bd_pins axi_adrv9001/mcs_in]
   connect_bd_net -net mssi_sync_1 [get_bd_ports mssi_sync] [get_bd_pins axi_adrv9001/mssi_sync_in]
   connect_bd_net -net ref_clk_1 [get_bd_ports fpga_ref_clk] [get_bd_pins axi_adrv9001/ref_clk]
@@ -1105,11 +1110,11 @@ Port;FD4A0000;FD4AFFFF;0|FPD;DPDMA;FD4C0000;FD4CFFFF;0|FPD;DDR_XMPU5_CFG;FD05000
   assign_bd_address -offset 0x84A40000 -range 0x00001000 -with_name SEG_data_axi_adrv9001_rx2_dma -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_adrv9001_rx2_dma/s_axi/axi_lite] -force
   assign_bd_address -offset 0x84A50000 -range 0x00001000 -with_name SEG_data_axi_adrv9001_tx1_dma -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_adrv9001_tx1_dma/s_axi/axi_lite] -force
   assign_bd_address -offset 0x84A60000 -range 0x00001000 -with_name SEG_data_axi_adrv9001_tx2_dma -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_adrv9001_tx2_dma/s_axi/axi_lite] -force
-  assign_bd_address -offset 0x85000000 -range 0x00010000 -with_name SEG_data_axi_sysid_0 -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_sysid_0/s_axi/axi_lite] -force
-  assign_bd_address -offset 0x81200000 -range 0x00001000 -with_name SEG_data_axi_t12_gpio -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_t12_gpio/S_AXI/Reg] -force
-  assign_bd_address -offset 0x81210000 -range 0x00001000 -with_name SEG_data_axi_quad_spi_lb -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_quad_spi_lb/AXI_LITE/Reg] -force
   assign_bd_address -offset 0x81220000 -range 0x00001000 -with_name SEG_data_axi_quad_spi_hb -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_quad_spi_hb/AXI_LITE/Reg] -force
+  assign_bd_address -offset 0x81210000 -range 0x00001000 -with_name SEG_data_axi_quad_spi_lb -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_quad_spi_lb/AXI_LITE/Reg] -force
+  assign_bd_address -offset 0x85000000 -range 0x00010000 -with_name SEG_data_axi_sysid_0 -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_sysid_0/s_axi/axi_lite] -force
   assign_bd_address -offset 0x81230000 -range 0x00001000 -with_name SEG_data_axi_t12_aux_gpio -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_t12_aux_gpio/S_AXI/Reg] -force
+  assign_bd_address -offset 0x81200000 -range 0x00001000 -with_name SEG_data_axi_t12_gpio -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_t12_gpio/S_AXI/Reg] -force
   assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces axi_adrv9001_rx1_dma/m_dest_axi] [get_bd_addr_segs sys_ps8/SAXIGP0/HPC0_DDR_LOW] -force
   assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces axi_adrv9001_rx2_dma/m_dest_axi] [get_bd_addr_segs sys_ps8/SAXIGP0/HPC0_DDR_LOW] -force
   assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces axi_adrv9001_tx1_dma/m_src_axi] [get_bd_addr_segs sys_ps8/SAXIGP0/HPC0_DDR_LOW] -force
@@ -1129,4 +1134,6 @@ Port;FD4A0000;FD4AFFFF;0|FPD;DPDMA;FD4C0000;FD4CFFFF;0|FPD;DDR_XMPU5_CFG;FD05000
 # MAIN FLOW
 ##################################################################
 
-create_root_design "" $mem_init_sys_file_path
+create_root_design ""
+
+
