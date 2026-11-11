@@ -1,0 +1,10 @@
+vlib work
+vmap -c
+vcom  CrestFactorReduction_pkg.vhd
+vcom  Sqrt.vhd
+vcom  abs_rsvd.vhd
+vcom  Divide.vhd
+vcom  Divide2.vhd
+vcom  signum.vhd
+vcom  CrestFactorReduction_block.vhd
+vcom  CrestFactorReduction.vhd

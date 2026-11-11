@@ -1,0 +1,1 @@
+var modelInfo = {model:"ddc"};var modelHierarchy=[{model:"ddc",relativePath:"_internal.html",parent:"null"},];var AddCode = true;var rptComponent = "HDL";

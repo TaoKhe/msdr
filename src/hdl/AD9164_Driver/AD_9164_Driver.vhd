@@ -1,0 +1,163 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 13.02.2026 15:09:14
+-- Design Name: 
+-- Module Name: AD_9164_Driver - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use work.gpio_types_pkg.ALL;
+library UNISIM;
+use UNISIM.VComponents.all;
+use IEEE.NUMERIC_STD.ALL;
+use ieee.std_logic_arith.conv_std_logic_vector;
+
+entity AD_9164_Driver is
+    Port   (clk     		: in  std_logic;
+    		enable      	: in  std_logic;
+    		Set_DAC_freq	: in  std_logic;
+			freq_in     	: in  std_logic_vector(31 downto 0);
+			sclk       	 	: out std_logic;
+			csn         	: out std_logic;
+			mosi        	: out std_logic;
+			busy        	: out std_logic);  -- 19/10/2026: '1' khi dang ghi (fsm_reset /= check_freq)
+end AD_9164_Driver;
+
+architecture Behavioral of AD_9164_Driver is
+
+	component DAC_mult_B
+		PORT (  CLK : IN STD_LOGIC;
+				A : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+				B : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+				CE : IN STD_LOGIC;
+				P : OUT STD_LOGIC_VECTOR(63 DOWNTO 0));
+		END component;
+    			
+    type fsm_reset_type is (check_freq, store, wait_mult, first_bit, set_Reg, sep_0, sep_1, sep_2, first_bit2, close_FTW, sep_3);
+    signal fsm_reset    : fsm_reset_type := check_freq;   
+	signal sclks		: std_logic := '0';
+	signal DAC_mult_CE	: std_logic := '0';
+	signal bit_cnt		: integer range -1 to 71 := 71;
+	signal wait_mult_cnt: integer range 0 to 5 := 0;
+	signal DAC_freq 	: std_logic_vector(31 downto 0) := (others => '0');
+	signal P 			: std_logic_vector(63 downto 0) := (others => '0');
+	signal FTW			: std_logic_vector(47 downto 0) := (others => '0');
+	signal Reg_word		: std_logic_vector(71 downto 0) := (others => '0');
+	constant Close_word	: std_logic_vector(23 downto 0) := x"011300";
+	
+begin
+
+	DAC_mult_inst : DAC_mult_B
+		PORT MAP (  CLK 		=> clk,
+					CE 			=> '1',
+					A 			=> DAC_freq,
+					B 			=> x"2DD01FC0",
+					P 			=> P);
+					
+	FTW 	<= std_logic_vector(P(60 downto 13)); -- / 8192
+	
+	Reg_word <= x"0119" & FTW & x"01";
+	
+	process(clk)
+		begin	
+			if rising_edge(clk) then
+				case fsm_reset is
+					when check_freq	=>	if ((Set_DAC_freq = '1') and (enable = '1')) then
+											DAC_freq 	<= freq_in;
+											DAC_mult_CE <= '1';
+											csn		  	<= '0';
+											fsm_reset   <= store;
+										else
+											DAC_mult_CE <= '0';
+											csn	  		<= '1';
+											fsm_reset   <= check_freq;
+										end if;
+										
+					when store		=>  wait_mult_cnt 	<= 0;
+										sclks			<= '0';
+										bit_cnt     	<= 71;
+										fsm_reset   	<= wait_mult;
+
+					when wait_mult	=> 	if (wait_mult_cnt = 5) then
+											wait_mult_cnt 	<= 0;
+											DAC_mult_CE 	<= '0';
+											fsm_reset   	<= first_bit;
+										else
+											wait_mult_cnt 	<= wait_mult_cnt + 1;
+										end if;
+					when first_bit	=>  bit_cnt     <= bit_cnt - 1;
+										sclks		<= '0';
+										csn	  		<= '0';
+										mosi	    <= Reg_word(bit_cnt);
+										fsm_reset   <= set_Reg;
+										
+					when set_Reg	=>	if (sclks = '1') then
+											bit_cnt     <= bit_cnt - 1;
+											mosi	    <= Reg_word(bit_cnt);
+											sclks		<= '0';
+											if (bit_cnt = 0) then
+												fsm_reset   <= sep_0;
+											end if; 
+											sclks 	<= '0';
+										else
+											sclks	<= '1';
+										end if;
+										
+					when sep_0   	=> sclks 		<= '1';
+									   fsm_reset   	<= sep_1;
+									   
+					when sep_1   	=> sclks 		<= '0';
+									   csn	  		<= '1';
+									   fsm_reset   	<= sep_2;
+									   
+					when sep_2   	=> fsm_reset   	<= first_bit2;
+									   bit_cnt      <= 23;
+									   
+					when first_bit2	=>  bit_cnt     <= bit_cnt - 1;
+										sclks		<= '0';
+										csn	  		<= '0';
+										mosi	    <= Close_word(bit_cnt);
+										fsm_reset   <= close_FTW;
+									   
+					when close_FTW  => if (sclks = '1') then
+											bit_cnt     <= bit_cnt - 1;
+											mosi	    <= Close_word(bit_cnt);
+											sclks		<= '0';
+											if (bit_cnt = 0) then
+												fsm_reset   <= sep_3;
+											end if; 
+											sclks 	<= '0';
+										else
+											sclks	<= '1';
+										end if;
+										
+					when sep_3   	=> sclks 		<= '1';
+									   fsm_reset   	<= check_freq;
+									   
+					when others 	=> fsm_reset    <= check_freq;
+									   sclks		<= '0';
+				end case;
+			end if;
+		end process;
+
+	sclk <= sclks;
+	-- 19/10/2026: fsm_main.hop_exec_proc dung canh xuong cua busy lam dds_config_done
+	busy <= '0' when fsm_reset = check_freq else '1';
+	
+end Behavioral;

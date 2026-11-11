@@ -1,8 +1,0 @@
-#!/bin/bash
-
-SOURCE="ad_pack_tb.v"
-SOURCE+=" ../ad_pack.v"
-
-test_script_dir=$(cd -- "$(dirname -- "$0")" && pwd)
-cd "$test_script_dir" || exit 1
-source "$test_script_dir/run_tb.sh"

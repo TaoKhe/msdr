@@ -1,0 +1,10 @@
+vlib work
+vmap -c
+vcom  ddc_pkg.vhd
+vcom  FilterCoef.vhd
+vcom  FilterTapWvldIn.vhd
+vcom  subFilter.vhd
+vcom  FilterBank.vhd
+vcom  FIRDecimInteg.vhd
+vcom  FIR_Decimator.vhd
+vcom  ddc.vhd

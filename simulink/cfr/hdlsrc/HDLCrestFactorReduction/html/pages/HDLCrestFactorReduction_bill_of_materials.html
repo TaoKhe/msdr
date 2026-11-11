@@ -1,0 +1,3076 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="rtwreport.css" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>
+High-level Resource Utilization Report for HDLCrestFactorReduction
+</title>
+
+</head>
+<body bgcolor="#ffffff" link="0033CC" vlink="#666666" onload="try {if (top) {if (top.rtwPageOnLoad) top.rtwPageOnLoad('rtwIdBillOfMaterials'); else local_onload();}} catch(err) {};hdlTableShrink(this, 'Input_Port');hdlTableShrink(this, 'Output_Port');hdlTableShrink(this, 'Multiplier_2_1');hdlTableShrink(this, 'Register_2_1');hdlTableShrink(this, 'Register_2_2');hdlTableShrink(this, 'Register_2_3');hdlTableShrink(this, 'Register_2_4');hdlTableShrink(this, 'Multiplexer_2_1');hdlTableShrink(this, 'Adder_3_1');hdlTableShrink(this, 'Subtractor_3_1');hdlTableShrink(this, 'Subtractor_3_2');hdlTableShrink(this, 'Subtractor_3_3');hdlTableShrink(this, 'Register_3_1');hdlTableShrink(this, 'Register_3_2');hdlTableShrink(this, 'Register_3_3');hdlTableShrink(this, 'Register_3_4');hdlTableShrink(this, 'Register_3_5');hdlTableShrink(this, 'Multiplexer_3_1');hdlTableShrink(this, 'Multiplexer_3_2');hdlTableShrink(this, 'Multiplexer_3_3');hdlTableShrink(this, 'Multiplexer_3_4');hdlTableShrink(this, 'Multiplexer_3_5');hdlTableShrink(this, 'Multiplier_4_1');hdlTableShrink(this, 'Adder_4_1');hdlTableShrink(this, 'Register_4_1');hdlTableShrink(this, 'Register_4_2');hdlTableShrink(this, 'Register_4_3');">
+<script>
+<!--
+function hdlTableShrink(o,tagNameStr)
+{
+var temp = document.getElementsByName(tagNameStr);
+if (temp[0].style.display == "")
+{
+	temp[0].style.display = "none";
+	o.innerHTML = '<span style="font-family:monospace">[+]</span>';
+}
+else
+{
+	temp[0].style.display = "";
+	o.innerHTML = '<span style="font-family:monospace">[-]</span>';
+}
+}
+// -->
+</script>
+<script>
+<!--
+function hdlTableCollapseAll(o, numNtks, numComps)
+{
+	var id = "";
+	for (i = 1; i <= numNtks; i++)
+	{
+		for (j = 1; j <= numComps; j++)
+		{
+			id = "Multiply" + "_" + i + "_" + j;
+			var temp = document.getElementsByName(id);
+			if (temp != null && temp.length > 0)
+			{
+				temp[0].style.display = "none";
+			}
+			id = "Adder" + "_" + i + "_" + j;
+			temp = document.getElementsByName(id);
+			if (temp != null && temp.length > 0)
+			{
+				temp[0].style.display = "none";
+			}
+			id = "Subtractor" + "_" + i + "_" + j;
+			temp = document.getElementsByName(id);
+			if (temp != null && temp.length > 0)
+			{
+				temp[0].style.display = "none";
+			}
+			id = "Register" + "_" + i + "_" + j;
+			temp = document.getElementsByName(id);
+			if (temp != null && temp.length > 0)
+			{
+				temp[0].style.display = "none";
+			}
+			id = "RAM" + "_" + i + "_" + j;
+			temp = document.getElementsByName(id);
+			if (temp != null && temp.length > 0)
+			{
+				temp[0].style.display = "none";
+			}
+			id = "Multiplexer" + "_" + i + "_" + j;
+			temp = document.getElementsByName(id);
+			if (temp != null && temp.length > 0)
+			{
+				temp[0].style.display = "none";
+			}
+		}
+	}
+	var collapsibles = document.getElementsByName('collapsible');
+	for (i = 0; i < collapsibles.length; i++)
+	{
+		collapsibles[i].innerHTML = '<span style="font-family:monospace">[+]</span>';
+	}
+}
+// -->
+</script>
+<script>
+<!--
+function hdlTableExpandAll(o, numNtks, numComps)
+{
+	var id = "";
+	for (i = 1; i <= numNtks; i++)
+	{
+		for (j = 1; j <= numComps; j++)
+		{
+			id = "Multiply" + "_" + i + "_" + j;
+			var temp = document.getElementsByName(id);
+			if (temp != null && temp.length > 0)
+			{
+				temp[0].style.display = "";
+			}
+			id = "Adder" + "_" + i + "_" + j;
+			temp = document.getElementsByName(id);
+			if (temp != null && temp.length > 0)
+			{
+				temp[0].style.display = "";
+			}
+			id = "Subtractor" + "_" + i + "_" + j;
+			temp = document.getElementsByName(id);
+			if (temp != null && temp.length > 0)
+			{
+				temp[0].style.display = "";
+			}
+			id = "Register" + "_" + i + "_" + j;
+			temp = document.getElementsByName(id);
+			if (temp != null && temp.length > 0)
+			{
+				temp[0].style.display = "";
+			}
+			id = "RAM" + "_" + i + "_" + j;
+			temp = document.getElementsByName(id);
+			if (temp != null && temp.length > 0)
+			{
+				temp[0].style.display = "";
+			}
+			id = "Multiplexer" + "_" + i + "_" + j;
+			temp = document.getElementsByName(id);
+			if (temp != null && temp.length > 0)
+			{
+				temp[0].style.display = "";
+			}
+		}
+	}
+	var collapsibles = document.getElementsByName('collapsible');
+	for (i = 0; i < collapsibles.length; i++)
+	{
+		collapsibles[i].innerHTML = '<span style="font-family:monospace">[-]</span>';
+	}
+}
+// -->
+</script>
+<font SIZE="+2" COLOR="#000066">
+Generic Resource Report for HDLCrestFactorReduction
+</font>
+<br /><br /><br /><a name="Summary">
+<font size="+1" color="#000066">
+<b class="midprod">
+Summary
+</b>
+
+</font>
+
+</a>
+<br /><br /><table width="100%" border="1">
+<tr style="background-color: #eeeeff">
+<td align="left" valign="top" style="border-style: none">
+Multipliers
+</td>
+<td align="center" valign="top" style="border-style: none">
+4
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td align="left" valign="top" style="border-style: none">
+Adders/Subtractors
+</td>
+<td align="center" valign="top" style="border-style: none">
+150
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td align="left" valign="top" style="border-style: none">
+Registers
+</td>
+<td align="center" valign="top" style="border-style: none">
+667
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td align="left" valign="top" style="border-style: none">
+Total 1-Bit Registers
+</td>
+<td align="center" valign="top" style="border-style: none">
+11240
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td align="left" valign="top" style="border-style: none">
+RAMs
+</td>
+<td align="center" valign="top" style="border-style: none">
+0
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td align="left" valign="top" style="border-style: none">
+Multiplexers
+</td>
+<td align="center" valign="top" style="border-style: none">
+109
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td align="left" valign="top" style="border-style: none">
+I/O Bits
+</td>
+<td align="center" valign="top" style="border-style: none">
+68
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td align="left" valign="top" style="border-style: none">
+Static Shift operators
+</td>
+<td align="center" valign="top" style="border-style: none">
+15
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td align="left" valign="top" style="border-style: none">
+Dynamic Shift operators
+</td>
+<td align="center" valign="top" style="border-style: none">
+0
+</td>
+
+</tr>
+
+</table>
+<br /><br /><a name="Detailed Report">
+<font size="+1" color="#000066">
+<b class="midprod">
+Detailed Report
+</b>
+
+</font>
+
+</a>
+<br /><br /><p><hr /></p><h5>
+Report for Subsystem:    <a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:44\')'})"  name="code2model" class="code2model">
+CrestFactorReduction
+</a>
+
+</h5>
+<h5>
+Number of I/O Bits (68)
+</h5>
+<span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Input_Port')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+Number of Input Bits: 35
+</span>
+<span name="Input_Port" id="Input_Port">
+<ul>
+<li>
+clk: 1 bit
+</li>
+<li>
+aresetn: 1 bit
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:45\')'})"  name="code2model" class="code2model">
+txData
+</a>
+: 16 bits
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:45\')'})"  name="code2model" class="code2model">
+txData
+</a>
+: 16 bits
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:46\')'})"  name="code2model" class="code2model">
+txValid
+</a>
+: 1 bit
+</li>
+
+</ul>
+
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Output_Port')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+Number of Output Bits: 33
+</span>
+<span name="Output_Port" id="Output_Port">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:47\')'})"  name="code2model" class="code2model">
+CFRData
+</a>
+: 16 bits
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:47\')'})"  name="code2model" class="code2model">
+CFRData
+</a>
+: 16 bits
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:48\')'})"  name="code2model" class="code2model">
+CFRvalid
+</a>
+: 1 bit
+</li>
+
+</ul>
+
+</span>
+<br /><p><hr /></p><h5>
+Report for Subsystem:    <a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:3\')'})"  name="code2model" class="code2model">
+CrestFactorReduction
+</a>
+
+</h5>
+<h5>
+Multipliers (2)
+</h5>
+<span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Multiplier_2_1')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+16x16-bit Multiplier 							: 2
+</span>
+<span name="Multiplier_2_1" id="Multiplier_2_1">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:133\')'})"  name="code2model" class="code2model">
+Gain
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><h5>
+Registers (262)
+</h5>
+<span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Register_2_1')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+16-bit Register 							: 164
+</span>
+<span name="Register_2_1" id="Register_2_1">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:49\')'})"  name="code2model" class="code2model">
+Delay
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:86\')'})"  name="code2model" class="code2model">
+Delay5
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:89\')'})"  name="code2model" class="code2model">
+Delay7
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:87\')'})"  name="code2model" class="code2model">
+Delay6
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Register_2_2')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+17-bit Register 							: 35
+</span>
+<span name="Register_2_2" id="Register_2_2">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:90\')'})"  name="code2model" class="code2model">
+Delay8
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Register_2_3')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+1-bit Register 							: 61
+</span>
+<span name="Register_2_3" id="Register_2_3">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'gm_HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+delayMatch
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:50\')'})"  name="code2model" class="code2model">
+Delay1
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:85\')'})"  name="code2model" class="code2model">
+Delay4
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:91\')'})"  name="code2model" class="code2model">
+Delay9
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:52\')'})"  name="code2model" class="code2model">
+Delay3
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Register_2_4')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+32-bit Register 							: 2
+</span>
+<span name="Register_2_4" id="Register_2_4">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'gm_HDLCrestFactorReduction:67\')'})"  name="code2model" class="code2model">
+delayMatch1
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><h5>
+Multiplexers (2)
+</h5>
+<span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Multiplexer_2_1')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+32-bit 2-to-1 Multiplexer 							: 2
+</span>
+<span name="Multiplexer_2_1" id="Multiplexer_2_1">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:10\')'})"  name="code2model" class="code2model">
+Switch
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><p><hr /></p><h5>
+Report for Subsystem:    <a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:58\')'})"  name="code2model" class="code2model">
+signum
+</a>
+
+</h5>
+<h5>
+Adders/Subtractors (134)
+</h5>
+<span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Adder_3_1')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+33x33-bit Adder 							: 64
+</span>
+<span name="Adder_3_1" id="Adder_3_1">
+<ul class="SystemdefinedCollapse" id="3f63d487-1f31-4d6e-9fca-777639dc6523" dataCollapse="off">
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+
+</ul>
+<span class="SDCollapseControl" onclick="collapseSD(this, '3f63d487-1f31-4d6e-9fca-777639dc6523')" onmouseover="this.style.cursor = 'pointer'">
+&#8743; Less
+</span>
+<br />
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Subtractor_3_1')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+33-bit Subtractor 							: 2
+</span>
+<span name="Subtractor_3_1" id="Subtractor_3_1">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Subtractor_3_2')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+19-bit Subtractor 							: 2
+</span>
+<span name="Subtractor_3_2" id="Subtractor_3_2">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Subtractor_3_3')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+34-bit Subtractor 							: 66
+</span>
+<span name="Subtractor_3_3" id="Subtractor_3_3">
+<ul class="SystemdefinedCollapse" id="ab14fbfb-3013-4262-a923-6203ce737e0e" dataCollapse="off">
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+
+</ul>
+<span class="SDCollapseControl" onclick="collapseSD(this, 'ab14fbfb-3013-4262-a923-6203ce737e0e')" onmouseover="this.style.cursor = 'pointer'">
+&#8743; Less
+</span>
+<br />
+</span>
+<br /><h5>
+Registers (348)
+</h5>
+<span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Register_3_1')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+1-bit Register 							: 210
+</span>
+<span name="Register_3_1" id="Register_3_1">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Register_3_2')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+31-bit Register 							: 4
+</span>
+<span name="Register_3_2" id="Register_3_2">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Register_3_3')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+16-bit Register 							: 2
+</span>
+<span name="Register_3_3" id="Register_3_3">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Register_3_4')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+64-bit Register 							: 66
+</span>
+<span name="Register_3_4" id="Register_3_4">
+<ul class="SystemdefinedCollapse" id="dae3b49d-f14a-4c4c-ac4c-0cf98bd89d9d" dataCollapse="off">
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+
+</ul>
+<span class="SDCollapseControl" onclick="collapseSD(this, 'dae3b49d-f14a-4c4c-ac4c-0cf98bd89d9d')" onmouseover="this.style.cursor = 'pointer'">
+&#8743; Less
+</span>
+<br />
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Register_3_5')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+33-bit Register 							: 66
+</span>
+<span name="Register_3_5" id="Register_3_5">
+<ul class="SystemdefinedCollapse" id="7c9270d6-ec97-403c-8ca9-96a60719ca59" dataCollapse="off">
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+
+</ul>
+<span class="SDCollapseControl" onclick="collapseSD(this, '7c9270d6-ec97-403c-8ca9-96a60719ca59')" onmouseover="this.style.cursor = 'pointer'">
+&#8743; Less
+</span>
+<br />
+</span>
+<br /><h5>
+Multiplexers (76)
+</h5>
+<span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Multiplexer_3_1')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+64-bit 2-to-1 Multiplexer 							: 2
+</span>
+<span name="Multiplexer_3_1" id="Multiplexer_3_1">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Multiplexer_3_2')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+33-bit 2-to-1 Multiplexer 							: 66
+</span>
+<span name="Multiplexer_3_2" id="Multiplexer_3_2">
+<ul class="SystemdefinedCollapse" id="0253999d-a3a3-4862-a0ab-0fde9a9b6c39" dataCollapse="off">
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+
+</ul>
+<span class="SDCollapseControl" onclick="collapseSD(this, '0253999d-a3a3-4862-a0ab-0fde9a9b6c39')" onmouseover="this.style.cursor = 'pointer'">
+&#8743; Less
+</span>
+<br />
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Multiplexer_3_3')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+32-bit 4-to-1 Multiplexer 							: 2
+</span>
+<span name="Multiplexer_3_3" id="Multiplexer_3_3">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Multiplexer_3_4')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+31-bit 3-to-1 Multiplexer 							: 2
+</span>
+<span name="Multiplexer_3_4" id="Multiplexer_3_4">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Multiplexer_3_5')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+31-bit 2-to-1 Multiplexer 							: 4
+</span>
+<span name="Multiplexer_3_5" id="Multiplexer_3_5">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:66\')'})"  name="code2model" class="code2model">
+Divide
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:69\')'})"  name="code2model" class="code2model">
+Divide2
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><p><hr /></p><h5>
+Report for Subsystem:    <a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:21\')'})"  name="code2model" class="code2model">
+abs
+</a>
+
+</h5>
+<h5>
+Multipliers (2)
+</h5>
+<span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Multiplier_4_1')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+16x16-bit Multiplier 							: 2
+</span>
+<span name="Multiplier_4_1" id="Multiplier_4_1">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:25\')'})"  name="code2model" class="code2model">
+Product
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:26\')'})"  name="code2model" class="code2model">
+Product1
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><h5>
+Adders/Subtractors (16)
+</h5>
+<span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Adder_4_1')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+33x33-bit Adder 							: 2
+</span>
+<span name="Adder_4_1" id="Adder_4_1">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:27\')'})"  name="code2model" class="code2model">
+Add
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><span style="font-family:monospace">
+5x5-bit Adder 							: 1
+</span>
+<br /><span style="font-family:monospace">
+7x7-bit Adder 							: 1
+</span>
+<br /><span style="font-family:monospace">
+9x9-bit Adder 							: 1
+</span>
+<br /><span style="font-family:monospace">
+11x11-bit Adder 							: 1
+</span>
+<br /><span style="font-family:monospace">
+13x13-bit Adder 							: 1
+</span>
+<br /><span style="font-family:monospace">
+15x15-bit Adder 							: 1
+</span>
+<br /><span style="font-family:monospace">
+17x17-bit Adder 							: 1
+</span>
+<br /><span style="font-family:monospace">
+19x19-bit Adder 							: 1
+</span>
+<br /><span style="font-family:monospace">
+21x21-bit Adder 							: 1
+</span>
+<br /><span style="font-family:monospace">
+23x23-bit Adder 							: 1
+</span>
+<br /><span style="font-family:monospace">
+25x25-bit Adder 							: 1
+</span>
+<br /><span style="font-family:monospace">
+27x27-bit Adder 							: 1
+</span>
+<br /><span style="font-family:monospace">
+29x29-bit Adder 							: 1
+</span>
+<br /><span style="font-family:monospace">
+31x31-bit Adder 							: 1
+</span>
+<br /><h5>
+Registers (57)
+</h5>
+<span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Register_4_1')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+16-bit Register 							: 8
+</span>
+<span name="Register_4_1" id="Register_4_1">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:80\')'})"  name="code2model" class="code2model">
+Delay
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:136\')'})"  name="code2model" class="code2model">
+Delay5
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Register_4_2')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+32-bit Register 							: 4
+</span>
+<span name="Register_4_2" id="Register_4_2">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:82\')'})"  name="code2model" class="code2model">
+Delay2
+</a>
+
+</li>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:83\')'})"  name="code2model" class="code2model">
+Delay3
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Register_4_3')" onmouseover="this.style.cursor = 'pointer'">
+[+]
+</span>
+<span style="font-family:monospace">
+33-bit Register 							: 16
+</span>
+<span name="Register_4_3" id="Register_4_3">
+<ul>
+<li>
+<a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'HDLCrestFactorReduction:84\')'})"  name="code2model" class="code2model">
+Delay4
+</a>
+
+</li>
+
+</ul>
+
+</span>
+<br /><span style="font-family:monospace">
+1-bit Register 							: 1
+</span>
+<br /><span style="font-family:monospace">
+2-bit Register 							: 2
+</span>
+<br /><span style="font-family:monospace">
+4-bit Register 							: 2
+</span>
+<br /><span style="font-family:monospace">
+3-bit Register 							: 1
+</span>
+<br /><span style="font-family:monospace">
+6-bit Register 							: 2
+</span>
+<br /><span style="font-family:monospace">
+8-bit Register 							: 2
+</span>
+<br /><span style="font-family:monospace">
+5-bit Register 							: 1
+</span>
+<br /><span style="font-family:monospace">
+10-bit Register 							: 2
+</span>
+<br /><span style="font-family:monospace">
+12-bit Register 							: 2
+</span>
+<br /><span style="font-family:monospace">
+7-bit Register 							: 1
+</span>
+<br /><span style="font-family:monospace">
+14-bit Register 							: 2
+</span>
+<br /><span style="font-family:monospace">
+9-bit Register 							: 1
+</span>
+<br /><span style="font-family:monospace">
+18-bit Register 							: 1
+</span>
+<br /><span style="font-family:monospace">
+20-bit Register 							: 1
+</span>
+<br /><span style="font-family:monospace">
+11-bit Register 							: 1
+</span>
+<br /><span style="font-family:monospace">
+22-bit Register 							: 1
+</span>
+<br /><span style="font-family:monospace">
+24-bit Register 							: 1
+</span>
+<br /><span style="font-family:monospace">
+13-bit Register 							: 1
+</span>
+<br /><span style="font-family:monospace">
+26-bit Register 							: 1
+</span>
+<br /><span style="font-family:monospace">
+28-bit Register 							: 1
+</span>
+<br /><span style="font-family:monospace">
+15-bit Register 							: 1
+</span>
+<br /><span style="font-family:monospace">
+30-bit Register 							: 1
+</span>
+<br /><h5>
+Multiplexers (31)
+</h5>
+<span style="font-family:monospace">
+1-bit 2-to-1 Multiplexer 							: 1
+</span>
+<br /><span style="font-family:monospace">
+2-bit 2-to-1 Multiplexer 							: 1
+</span>
+<br /><span style="font-family:monospace">
+4-bit 2-to-1 Multiplexer 							: 2
+</span>
+<br /><span style="font-family:monospace">
+6-bit 2-to-1 Multiplexer 							: 2
+</span>
+<br /><span style="font-family:monospace">
+8-bit 2-to-1 Multiplexer 							: 2
+</span>
+<br /><span style="font-family:monospace">
+10-bit 2-to-1 Multiplexer 							: 2
+</span>
+<br /><span style="font-family:monospace">
+12-bit 2-to-1 Multiplexer 							: 2
+</span>
+<br /><span style="font-family:monospace">
+14-bit 2-to-1 Multiplexer 							: 2
+</span>
+<br /><span style="font-family:monospace">
+16-bit 2-to-1 Multiplexer 							: 2
+</span>
+<br /><span style="font-family:monospace">
+18-bit 2-to-1 Multiplexer 							: 2
+</span>
+<br /><span style="font-family:monospace">
+20-bit 2-to-1 Multiplexer 							: 2
+</span>
+<br /><span style="font-family:monospace">
+22-bit 2-to-1 Multiplexer 							: 2
+</span>
+<br /><span style="font-family:monospace">
+24-bit 2-to-1 Multiplexer 							: 2
+</span>
+<br /><span style="font-family:monospace">
+26-bit 2-to-1 Multiplexer 							: 2
+</span>
+<br /><span style="font-family:monospace">
+28-bit 2-to-1 Multiplexer 							: 2
+</span>
+<br /><span style="font-family:monospace">
+30-bit 2-to-1 Multiplexer 							: 2
+</span>
+<br /><span style="font-family:monospace">
+32-bit 2-to-1 Multiplexer 							: 1
+</span>
+<br /><h5>
+Number of Shift operators (15)
+</h5>
+<span style="font-family:monospace">
+Static Shift Left 							: 15
+</span>
+<br /><p><hr /></p>
+<script>function postParentWindowMessage(message) {window.parent.postMessage(message, "*");}
+document.addEventListener('click', function () {postParentWindowMessage({message: 'iframeClick'});});</script>
+</body>
+
+</html>

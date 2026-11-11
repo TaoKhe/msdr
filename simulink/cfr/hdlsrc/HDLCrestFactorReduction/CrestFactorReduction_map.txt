@@ -1,0 +1,8 @@
+ --> CrestFactorReduction_pkg
+HDLCrestFactorReduction/CrestFactorReduction/CrestFactorReduction/abs/Sqrt --> Sqrt
+HDLCrestFactorReduction/CrestFactorReduction/CrestFactorReduction/abs --> abs_rsvd
+HDLCrestFactorReduction/CrestFactorReduction/CrestFactorReduction/signum/Divide --> Divide
+HDLCrestFactorReduction/CrestFactorReduction/CrestFactorReduction/signum/Divide2 --> Divide2
+HDLCrestFactorReduction/CrestFactorReduction/CrestFactorReduction/signum --> signum
+HDLCrestFactorReduction/CrestFactorReduction/CrestFactorReduction --> CrestFactorReduction_block
+HDLCrestFactorReduction/CrestFactorReduction --> CrestFactorReduction

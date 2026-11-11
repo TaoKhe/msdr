@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:36:09 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Tue Nov  3 15:42:40 2026
+# Process ID: 1293042
+# Current directory: /home/user5/Projects/adrv9001_zcu102/src/hdl/library/util_pack/util_cpack2
+# Command line: vivado -mode batch -source util_cpack2_ip.tcl
+# Log file: /home/user5/Projects/adrv9001_zcu102/src/hdl/library/util_pack/util_cpack2/vivado.log
+# Journal file: /home/user5/Projects/adrv9001_zcu102/src/hdl/library/util_pack/util_cpack2/vivado.jou
+# Running On        :server01
+# Platform          :Ubuntu
+# Operating System  :Ubuntu 22.04.5 LTS
+# Processor Detail  :Intel(R) Xeon(R) Gold 6330 CPU @ 2.00GHz
+# CPU Frequency     :939.915 MHz
+# CPU Physical cores:56
+# CPU Logical cores :112
+# Host memory       :134566 MB
+# Swap memory       :8589 MB
+# Total Virtual     :143156 MB
+# Available Virtual :54060 MB
+#-----------------------------------------------------------
+source util_cpack2_ip.tcl

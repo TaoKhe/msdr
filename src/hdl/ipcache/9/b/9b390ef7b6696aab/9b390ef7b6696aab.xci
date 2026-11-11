@@ -1,0 +1,116 @@
+{
+  "schema": "xilinx.com:schema:json_instance:1.0",
+  "ip_inst": {
+    "xci_name": "9b390ef7b6696aab",
+    "component_reference": "analog.com:user:util_cpack2:1.0",
+    "ip_revision": "1",
+    "gen_directory": "../../../../../../msdr_gen/msdr.gen/sources_1/ip/9b390ef7b6696aab",
+    "parameters": {
+      "component_parameters": {
+        "NUM_OF_CHANNELS": [ { "value": "4", "resolve_type": "user", "format": "long", "usage": "all" } ],
+        "SAMPLES_PER_CHANNEL": [ { "value": "1", "resolve_type": "user", "format": "long", "usage": "all" } ],
+        "SAMPLE_DATA_WIDTH": [ { "value": "16", "resolve_type": "user", "format": "long", "usage": "all" } ],
+        "INTERFACE_TYPE": [ { "value": "1", "resolve_type": "user", "format": "long", "usage": "all" } ],
+        "PARALLEL_OR_SERIAL_N": [ { "value": "0", "resolve_type": "user", "format": "long", "usage": "all" } ],
+        "Component_Name": [ { "value": "9b390ef7b6696aab", "resolve_type": "user", "usage": "all" } ]
+      },
+      "model_parameters": {
+        "NUM_OF_CHANNELS": [ { "value": "4", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+        "SAMPLES_PER_CHANNEL": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+        "SAMPLE_DATA_WIDTH": [ { "value": "16", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+        "INTERFACE_TYPE": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+        "PARALLEL_OR_SERIAL_N": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ]
+      },
+      "project_parameters": {
+        "ARCHITECTURE": [ { "value": "zynquplus" } ],
+        "BASE_BOARD_PART": [ { "value": "" } ],
+        "BOARD_CONNECTIONS": [ { "value": "" } ],
+        "DEVICE": [ { "value": "xczu15eg" } ],
+        "NEXTGEN_VERSAL": [ { "value": "0" } ],
+        "PACKAGE": [ { "value": "ffvb1156" } ],
+        "PREFHDL": [ { "value": "VERILOG" } ],
+        "SILICON_REVISION": [ { "value": "" } ],
+        "SIMULATOR_LANGUAGE": [ { "value": "MIXED" } ],
+        "SPEEDGRADE": [ { "value": "-2" } ],
+        "STATIC_POWER": [ { "value": "" } ],
+        "TEMPERATURE_GRADE": [ { "value": "I" } ]
+      },
+      "runtime_parameters": {
+        "IPCACHEID": [ { "value": "9b390ef7b6696aab" } ],
+        "IPCACHESYNTHCL": [ { "value": "$Change: 5073576 $" } ],
+        "IPCACHESYNTHCRC": [ { "value": "7f7d57ec" } ],
+        "IPCACHESYNTHRUNTIME": [ { "value": "52" } ],
+        "IPCONTEXT": [ { "value": "IP_Unknown" } ],
+        "IPREVISION": [ { "value": "1" } ],
+        "MANAGED": [ { "value": "TRUE" } ],
+        "OUTPUTDIR": [ { "value": "../../../../../../msdr_gen/msdr.gen/sources_1/ip/9b390ef7b6696aab" } ],
+        "SELECTEDSIMMODEL": [ { "value": "" } ],
+        "SHAREDDIR": [ { "value": "." } ],
+        "SWVERSION": [ { "value": "2024.1" } ],
+        "SYNTHESISFLOW": [ { "value": "GLOBAL" } ]
+      }
+    },
+    "boundary": {
+      "ports": {
+        "clk": [ { "direction": "in" } ],
+        "reset": [ { "direction": "in" } ],
+        "enable_0": [ { "direction": "in" } ],
+        "enable_1": [ { "direction": "in" } ],
+        "enable_2": [ { "direction": "in" } ],
+        "enable_3": [ { "direction": "in" } ],
+        "fifo_wr_en": [ { "direction": "in", "driver_value": "0" } ],
+        "fifo_wr_overflow": [ { "direction": "out" } ],
+        "fifo_wr_data_0": [ { "direction": "in", "size_left": "15", "size_right": "0", "driver_value": "0" } ],
+        "fifo_wr_data_1": [ { "direction": "in", "size_left": "15", "size_right": "0", "driver_value": "0" } ],
+        "fifo_wr_data_2": [ { "direction": "in", "size_left": "15", "size_right": "0", "driver_value": "0" } ],
+        "fifo_wr_data_3": [ { "direction": "in", "size_left": "15", "size_right": "0", "driver_value": "0" } ],
+        "packed_fifo_wr_en": [ { "direction": "out", "driver_value": "0" } ],
+        "packed_fifo_wr_overflow": [ { "direction": "in", "driver_value": "0" } ],
+        "packed_fifo_wr_data": [ { "direction": "out", "size_left": "63", "size_right": "0", "driver_value": "0" } ],
+        "packed_sync": [ { "direction": "out" } ]
+      },
+      "interfaces": {
+        "packed_fifo_wr": {
+          "vlnv": "analog.com:interface:fifo_wr:1.0",
+          "abstraction_type": "analog.com:interface:fifo_wr_rtl:1.0",
+          "mode": "master",
+          "port_maps": {
+            "EN": [ { "physical_name": "packed_fifo_wr_en" } ],
+            "DATA": [ { "physical_name": "packed_fifo_wr_data" } ],
+            "OVERFLOW": [ { "physical_name": "packed_fifo_wr_overflow" } ]
+          }
+        },
+        "m_axis_packed_fifo_wr_signal_clock": {
+          "vlnv": "xilinx.com:signal:clock:1.0",
+          "abstraction_type": "xilinx.com:signal:clock_rtl:1.0",
+          "mode": "slave",
+          "parameters": {
+            "ASSOCIATED_BUSIF": [ { "value": "m_axis:packed_fifo_wr", "value_src": "constant", "usage": "all" } ],
+            "ASSOCIATED_RESET": [ { "value": "reset", "value_src": "constant", "usage": "all" } ],
+            "FREQ_HZ": [ { "value": "100000000", "resolve_type": "generated", "format": "long", "is_ips_inferred": true, "is_static_object": false } ],
+            "FREQ_TOLERANCE_HZ": [ { "value": "0", "resolve_type": "generated", "format": "long", "is_ips_inferred": true, "is_static_object": false } ],
+            "PHASE": [ { "value": "0.0", "resolve_type": "generated", "format": "float", "is_ips_inferred": true, "is_static_object": false } ],
+            "CLK_DOMAIN": [ { "value": "", "resolve_type": "generated", "is_ips_inferred": true, "is_static_object": false } ],
+            "ASSOCIATED_PORT": [ { "value": "", "resolve_type": "generated", "is_ips_inferred": true, "is_static_object": false } ],
+            "INSERT_VIP": [ { "value": "0", "resolve_type": "user", "format": "long", "usage": "simulation.rtl", "is_ips_inferred": true, "is_static_object": false } ]
+          },
+          "port_maps": {
+            "CLK": [ { "physical_name": "clk" } ]
+          }
+        },
+        "m_axis_packed_fifo_wr_signal_reset": {
+          "vlnv": "xilinx.com:signal:reset:1.0",
+          "abstraction_type": "xilinx.com:signal:reset_rtl:1.0",
+          "mode": "slave",
+          "parameters": {
+            "POLARITY": [ { "value": "ACTIVE_HIGH", "value_src": "constant", "usage": "all" } ],
+            "INSERT_VIP": [ { "value": "0", "resolve_type": "user", "format": "long", "usage": "simulation.rtl", "is_ips_inferred": true, "is_static_object": false } ]
+          },
+          "port_maps": {
+            "RST": [ { "physical_name": "reset" } ]
+          }
+        }
+      }
+    }
+  }
+}

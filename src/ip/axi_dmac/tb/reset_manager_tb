@@ -1,9 +1,0 @@
-#!/bin/bash
-
-SOURCE="$(basename "$0").v"
-SOURCE+=" ../axi_dmac_reset_manager.v"
-SOURCE+=" ../../util_cdc/sync_bits.v"
-
-test_script_dir=$(cd -- "$(dirname -- "$0")" && pwd)
-cd "$test_script_dir" || exit 1
-source "$test_script_dir/../../common/tb/run_tb.sh"

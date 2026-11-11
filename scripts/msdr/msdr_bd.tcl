@@ -1,0 +1,1156 @@
+
+################################################################
+# This is a generated script based on design: system
+#
+# Though there are limitations about the generated script,
+# the main purpose of this utility is to make learning
+# IP Integrator Tcl commands easier.
+################################################################
+
+namespace eval _tcl {
+proc get_script_folder {} {
+   set script_path [file normalize [info script]]
+   set script_folder [file dirname $script_path]
+   return $script_folder
+}
+}
+variable script_folder
+set script_folder [_tcl::get_script_folder]
+
+################################################################
+# Check if script is running in correct Vivado version.
+################################################################
+set scripts_vivado_version 2024.1
+set current_vivado_version [version -short]
+
+if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
+   puts ""
+   if { [string compare $scripts_vivado_version $current_vivado_version] > 0 } {
+      catch {common::send_gid_msg -ssname BD::TCL -id 2042 -severity "ERROR" " This script was generated using Vivado <$scripts_vivado_version> and is being run in <$current_vivado_version> of Vivado. Sourcing the script failed since it was created with a future version of Vivado."}
+
+   } else {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2041 -severity "ERROR" "This script was generated using Vivado <$scripts_vivado_version> and is being run in <$current_vivado_version> of Vivado. Please run the script in Vivado <$scripts_vivado_version> then open the design in Vivado <$current_vivado_version>. Upgrade the design by running \"Tools => Report => Report IP Status...\", then run write_bd_tcl to create an updated script."}
+
+   }
+
+   return 1
+}
+
+################################################################
+# START
+################################################################
+
+# To test this script, run the following commands from Vivado Tcl console:
+# source system_script.tcl
+
+# If there is no project opened, this script will create a
+# project, but make sure you do not have an existing project
+# <./myproj/project_1.xpr> in the current working folder.
+
+set list_projs [get_projects -quiet]
+if { $list_projs eq "" } {
+   create_project project_1 myproj -part xczu15eg-ffvb1156-2-i
+}
+
+
+# CHANGE DESIGN NAME HERE
+variable design_name
+set design_name system
+
+# If you do not already have an existing IP Integrator design open,
+# you can create a design using the following command:
+#    create_bd_design $design_name
+
+# Creating design if needed
+set errMsg ""
+set nRet 0
+
+set cur_design [current_bd_design -quiet]
+set list_cells [get_bd_cells -quiet]
+
+if { ${design_name} eq "" } {
+   # USE CASES:
+   #    1) Design_name not set
+
+   set errMsg "Please set the variable <design_name> to a non-empty value."
+   set nRet 1
+
+} elseif { ${cur_design} ne "" && ${list_cells} eq "" } {
+   # USE CASES:
+   #    2): Current design opened AND is empty AND names same.
+   #    3): Current design opened AND is empty AND names diff; design_name NOT in project.
+   #    4): Current design opened AND is empty AND names diff; design_name exists in project.
+
+   if { $cur_design ne $design_name } {
+      common::send_gid_msg -ssname BD::TCL -id 2001 -severity "INFO" "Changing value of <design_name> from <$design_name> to <$cur_design> since current design is empty."
+      set design_name [get_property NAME $cur_design]
+   }
+   common::send_gid_msg -ssname BD::TCL -id 2002 -severity "INFO" "Constructing design in IPI design <$cur_design>..."
+
+} elseif { ${cur_design} ne "" && $list_cells ne "" && $cur_design eq $design_name } {
+   # USE CASES:
+   #    5) Current design opened AND has components AND same names.
+
+   set errMsg "Design <$design_name> already exists in your project, please set the variable <design_name> to another value."
+   set nRet 1
+} elseif { [get_files -quiet ${design_name}.bd] ne "" } {
+   # USE CASES: 
+   #    6) Current opened design, has components, but diff names, design_name exists in project.
+   #    7) No opened design, design_name exists in project.
+
+   set errMsg "Design <$design_name> already exists in your project, please set the variable <design_name> to another value."
+   set nRet 2
+
+} else {
+   # USE CASES:
+   #    8) No opened design, design_name not in project.
+   #    9) Current opened design, has components, but diff names, design_name not in project.
+
+   common::send_gid_msg -ssname BD::TCL -id 2003 -severity "INFO" "Currently there is no design <$design_name> in project, so creating one..."
+
+   create_bd_design $design_name
+
+   common::send_gid_msg -ssname BD::TCL -id 2004 -severity "INFO" "Making design <$design_name> as current_bd_design."
+   current_bd_design $design_name
+
+}
+
+common::send_gid_msg -ssname BD::TCL -id 2005 -severity "INFO" "Currently the variable <design_name> is equal to \"$design_name\"."
+
+if { $nRet != 0 } {
+   catch {common::send_gid_msg -ssname BD::TCL -id 2006 -severity "ERROR" $errMsg}
+   return $nRet
+}
+
+set bCheckIPsPassed 1
+##################################################################
+# CHECK IPs
+##################################################################
+set bCheckIPs 1
+if { $bCheckIPs == 1 } {
+   set list_check_ips "\ 
+xilinx.com:ip:zynq_ultra_ps_e:3.5\
+xilinx.com:ip:proc_sys_reset:5.0\
+xilinx.com:inline_hdl:ilconcat:1.0\
+xilinx.com:inline_hdl:ilconstant:1.0\
+analog.com:user:axi_sysid:1.0\
+analog.com:user:sysid_rom:1.0\
+xilinx.com:ip:smartconnect:1.0\
+analog.com:user:axi_adrv9001:1.0\
+analog.com:user:axi_dmac:1.0\
+analog.com:user:util_cpack2:1.0\
+analog.com:user:util_upack2:1.0\
+xilinx.com:ip:axi_gpio:2.0\
+"
+
+   set list_ips_missing ""
+   common::send_gid_msg -ssname BD::TCL -id 2011 -severity "INFO" "Checking if the following IPs exist in the project's IP catalog: $list_check_ips ."
+
+   foreach ip_vlnv $list_check_ips {
+      set ip_obj [get_ipdefs -all $ip_vlnv]
+      if { $ip_obj eq "" } {
+         lappend list_ips_missing $ip_vlnv
+      }
+   }
+
+   if { $list_ips_missing ne "" } {
+      catch {common::send_gid_msg -ssname BD::TCL -id 2012 -severity "ERROR" "The following IPs are not found in the IP Catalog:\n  $list_ips_missing\n\nResolution: Please add the repository containing the IP(s) to the project." }
+      set bCheckIPsPassed 0
+   }
+
+}
+
+if { $bCheckIPsPassed != 1 } {
+  common::send_gid_msg -ssname BD::TCL -id 2023 -severity "WARNING" "Will not continue with creation of design due to the error(s) above."
+  return 3
+}
+
+##################################################################
+# DESIGN PROCs
+##################################################################
+
+
+
+# Procedure to create entire design; Provide argument to make
+# procedure reusable. If parentCell is "", will use root.
+proc create_root_design { parentCell sysid_directory } {
+
+  variable script_folder
+  variable design_name
+
+  if { $parentCell eq "" } {
+     set parentCell [get_bd_cells /]
+  }
+
+  # Get object for parentCell
+  set parentObj [get_bd_cells $parentCell]
+  if { $parentObj == "" } {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2090 -severity "ERROR" "Unable to find parent cell <$parentCell>!"}
+     return
+  }
+
+  # Make sure parentObj is hier blk
+  set parentType [get_property TYPE $parentObj]
+  if { $parentType ne "hier" } {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2091 -severity "ERROR" "Parent <$parentObj> has TYPE = <$parentType>. Expected to be <hier>."}
+     return
+  }
+
+  # Save current instance; Restore later
+  set oldCurInst [current_bd_instance .]
+
+  # Set parent object as current
+  current_bd_instance $parentObj
+
+
+  # Create interface ports
+
+  # Create ports
+  set spi0_csn [ create_bd_port -dir O -from 2 -to 0 spi0_csn ]
+  set spi0_sclk [ create_bd_port -dir O spi0_sclk ]
+  set spi0_mosi [ create_bd_port -dir O spi0_mosi ]
+  set spi0_miso [ create_bd_port -dir I spi0_miso ]
+  set spi1_csn [ create_bd_port -dir O -from 2 -to 0 spi1_csn ]
+  set spi1_sclk [ create_bd_port -dir O spi1_sclk ]
+  set spi1_mosi [ create_bd_port -dir O spi1_mosi ]
+  set spi1_miso [ create_bd_port -dir I spi1_miso ]
+  set t12_aux_gpio_i [ create_bd_port -dir I -from 16 -to 0 t12_aux_gpio_i ]
+  set t12_aux_gpio_o [ create_bd_port -dir O -from 16 -to 0 t12_aux_gpio_o ]
+  set t12_aux_gpio_t [ create_bd_port -dir O -from 16 -to 0 t12_aux_gpio_t ]
+  set lb_tft_sclk [ create_bd_port -dir O lb_tft_sclk ]
+  set lb_tft_sdi [ create_bd_port -dir O lb_tft_sdi ]
+  set lb_tft_sdo [ create_bd_port -dir I lb_tft_sdo ]
+  set lb_tft_csn [ create_bd_port -dir O -from 1 -to 0 lb_tft_csn ]
+  set hb_tft_sclk [ create_bd_port -dir O hb_tft_sclk ]
+  set hb_tft_sdi [ create_bd_port -dir O hb_tft_sdi ]
+  set hb_tft_sdo [ create_bd_port -dir I hb_tft_sdo ]
+  set hb_tft_csn [ create_bd_port -dir O -from 3 -to 0 hb_tft_csn ]
+  set gpio_i [ create_bd_port -dir I -from 94 -to 0 gpio_i ]
+  set gpio_o [ create_bd_port -dir O -from 94 -to 0 gpio_o ]
+  set gpio_t [ create_bd_port -dir O -from 94 -to 0 gpio_t ]
+  set tx_output_enable [ create_bd_port -dir I tx_output_enable ]
+  set ref_clk [ create_bd_port -dir I ref_clk ]
+  set mcs_in [ create_bd_port -dir I mcs_in ]
+  set mcs_out [ create_bd_port -dir O mcs_out ]
+  set mssi_sync [ create_bd_port -dir I mssi_sync ]
+  set rx1_dclk_in_n [ create_bd_port -dir I rx1_dclk_in_n ]
+  set rx1_dclk_in_p [ create_bd_port -dir I rx1_dclk_in_p ]
+  set rx1_idata_in_n [ create_bd_port -dir I rx1_idata_in_n ]
+  set rx1_idata_in_p [ create_bd_port -dir I rx1_idata_in_p ]
+  set rx1_qdata_in_n [ create_bd_port -dir I rx1_qdata_in_n ]
+  set rx1_qdata_in_p [ create_bd_port -dir I rx1_qdata_in_p ]
+  set rx1_strobe_in_n [ create_bd_port -dir I rx1_strobe_in_n ]
+  set rx1_strobe_in_p [ create_bd_port -dir I rx1_strobe_in_p ]
+  set rx2_dclk_in_n [ create_bd_port -dir I rx2_dclk_in_n ]
+  set rx2_dclk_in_p [ create_bd_port -dir I rx2_dclk_in_p ]
+  set rx2_idata_in_n [ create_bd_port -dir I rx2_idata_in_n ]
+  set rx2_idata_in_p [ create_bd_port -dir I rx2_idata_in_p ]
+  set rx2_qdata_in_n [ create_bd_port -dir I rx2_qdata_in_n ]
+  set rx2_qdata_in_p [ create_bd_port -dir I rx2_qdata_in_p ]
+  set rx2_strobe_in_n [ create_bd_port -dir I rx2_strobe_in_n ]
+  set rx2_strobe_in_p [ create_bd_port -dir I rx2_strobe_in_p ]
+  set tx1_dclk_out_n [ create_bd_port -dir O tx1_dclk_out_n ]
+  set tx1_dclk_out_p [ create_bd_port -dir O tx1_dclk_out_p ]
+  set tx1_dclk_in_n [ create_bd_port -dir I tx1_dclk_in_n ]
+  set tx1_dclk_in_p [ create_bd_port -dir I tx1_dclk_in_p ]
+  set tx1_idata_out_n [ create_bd_port -dir O tx1_idata_out_n ]
+  set tx1_idata_out_p [ create_bd_port -dir O tx1_idata_out_p ]
+  set tx1_qdata_out_n [ create_bd_port -dir O tx1_qdata_out_n ]
+  set tx1_qdata_out_p [ create_bd_port -dir O tx1_qdata_out_p ]
+  set tx1_strobe_out_n [ create_bd_port -dir O tx1_strobe_out_n ]
+  set tx1_strobe_out_p [ create_bd_port -dir O tx1_strobe_out_p ]
+  set tx2_dclk_out_n [ create_bd_port -dir O tx2_dclk_out_n ]
+  set tx2_dclk_out_p [ create_bd_port -dir O tx2_dclk_out_p ]
+  set tx2_dclk_in_n [ create_bd_port -dir I tx2_dclk_in_n ]
+  set tx2_dclk_in_p [ create_bd_port -dir I tx2_dclk_in_p ]
+  set tx2_idata_out_n [ create_bd_port -dir O tx2_idata_out_n ]
+  set tx2_idata_out_p [ create_bd_port -dir O tx2_idata_out_p ]
+  set tx2_qdata_out_n [ create_bd_port -dir O tx2_qdata_out_n ]
+  set tx2_qdata_out_p [ create_bd_port -dir O tx2_qdata_out_p ]
+  set tx2_strobe_out_n [ create_bd_port -dir O tx2_strobe_out_n ]
+  set tx2_strobe_out_p [ create_bd_port -dir O tx2_strobe_out_p ]
+  set rx1_enable [ create_bd_port -dir O rx1_enable ]
+  set rx2_enable [ create_bd_port -dir O rx2_enable ]
+  set tx1_enable [ create_bd_port -dir O tx1_enable ]
+  set tx2_enable [ create_bd_port -dir O tx2_enable ]
+  set gpio_rx1_enable_in [ create_bd_port -dir I gpio_rx1_enable_in ]
+  set gpio_rx2_enable_in [ create_bd_port -dir I gpio_rx2_enable_in ]
+  set gpio_tx1_enable_in [ create_bd_port -dir I gpio_tx1_enable_in ]
+  set gpio_tx2_enable_in [ create_bd_port -dir I gpio_tx2_enable_in ]
+  set tdd_sync [ create_bd_port -dir I tdd_sync ]
+  set tdd_sync_cntr [ create_bd_port -dir O tdd_sync_cntr ]
+  set t12_gpio0_i [ create_bd_port -dir I -from 31 -to 0 t12_gpio0_i ]
+  set t12_gpio1_i [ create_bd_port -dir I -from 26 -to 0 t12_gpio1_i ]
+
+  # Create instance: sys_ps8, and set properties
+  set sys_ps8 [ create_bd_cell -type ip -vlnv xilinx.com:ip:zynq_ultra_ps_e:3.5 sys_ps8 ]
+  set_property -dict [list \
+    CONFIG.PSU_BANK_0_IO_STANDARD {LVCMOS33} \
+    CONFIG.PSU_BANK_1_IO_STANDARD {LVCMOS33} \
+    CONFIG.PSU_BANK_2_IO_STANDARD {LVCMOS33} \
+    CONFIG.PSU_BANK_3_IO_STANDARD {LVCMOS33} \
+    CONFIG.PSU_DDR_RAM_HIGHADDR {0x7FFFFFFF} \
+    CONFIG.PSU_DDR_RAM_HIGHADDR_OFFSET {0x00000002} \
+    CONFIG.PSU_DDR_RAM_LOWADDR_OFFSET {0x80000000} \
+    CONFIG.PSU_MIO_10_POLARITY {Default} \
+    CONFIG.PSU_MIO_11_POLARITY {Default} \
+    CONFIG.PSU_MIO_12_INPUT_TYPE {cmos} \
+    CONFIG.PSU_MIO_12_POLARITY {Default} \
+    CONFIG.PSU_MIO_13_INPUT_TYPE {cmos} \
+    CONFIG.PSU_MIO_13_POLARITY {Default} \
+    CONFIG.PSU_MIO_14_POLARITY {Default} \
+    CONFIG.PSU_MIO_15_POLARITY {Default} \
+    CONFIG.PSU_MIO_16_POLARITY {Default} \
+    CONFIG.PSU_MIO_17_POLARITY {Default} \
+    CONFIG.PSU_MIO_18_POLARITY {Default} \
+    CONFIG.PSU_MIO_19_POLARITY {Default} \
+    CONFIG.PSU_MIO_20_INPUT_TYPE {cmos} \
+    CONFIG.PSU_MIO_20_POLARITY {Default} \
+    CONFIG.PSU_MIO_21_DRIVE_STRENGTH {12} \
+    CONFIG.PSU_MIO_21_POLARITY {Default} \
+    CONFIG.PSU_MIO_21_SLEW {fast} \
+    CONFIG.PSU_MIO_22_INPUT_TYPE {cmos} \
+    CONFIG.PSU_MIO_22_POLARITY {Default} \
+    CONFIG.PSU_MIO_23_POLARITY {Default} \
+    CONFIG.PSU_MIO_24_INPUT_TYPE {cmos} \
+    CONFIG.PSU_MIO_24_POLARITY {Default} \
+    CONFIG.PSU_MIO_25_DRIVE_STRENGTH {12} \
+    CONFIG.PSU_MIO_25_POLARITY {Default} \
+    CONFIG.PSU_MIO_25_SLEW {fast} \
+    CONFIG.PSU_MIO_27_DRIVE_STRENGTH {12} \
+    CONFIG.PSU_MIO_27_SLEW {fast} \
+    CONFIG.PSU_MIO_28_POLARITY {Default} \
+    CONFIG.PSU_MIO_29_POLARITY {Default} \
+    CONFIG.PSU_MIO_30_DRIVE_STRENGTH {12} \
+    CONFIG.PSU_MIO_30_POLARITY {Default} \
+    CONFIG.PSU_MIO_30_SLEW {fast} \
+    CONFIG.PSU_MIO_31_INPUT_TYPE {cmos} \
+    CONFIG.PSU_MIO_31_POLARITY {Default} \
+    CONFIG.PSU_MIO_34_POLARITY {Default} \
+    CONFIG.PSU_MIO_35_POLARITY {Default} \
+    CONFIG.PSU_MIO_36_INPUT_TYPE {cmos} \
+    CONFIG.PSU_MIO_36_POLARITY {Default} \
+    CONFIG.PSU_MIO_38_POLARITY {Default} \
+    CONFIG.PSU_MIO_39_POLARITY {Default} \
+    CONFIG.PSU_MIO_40_POLARITY {Default} \
+    CONFIG.PSU_MIO_41_POLARITY {Default} \
+    CONFIG.PSU_MIO_44_DRIVE_STRENGTH {12} \
+    CONFIG.PSU_MIO_44_POLARITY {Default} \
+    CONFIG.PSU_MIO_44_SLEW {fast} \
+    CONFIG.PSU_MIO_45_DRIVE_STRENGTH {12} \
+    CONFIG.PSU_MIO_45_POLARITY {Default} \
+    CONFIG.PSU_MIO_45_SLEW {fast} \
+    CONFIG.PSU_MIO_46_POLARITY {Default} \
+    CONFIG.PSU_MIO_47_POLARITY {Default} \
+    CONFIG.PSU_MIO_48_POLARITY {Default} \
+    CONFIG.PSU_MIO_49_POLARITY {Default} \
+    CONFIG.PSU_MIO_50_POLARITY {Default} \
+    CONFIG.PSU_MIO_51_INPUT_TYPE {cmos} \
+    CONFIG.PSU_MIO_51_POLARITY {Default} \
+    CONFIG.PSU_MIO_52_DIRECTION {in} \
+    CONFIG.PSU_MIO_52_DRIVE_STRENGTH {12} \
+    CONFIG.PSU_MIO_52_SLEW {fast} \
+    CONFIG.PSU_MIO_53_DIRECTION {in} \
+    CONFIG.PSU_MIO_53_DRIVE_STRENGTH {12} \
+    CONFIG.PSU_MIO_53_SLEW {fast} \
+    CONFIG.PSU_MIO_54_DIRECTION {inout} \
+    CONFIG.PSU_MIO_55_DIRECTION {in} \
+    CONFIG.PSU_MIO_55_DRIVE_STRENGTH {12} \
+    CONFIG.PSU_MIO_55_SLEW {fast} \
+    CONFIG.PSU_MIO_56_DIRECTION {inout} \
+    CONFIG.PSU_MIO_57_DIRECTION {inout} \
+    CONFIG.PSU_MIO_58_DIRECTION {out} \
+    CONFIG.PSU_MIO_58_INPUT_TYPE {cmos} \
+    CONFIG.PSU_MIO_59_DIRECTION {inout} \
+    CONFIG.PSU_MIO_60_DIRECTION {inout} \
+    CONFIG.PSU_MIO_61_DIRECTION {inout} \
+    CONFIG.PSU_MIO_62_DIRECTION {inout} \
+    CONFIG.PSU_MIO_63_DIRECTION {inout} \
+    CONFIG.PSU_MIO_6_POLARITY {Default} \
+    CONFIG.PSU_MIO_7_INPUT_TYPE {cmos} \
+    CONFIG.PSU_MIO_7_POLARITY {Default} \
+    CONFIG.PSU_MIO_8_POLARITY {Default} \
+    CONFIG.PSU_MIO_9_POLARITY {Default} \
+    CONFIG.PSU_MIO_TREE_PERIPHERALS {Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#GPIO0 MIO#GPIO0 MIO#GPIO0 MIO#GPIO0 MIO#GPIO0 MIO#GPIO0 MIO#GPIO0 MIO#GPIO0\
+MIO#GPIO0 MIO#GPIO0 MIO#GPIO0 MIO#GPIO0 MIO#GPIO0 MIO#GPIO0 MIO#GPIO0 MIO#GPIO0 MIO#GPIO0 MIO#GPIO0 MIO#GPIO0 MIO#GPIO0 MIO#UART 0#UART 0#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#PMU GPO 0#PMU GPO 1#GPIO1\
+MIO#GPIO1 MIO#GPIO1 MIO#PMU GPO 5#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#I2C 0#I2C 0#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#############Gem 3#Gem 3#Gem 3#Gem 3#Gem\
+3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#MDIO 3#MDIO 3} \
+    CONFIG.PSU_MIO_TREE_SIGNALS {sclk_out#miso_mo1#mo2#mo3#mosi_mi0#n_ss_out#gpio0[6]#gpio0[7]#gpio0[8]#gpio0[9]#gpio0[10]#gpio0[11]#gpio0[12]#gpio0[13]#gpio0[14]#gpio0[15]#gpio0[16]#gpio0[17]#gpio0[18]#gpio0[19]#gpio0[20]#gpio0[21]#gpio0[22]#gpio0[23]#gpio0[24]#gpio0[25]#rxd#txd#gpio1[28]#gpio1[29]#gpio1[30]#gpio1[31]#gpo[0]#gpo[1]#gpio1[34]#gpio1[35]#gpio1[36]#gpo[5]#gpio1[38]#gpio1[39]#gpio1[40]#gpio1[41]#scl_out#sda_out#gpio1[44]#gpio1[45]#gpio1[46]#gpio1[47]#gpio1[48]#gpio1[49]#gpio1[50]#gpio1[51]#############rgmii_tx_clk#rgmii_txd[0]#rgmii_txd[1]#rgmii_txd[2]#rgmii_txd[3]#rgmii_tx_ctl#rgmii_rx_clk#rgmii_rxd[0]#rgmii_rxd[1]#rgmii_rxd[2]#rgmii_rxd[3]#rgmii_rx_ctl#gem3_mdc#gem3_mdio_out}\
+\
+    CONFIG.PSU_SD1_INTERNAL_BUS_WIDTH {8} \
+    CONFIG.PSU_USB3__DUAL_CLOCK_ENABLE {0} \
+    CONFIG.PSU__ACT_DDR_FREQ_MHZ {1200.000000} \
+    CONFIG.PSU__AFI0_COHERENCY {1} \
+    CONFIG.PSU__CAN1__PERIPHERAL__ENABLE {0} \
+    CONFIG.PSU__CRF_APB__ACPU_CTRL__ACT_FREQMHZ {1200.000000} \
+    CONFIG.PSU__CRF_APB__ACPU_CTRL__FREQMHZ {1200} \
+    CONFIG.PSU__CRF_APB__ACPU_CTRL__SRCSEL {APLL} \
+    CONFIG.PSU__CRF_APB__APLL_CTRL__SRCSEL {PSS_REF_CLK} \
+    CONFIG.PSU__CRF_APB__DBG_FPD_CTRL__ACT_FREQMHZ {249.999985} \
+    CONFIG.PSU__CRF_APB__DBG_FPD_CTRL__FREQMHZ {250} \
+    CONFIG.PSU__CRF_APB__DBG_FPD_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRF_APB__DBG_TRACE_CTRL__FREQMHZ {250} \
+    CONFIG.PSU__CRF_APB__DBG_TRACE_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRF_APB__DBG_TSTMP_CTRL__ACT_FREQMHZ {249.999985} \
+    CONFIG.PSU__CRF_APB__DBG_TSTMP_CTRL__FREQMHZ {250} \
+    CONFIG.PSU__CRF_APB__DBG_TSTMP_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRF_APB__DDR_CTRL__ACT_FREQMHZ {600.000000} \
+    CONFIG.PSU__CRF_APB__DDR_CTRL__FREQMHZ {1200} \
+    CONFIG.PSU__CRF_APB__DDR_CTRL__SRCSEL {VPLL} \
+    CONFIG.PSU__CRF_APB__DPDMA_REF_CTRL__ACT_FREQMHZ {600.000000} \
+    CONFIG.PSU__CRF_APB__DPDMA_REF_CTRL__FREQMHZ {600} \
+    CONFIG.PSU__CRF_APB__DPDMA_REF_CTRL__SRCSEL {APLL} \
+    CONFIG.PSU__CRF_APB__DPLL_CTRL__SRCSEL {PSS_REF_CLK} \
+    CONFIG.PSU__CRF_APB__DP_AUDIO_REF_CTRL__ACT_FREQMHZ {25.000000} \
+    CONFIG.PSU__CRF_APB__DP_AUDIO_REF_CTRL__SRCSEL {RPLL} \
+    CONFIG.PSU__CRF_APB__DP_STC_REF_CTRL__ACT_FREQMHZ {26.666666} \
+    CONFIG.PSU__CRF_APB__DP_STC_REF_CTRL__SRCSEL {RPLL} \
+    CONFIG.PSU__CRF_APB__DP_VIDEO_REF_CTRL__ACT_FREQMHZ {300.000000} \
+    CONFIG.PSU__CRF_APB__DP_VIDEO_REF_CTRL__SRCSEL {VPLL} \
+    CONFIG.PSU__CRF_APB__GDMA_REF_CTRL__ACT_FREQMHZ {600.000000} \
+    CONFIG.PSU__CRF_APB__GDMA_REF_CTRL__FREQMHZ {600} \
+    CONFIG.PSU__CRF_APB__GDMA_REF_CTRL__SRCSEL {APLL} \
+    CONFIG.PSU__CRF_APB__GPU_REF_CTRL__ACT_FREQMHZ {499.999969} \
+    CONFIG.PSU__CRF_APB__GPU_REF_CTRL__FREQMHZ {500} \
+    CONFIG.PSU__CRF_APB__GPU_REF_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRF_APB__PCIE_REF_CTRL__ACT_FREQMHZ {249.999985} \
+    CONFIG.PSU__CRF_APB__SATA_REF_CTRL__ACT_FREQMHZ {249.999985} \
+    CONFIG.PSU__CRF_APB__TOPSW_LSBUS_CTRL__ACT_FREQMHZ {99.999992} \
+    CONFIG.PSU__CRF_APB__TOPSW_LSBUS_CTRL__FREQMHZ {100} \
+    CONFIG.PSU__CRF_APB__TOPSW_LSBUS_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRF_APB__TOPSW_MAIN_CTRL__ACT_FREQMHZ {525.000000} \
+    CONFIG.PSU__CRF_APB__TOPSW_MAIN_CTRL__FREQMHZ {533.33} \
+    CONFIG.PSU__CRF_APB__TOPSW_MAIN_CTRL__SRCSEL {DPLL} \
+    CONFIG.PSU__CRF_APB__VPLL_CTRL__SRCSEL {PSS_REF_CLK} \
+    CONFIG.PSU__CRL_APB__ADMA_REF_CTRL__ACT_FREQMHZ {499.999969} \
+    CONFIG.PSU__CRL_APB__ADMA_REF_CTRL__FREQMHZ {500} \
+    CONFIG.PSU__CRL_APB__ADMA_REF_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__AMS_REF_CTRL__ACT_FREQMHZ {49.999996} \
+    CONFIG.PSU__CRL_APB__CAN1_REF_CTRL__ACT_FREQMHZ {100} \
+    CONFIG.PSU__CRL_APB__CAN1_REF_CTRL__FREQMHZ {100} \
+    CONFIG.PSU__CRL_APB__CAN1_REF_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__CPU_R5_CTRL__ACT_FREQMHZ {499.999969} \
+    CONFIG.PSU__CRL_APB__CPU_R5_CTRL__FREQMHZ {500} \
+    CONFIG.PSU__CRL_APB__CPU_R5_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__DBG_LPD_CTRL__ACT_FREQMHZ {249.999985} \
+    CONFIG.PSU__CRL_APB__DBG_LPD_CTRL__FREQMHZ {250} \
+    CONFIG.PSU__CRL_APB__DBG_LPD_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__DLL_REF_CTRL__ACT_FREQMHZ {999.999939} \
+    CONFIG.PSU__CRL_APB__GEM0_REF_CTRL__ACT_FREQMHZ {124.999992} \
+    CONFIG.PSU__CRL_APB__GEM1_REF_CTRL__ACT_FREQMHZ {124.999992} \
+    CONFIG.PSU__CRL_APB__GEM2_REF_CTRL__ACT_FREQMHZ {124.999992} \
+    CONFIG.PSU__CRL_APB__GEM3_REF_CTRL__ACT_FREQMHZ {124.999992} \
+    CONFIG.PSU__CRL_APB__GEM3_REF_CTRL__FREQMHZ {125} \
+    CONFIG.PSU__CRL_APB__GEM3_REF_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__GEM_TSU_REF_CTRL__ACT_FREQMHZ {249.999985} \
+    CONFIG.PSU__CRL_APB__GEM_TSU_REF_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__I2C0_REF_CTRL__ACT_FREQMHZ {99.999992} \
+    CONFIG.PSU__CRL_APB__I2C0_REF_CTRL__FREQMHZ {100} \
+    CONFIG.PSU__CRL_APB__I2C0_REF_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__I2C1_REF_CTRL__ACT_FREQMHZ {100} \
+    CONFIG.PSU__CRL_APB__I2C1_REF_CTRL__FREQMHZ {100} \
+    CONFIG.PSU__CRL_APB__I2C1_REF_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__IOPLL_CTRL__SRCSEL {PSS_REF_CLK} \
+    CONFIG.PSU__CRL_APB__IOU_SWITCH_CTRL__ACT_FREQMHZ {249.999985} \
+    CONFIG.PSU__CRL_APB__IOU_SWITCH_CTRL__FREQMHZ {250} \
+    CONFIG.PSU__CRL_APB__IOU_SWITCH_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__LPD_LSBUS_CTRL__ACT_FREQMHZ {99.999992} \
+    CONFIG.PSU__CRL_APB__LPD_LSBUS_CTRL__FREQMHZ {100} \
+    CONFIG.PSU__CRL_APB__LPD_LSBUS_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__LPD_SWITCH_CTRL__ACT_FREQMHZ {499.999969} \
+    CONFIG.PSU__CRL_APB__LPD_SWITCH_CTRL__FREQMHZ {500} \
+    CONFIG.PSU__CRL_APB__LPD_SWITCH_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__PCAP_CTRL__ACT_FREQMHZ {199.999985} \
+    CONFIG.PSU__CRL_APB__PCAP_CTRL__FREQMHZ {200} \
+    CONFIG.PSU__CRL_APB__PCAP_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__PL0_REF_CTRL__ACT_FREQMHZ {100.000000} \
+    CONFIG.PSU__CRL_APB__PL0_REF_CTRL__FREQMHZ {100} \
+    CONFIG.PSU__CRL_APB__PL0_REF_CTRL__SRCSEL {RPLL} \
+    CONFIG.PSU__CRL_APB__PL1_REF_CTRL__ACT_FREQMHZ {250.000000} \
+    CONFIG.PSU__CRL_APB__PL1_REF_CTRL__FREQMHZ {250} \
+    CONFIG.PSU__CRL_APB__PL1_REF_CTRL__SRCSEL {RPLL} \
+    CONFIG.PSU__CRL_APB__PL2_REF_CTRL__ACT_FREQMHZ {500.000000} \
+    CONFIG.PSU__CRL_APB__PL2_REF_CTRL__FREQMHZ {500} \
+    CONFIG.PSU__CRL_APB__PL2_REF_CTRL__SRCSEL {RPLL} \
+    CONFIG.PSU__CRL_APB__QSPI_REF_CTRL__ACT_FREQMHZ {124.999992} \
+    CONFIG.PSU__CRL_APB__QSPI_REF_CTRL__FREQMHZ {125} \
+    CONFIG.PSU__CRL_APB__QSPI_REF_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__RPLL_CTRL__SRCSEL {PSS_REF_CLK} \
+    CONFIG.PSU__CRL_APB__SDIO1_REF_CTRL__ACT_FREQMHZ {187.500000} \
+    CONFIG.PSU__CRL_APB__SDIO1_REF_CTRL__FREQMHZ {200} \
+    CONFIG.PSU__CRL_APB__SDIO1_REF_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__SPI0_REF_CTRL__ACT_FREQMHZ {100.000000} \
+    CONFIG.PSU__CRL_APB__SPI0_REF_CTRL__FREQMHZ {100} \
+    CONFIG.PSU__CRL_APB__SPI1_REF_CTRL__ACT_FREQMHZ {100.000000} \
+    CONFIG.PSU__CRL_APB__SPI1_REF_CTRL__FREQMHZ {100} \
+    CONFIG.PSU__CRL_APB__TIMESTAMP_REF_CTRL__ACT_FREQMHZ {99.999992} \
+    CONFIG.PSU__CRL_APB__TIMESTAMP_REF_CTRL__FREQMHZ {100} \
+    CONFIG.PSU__CRL_APB__TIMESTAMP_REF_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__UART0_REF_CTRL__ACT_FREQMHZ {99.999992} \
+    CONFIG.PSU__CRL_APB__UART0_REF_CTRL__FREQMHZ {100} \
+    CONFIG.PSU__CRL_APB__UART0_REF_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__UART1_REF_CTRL__ACT_FREQMHZ {100} \
+    CONFIG.PSU__CRL_APB__UART1_REF_CTRL__FREQMHZ {100} \
+    CONFIG.PSU__CRL_APB__UART1_REF_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__USB0_BUS_REF_CTRL__ACT_FREQMHZ {249.999985} \
+    CONFIG.PSU__CRL_APB__USB0_BUS_REF_CTRL__FREQMHZ {250} \
+    CONFIG.PSU__CRL_APB__USB0_BUS_REF_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__USB3_DUAL_REF_CTRL__ACT_FREQMHZ {19.999998} \
+    CONFIG.PSU__CRL_APB__USB3_DUAL_REF_CTRL__FREQMHZ {20} \
+    CONFIG.PSU__CRL_APB__USB3_DUAL_REF_CTRL__SRCSEL {IOPLL} \
+    CONFIG.PSU__CRL_APB__USB3__ENABLE {0} \
+    CONFIG.PSU__CSUPMU__PERIPHERAL__VALID {1} \
+    CONFIG.PSU__DDRC__BG_ADDR_COUNT {1} \
+    CONFIG.PSU__DDRC__BRC_MAPPING {ROW_BANK_COL} \
+    CONFIG.PSU__DDRC__BUS_WIDTH {32 Bit} \
+    CONFIG.PSU__DDRC__CL {17} \
+    CONFIG.PSU__DDRC__CLOCK_STOP_EN {0} \
+    CONFIG.PSU__DDRC__COMPONENTS {Components} \
+    CONFIG.PSU__DDRC__CWL {12} \
+    CONFIG.PSU__DDRC__DDR4_ADDR_MAPPING {0} \
+    CONFIG.PSU__DDRC__DDR4_CAL_MODE_ENABLE {0} \
+    CONFIG.PSU__DDRC__DDR4_CRC_CONTROL {0} \
+    CONFIG.PSU__DDRC__DDR4_T_REF_MODE {0} \
+    CONFIG.PSU__DDRC__DDR4_T_REF_RANGE {Normal (0-85)} \
+    CONFIG.PSU__DDRC__DEVICE_CAPACITY {8192 MBits} \
+    CONFIG.PSU__DDRC__DM_DBI {DM_NO_DBI} \
+    CONFIG.PSU__DDRC__DRAM_WIDTH {16 Bits} \
+    CONFIG.PSU__DDRC__ECC {Disabled} \
+    CONFIG.PSU__DDRC__FGRM {1X} \
+    CONFIG.PSU__DDRC__LP_ASR {manual normal} \
+    CONFIG.PSU__DDRC__MEMORY_TYPE {DDR 4} \
+    CONFIG.PSU__DDRC__PARITY_ENABLE {0} \
+    CONFIG.PSU__DDRC__PER_BANK_REFRESH {0} \
+    CONFIG.PSU__DDRC__PHY_DBI_MODE {0} \
+    CONFIG.PSU__DDRC__RANK_ADDR_COUNT {0} \
+    CONFIG.PSU__DDRC__ROW_ADDR_COUNT {16} \
+    CONFIG.PSU__DDRC__SB_TARGET {15-15-15} \
+    CONFIG.PSU__DDRC__SELF_REF_ABORT {0} \
+    CONFIG.PSU__DDRC__SPEED_BIN {DDR4_2400T} \
+    CONFIG.PSU__DDRC__STATIC_RD_MODE {0} \
+    CONFIG.PSU__DDRC__TRAIN_DATA_EYE {1} \
+    CONFIG.PSU__DDRC__TRAIN_READ_GATE {1} \
+    CONFIG.PSU__DDRC__TRAIN_WRITE_LEVEL {1} \
+    CONFIG.PSU__DDRC__T_FAW {30.0} \
+    CONFIG.PSU__DDRC__T_RAS_MIN {32} \
+    CONFIG.PSU__DDRC__T_RC {46.16} \
+    CONFIG.PSU__DDRC__T_RCD {17} \
+    CONFIG.PSU__DDRC__T_RP {17} \
+    CONFIG.PSU__DDRC__VREF {1} \
+    CONFIG.PSU__DDR_HIGH_ADDRESS_GUI_ENABLE {0} \
+    CONFIG.PSU__DDR__INTERFACE__FREQMHZ {600.000} \
+    CONFIG.PSU__DISPLAYPORT__PERIPHERAL__ENABLE {0} \
+    CONFIG.PSU__DLL__ISUSED {0} \
+    CONFIG.PSU__ENET0__PERIPHERAL__ENABLE {0} \
+    CONFIG.PSU__ENET1__PERIPHERAL__ENABLE {0} \
+    CONFIG.PSU__ENET2__PERIPHERAL__ENABLE {0} \
+    CONFIG.PSU__ENET3__FIFO__ENABLE {0} \
+    CONFIG.PSU__ENET3__GRP_MDIO__ENABLE {1} \
+    CONFIG.PSU__ENET3__GRP_MDIO__IO {MIO 76 .. 77} \
+    CONFIG.PSU__ENET3__PERIPHERAL__ENABLE {1} \
+    CONFIG.PSU__ENET3__PERIPHERAL__IO {MIO 64 .. 75} \
+    CONFIG.PSU__ENET3__PTP__ENABLE {0} \
+    CONFIG.PSU__ENET3__TSU__ENABLE {0} \
+    CONFIG.PSU__FPD_SLCR__WDT1__ACT_FREQMHZ {99.999992} \
+    CONFIG.PSU__FPGA_PL0_ENABLE {1} \
+    CONFIG.PSU__FPGA_PL1_ENABLE {1} \
+    CONFIG.PSU__FPGA_PL2_ENABLE {1} \
+    CONFIG.PSU__GEM3_COHERENCY {0} \
+    CONFIG.PSU__GEM3_ROUTE_THROUGH_FPD {0} \
+    CONFIG.PSU__GEM__TSU__ENABLE {0} \
+    CONFIG.PSU__GPIO0_MIO__IO {MIO 0 .. 25} \
+    CONFIG.PSU__GPIO0_MIO__PERIPHERAL__ENABLE {1} \
+    CONFIG.PSU__GPIO1_MIO__IO {MIO 26 .. 51} \
+    CONFIG.PSU__GPIO1_MIO__PERIPHERAL__ENABLE {1} \
+    CONFIG.PSU__GPIO2_MIO__PERIPHERAL__ENABLE {0} \
+    CONFIG.PSU__GPIO_EMIO_WIDTH {95} \
+    CONFIG.PSU__GPIO_EMIO__PERIPHERAL__ENABLE {1} \
+    CONFIG.PSU__GPIO_EMIO__PERIPHERAL__IO {95} \
+    CONFIG.PSU__I2C0__PERIPHERAL__ENABLE {1} \
+    CONFIG.PSU__I2C0__PERIPHERAL__IO {MIO 42 .. 43} \
+    CONFIG.PSU__I2C1__PERIPHERAL__ENABLE {0} \
+    CONFIG.PSU__IOU_SLCR__IOU_TTC_APB_CLK__TTC0_SEL {APB} \
+    CONFIG.PSU__IOU_SLCR__IOU_TTC_APB_CLK__TTC1_SEL {APB} \
+    CONFIG.PSU__IOU_SLCR__IOU_TTC_APB_CLK__TTC2_SEL {APB} \
+    CONFIG.PSU__IOU_SLCR__IOU_TTC_APB_CLK__TTC3_SEL {APB} \
+    CONFIG.PSU__IOU_SLCR__TTC0__ACT_FREQMHZ {100.000000} \
+    CONFIG.PSU__IOU_SLCR__TTC1__ACT_FREQMHZ {100.000000} \
+    CONFIG.PSU__IOU_SLCR__TTC2__ACT_FREQMHZ {100.000000} \
+    CONFIG.PSU__IOU_SLCR__TTC3__ACT_FREQMHZ {100.000000} \
+    CONFIG.PSU__IOU_SLCR__WDT0__ACT_FREQMHZ {99.999992} \
+    CONFIG.PSU__LPD_SLCR__CSUPMU__ACT_FREQMHZ {100.000000} \
+    CONFIG.PSU__MAXIGP2__DATA_WIDTH {32} \
+    CONFIG.PSU__OVERRIDE__BASIC_CLOCK {0} \
+    CONFIG.PSU__PCIE__CLASS_CODE_BASE {0x06} \
+    CONFIG.PSU__PCIE__CLASS_CODE_INTERFACE {0x0} \
+    CONFIG.PSU__PCIE__CLASS_CODE_SUB {0x4} \
+    CONFIG.PSU__PCIE__DEVICE_ID {0xD021} \
+    CONFIG.PSU__PCIE__MSIX_CAPABILITY {0} \
+    CONFIG.PSU__PCIE__MSI_CAPABILITY {0} \
+    CONFIG.PSU__PCIE__PERIPHERAL__ENABLE {0} \
+    CONFIG.PSU__PCIE__PERIPHERAL__ENDPOINT_ENABLE {1} \
+    CONFIG.PSU__PCIE__PERIPHERAL__ROOTPORT_ENABLE {0} \
+    CONFIG.PSU__PCIE__RESET__POLARITY {Active Low} \
+    CONFIG.PSU__PCIE__REVISION_ID {0x0} \
+    CONFIG.PSU__PCIE__SUBSYSTEM_ID {0x7} \
+    CONFIG.PSU__PCIE__SUBSYSTEM_VENDOR_ID {0x10EE} \
+    CONFIG.PSU__PCIE__VENDOR_ID {0x10EE} \
+    CONFIG.PSU__PL_CLK0_BUF {TRUE} \
+    CONFIG.PSU__PL_CLK1_BUF {TRUE} \
+    CONFIG.PSU__PL_CLK2_BUF {TRUE} \
+    CONFIG.PSU__PMU_COHERENCY {0} \
+    CONFIG.PSU__PMU__AIBACK__ENABLE {0} \
+    CONFIG.PSU__PMU__EMIO_GPI__ENABLE {0} \
+    CONFIG.PSU__PMU__EMIO_GPO__ENABLE {0} \
+    CONFIG.PSU__PMU__GPI0__ENABLE {0} \
+    CONFIG.PSU__PMU__GPI1__ENABLE {0} \
+    CONFIG.PSU__PMU__GPI2__ENABLE {0} \
+    CONFIG.PSU__PMU__GPI3__ENABLE {0} \
+    CONFIG.PSU__PMU__GPI4__ENABLE {0} \
+    CONFIG.PSU__PMU__GPI5__ENABLE {0} \
+    CONFIG.PSU__PMU__GPO0__ENABLE {1} \
+    CONFIG.PSU__PMU__GPO0__IO {MIO 32} \
+    CONFIG.PSU__PMU__GPO1__ENABLE {1} \
+    CONFIG.PSU__PMU__GPO1__IO {MIO 33} \
+    CONFIG.PSU__PMU__GPO2__ENABLE {0} \
+    CONFIG.PSU__PMU__GPO3__ENABLE {0} \
+    CONFIG.PSU__PMU__GPO4__ENABLE {0} \
+    CONFIG.PSU__PMU__GPO5__ENABLE {1} \
+    CONFIG.PSU__PMU__GPO5__IO {MIO 37} \
+    CONFIG.PSU__PMU__GPO5__POLARITY {low} \
+    CONFIG.PSU__PMU__PERIPHERAL__ENABLE {1} \
+    CONFIG.PSU__PMU__PLERROR__ENABLE {0} \
+    CONFIG.PSU__PRESET_APPLIED {1} \
+    CONFIG.PSU__PROTECTION__FPD_SEGMENTS {SA:0xFD1A0000; SIZE:1280; UNIT:KB; RegionTZ:Secure; WrAllowed:Read/Write; subsystemId:PMU Firmware   |    SA:0xFD000000; SIZE:64; UNIT:KB; RegionTZ:Secure; WrAllowed:Read/Write;\
+subsystemId:PMU Firmware   |    SA:0xFD010000; SIZE:64; UNIT:KB; RegionTZ:Secure; WrAllowed:Read/Write; subsystemId:PMU Firmware   |    SA:0xFD020000; SIZE:64; UNIT:KB; RegionTZ:Secure; WrAllowed:Read/Write;\
+subsystemId:PMU Firmware   |    SA:0xFD030000; SIZE:64; UNIT:KB; RegionTZ:Secure; WrAllowed:Read/Write; subsystemId:PMU Firmware   |    SA:0xFD040000; SIZE:64; UNIT:KB; RegionTZ:Secure; WrAllowed:Read/Write;\
+subsystemId:PMU Firmware   |    SA:0xFD050000; SIZE:64; UNIT:KB; RegionTZ:Secure; WrAllowed:Read/Write; subsystemId:PMU Firmware   |    SA:0xFD610000; SIZE:512; UNIT:KB; RegionTZ:Secure; WrAllowed:Read/Write;\
+subsystemId:PMU Firmware   |    SA:0xFD5D0000; SIZE:64; UNIT:KB; RegionTZ:Secure; WrAllowed:Read/Write; subsystemId:PMU Firmware   |   SA:0xFD1A0000 ; SIZE:1280; UNIT:KB; RegionTZ:Secure ; WrAllowed:Read/Write;\
+subsystemId:Secure Subsystem} \
+    CONFIG.PSU__PROTECTION__MASTERS {USB1:NonSecure;0|USB0:NonSecure;0|S_AXI_LPD:NA;0|S_AXI_HPC1_FPD:NA;0|S_AXI_HPC0_FPD:NA;1|S_AXI_HP3_FPD:NA;0|S_AXI_HP2_FPD:NA;0|S_AXI_HP1_FPD:NA;0|S_AXI_HP0_FPD:NA;0|S_AXI_ACP:NA;0|S_AXI_ACE:NA;0|SD1:NonSecure;0|SD0:NonSecure;0|SATA1:NonSecure;0|SATA0:NonSecure;0|RPU1:Secure;1|RPU0:Secure;1|QSPI:NonSecure;1|PMU:NA;1|PCIe:NonSecure;0|NAND:NonSecure;0|LDMA:NonSecure;1|GPU:NonSecure;1|GEM3:NonSecure;1|GEM2:NonSecure;0|GEM1:NonSecure;0|GEM0:NonSecure;0|FDMA:NonSecure;1|DP:NonSecure;0|DAP:NA;1|Coresight:NA;1|CSU:NA;1|APU:NA;1}\
+\
+    CONFIG.PSU__PROTECTION__SLAVES {LPD;USB3_1_XHCI;FE300000;FE3FFFFF;0|LPD;USB3_1;FF9E0000;FF9EFFFF;0|LPD;USB3_0_XHCI;FE200000;FE2FFFFF;0|LPD;USB3_0;FF9D0000;FF9DFFFF;0|LPD;UART1;FF010000;FF01FFFF;0|LPD;UART0;FF000000;FF00FFFF;1|LPD;TTC3;FF140000;FF14FFFF;1|LPD;TTC2;FF130000;FF13FFFF;1|LPD;TTC1;FF120000;FF12FFFF;1|LPD;TTC0;FF110000;FF11FFFF;1|FPD;SWDT1;FD4D0000;FD4DFFFF;1|LPD;SWDT0;FF150000;FF15FFFF;1|LPD;SPI1;FF050000;FF05FFFF;1|LPD;SPI0;FF040000;FF04FFFF;1|FPD;SMMU_REG;FD5F0000;FD5FFFFF;1|FPD;SMMU;FD800000;FDFFFFFF;1|FPD;SIOU;FD3D0000;FD3DFFFF;1|FPD;SERDES;FD400000;FD47FFFF;1|LPD;SD1;FF170000;FF17FFFF;0|LPD;SD0;FF160000;FF16FFFF;0|FPD;SATA;FD0C0000;FD0CFFFF;0|LPD;RTC;FFA60000;FFA6FFFF;1|LPD;RSA_CORE;FFCE0000;FFCEFFFF;1|LPD;RPU;FF9A0000;FF9AFFFF;1|LPD;R5_TCM_RAM_GLOBAL;FFE00000;FFE3FFFF;1|LPD;R5_1_Instruction_Cache;FFEC0000;FFECFFFF;1|LPD;R5_1_Data_Cache;FFED0000;FFEDFFFF;1|LPD;R5_1_BTCM_GLOBAL;FFEB0000;FFEBFFFF;1|LPD;R5_1_ATCM_GLOBAL;FFE90000;FFE9FFFF;1|LPD;R5_0_Instruction_Cache;FFE40000;FFE4FFFF;1|LPD;R5_0_Data_Cache;FFE50000;FFE5FFFF;1|LPD;R5_0_BTCM_GLOBAL;FFE20000;FFE2FFFF;1|LPD;R5_0_ATCM_GLOBAL;FFE00000;FFE0FFFF;1|LPD;QSPI_Linear_Address;C0000000;DFFFFFFF;1|LPD;QSPI;FF0F0000;FF0FFFFF;1|LPD;PMU_RAM;FFDC0000;FFDDFFFF;1|LPD;PMU_GLOBAL;FFD80000;FFDBFFFF;1|FPD;PCIE_MAIN;FD0E0000;FD0EFFFF;0|FPD;PCIE_LOW;E0000000;EFFFFFFF;0|FPD;PCIE_HIGH2;8000000000;BFFFFFFFFF;0|FPD;PCIE_HIGH1;600000000;7FFFFFFFF;0|FPD;PCIE_DMA;FD0F0000;FD0FFFFF;0|FPD;PCIE_ATTRIB;FD480000;FD48FFFF;0|LPD;OCM_XMPU_CFG;FFA70000;FFA7FFFF;1|LPD;OCM_SLCR;FF960000;FF96FFFF;1|OCM;OCM;FFFC0000;FFFFFFFF;1|LPD;NAND;FF100000;FF10FFFF;0|LPD;MBISTJTAG;FFCF0000;FFCFFFFF;1|LPD;LPD_XPPU_SINK;FF9C0000;FF9CFFFF;1|LPD;LPD_XPPU;FF980000;FF98FFFF;1|LPD;LPD_SLCR_SECURE;FF4B0000;FF4DFFFF;1|LPD;LPD_SLCR;FF410000;FF4AFFFF;1|LPD;LPD_GPV;FE100000;FE1FFFFF;1|LPD;LPD_DMA_7;FFAF0000;FFAFFFFF;1|LPD;LPD_DMA_6;FFAE0000;FFAEFFFF;1|LPD;LPD_DMA_5;FFAD0000;FFADFFFF;1|LPD;LPD_DMA_4;FFAC0000;FFACFFFF;1|LPD;LPD_DMA_3;FFAB0000;FFABFFFF;1|LPD;LPD_DMA_2;FFAA0000;FFAAFFFF;1|LPD;LPD_DMA_1;FFA90000;FFA9FFFF;1|LPD;LPD_DMA_0;FFA80000;FFA8FFFF;1|LPD;IPI_CTRL;FF380000;FF3FFFFF;1|LPD;IOU_SLCR;FF180000;FF23FFFF;1|LPD;IOU_SECURE_SLCR;FF240000;FF24FFFF;1|LPD;IOU_SCNTRS;FF260000;FF26FFFF;1|LPD;IOU_SCNTR;FF250000;FF25FFFF;1|LPD;IOU_GPV;FE000000;FE0FFFFF;1|LPD;I2C1;FF030000;FF03FFFF;0|LPD;I2C0;FF020000;FF02FFFF;1|FPD;GPU;FD4B0000;FD4BFFFF;1|LPD;GPIO;FF0A0000;FF0AFFFF;1|LPD;GEM3;FF0E0000;FF0EFFFF;1|LPD;GEM2;FF0D0000;FF0DFFFF;0|LPD;GEM1;FF0C0000;FF0CFFFF;0|LPD;GEM0;FF0B0000;FF0BFFFF;0|FPD;FPD_XMPU_SINK;FD4F0000;FD4FFFFF;1|FPD;FPD_XMPU_CFG;FD5D0000;FD5DFFFF;1|FPD;FPD_SLCR_SECURE;FD690000;FD6CFFFF;1|FPD;FPD_SLCR;FD610000;FD68FFFF;1|FPD;FPD_DMA_CH7;FD570000;FD57FFFF;1|FPD;FPD_DMA_CH6;FD560000;FD56FFFF;1|FPD;FPD_DMA_CH5;FD550000;FD55FFFF;1|FPD;FPD_DMA_CH4;FD540000;FD54FFFF;1|FPD;FPD_DMA_CH3;FD530000;FD53FFFF;1|FPD;FPD_DMA_CH2;FD520000;FD52FFFF;1|FPD;FPD_DMA_CH1;FD510000;FD51FFFF;1|FPD;FPD_DMA_CH0;FD500000;FD50FFFF;1|LPD;EFUSE;FFCC0000;FFCCFFFF;1|FPD;Display\
+Port;FD4A0000;FD4AFFFF;0|FPD;DPDMA;FD4C0000;FD4CFFFF;0|FPD;DDR_XMPU5_CFG;FD050000;FD05FFFF;1|FPD;DDR_XMPU4_CFG;FD040000;FD04FFFF;1|FPD;DDR_XMPU3_CFG;FD030000;FD03FFFF;1|FPD;DDR_XMPU2_CFG;FD020000;FD02FFFF;1|FPD;DDR_XMPU1_CFG;FD010000;FD01FFFF;1|FPD;DDR_XMPU0_CFG;FD000000;FD00FFFF;1|FPD;DDR_QOS_CTRL;FD090000;FD09FFFF;1|FPD;DDR_PHY;FD080000;FD08FFFF;1|DDR;DDR_LOW;0;7FFFFFFF;1|DDR;DDR_HIGH;800000000;800000000;0|FPD;DDDR_CTRL;FD070000;FD070FFF;1|LPD;Coresight;FE800000;FEFFFFFF;1|LPD;CSU_DMA;FFC80000;FFC9FFFF;1|LPD;CSU;FFCA0000;FFCAFFFF;1|LPD;CRL_APB;FF5E0000;FF85FFFF;1|FPD;CRF_APB;FD1A0000;FD2DFFFF;1|FPD;CCI_REG;FD5E0000;FD5EFFFF;1|LPD;CAN1;FF070000;FF07FFFF;0|LPD;CAN0;FF060000;FF06FFFF;0|FPD;APU;FD5C0000;FD5CFFFF;1|LPD;APM_INTC_IOU;FFA20000;FFA2FFFF;1|LPD;APM_FPD_LPD;FFA30000;FFA3FFFF;1|FPD;APM_5;FD490000;FD49FFFF;1|FPD;APM_0;FD0B0000;FD0BFFFF;1|LPD;APM2;FFA10000;FFA1FFFF;1|LPD;APM1;FFA00000;FFA0FFFF;1|LPD;AMS;FFA50000;FFA5FFFF;1|FPD;AFI_5;FD3B0000;FD3BFFFF;1|FPD;AFI_4;FD3A0000;FD3AFFFF;1|FPD;AFI_3;FD390000;FD39FFFF;1|FPD;AFI_2;FD380000;FD38FFFF;1|FPD;AFI_1;FD370000;FD37FFFF;1|FPD;AFI_0;FD360000;FD36FFFF;1|LPD;AFIFM6;FF9B0000;FF9BFFFF;1|FPD;ACPU_GIC;F9010000;F907FFFF;1}\
+\
+    CONFIG.PSU__PSS_REF_CLK__FREQMHZ {33.333333333} \
+    CONFIG.PSU__QSPI_COHERENCY {0} \
+    CONFIG.PSU__QSPI_ROUTE_THROUGH_FPD {0} \
+    CONFIG.PSU__QSPI__GRP_FBCLK__ENABLE {0} \
+    CONFIG.PSU__QSPI__PERIPHERAL__DATA_MODE {x4} \
+    CONFIG.PSU__QSPI__PERIPHERAL__ENABLE {1} \
+    CONFIG.PSU__QSPI__PERIPHERAL__IO {MIO 0 .. 5} \
+    CONFIG.PSU__QSPI__PERIPHERAL__MODE {Single} \
+    CONFIG.PSU__SATA__PERIPHERAL__ENABLE {0} \
+    CONFIG.PSU__SAXIGP0__DATA_WIDTH {128} \
+    CONFIG.PSU__SD1__CLK_100_SDR_OTAP_DLY {0x3} \
+    CONFIG.PSU__SD1__CLK_200_SDR_OTAP_DLY {0x3} \
+    CONFIG.PSU__SD1__CLK_50_DDR_ITAP_DLY {0x3D} \
+    CONFIG.PSU__SD1__CLK_50_DDR_OTAP_DLY {0x4} \
+    CONFIG.PSU__SD1__CLK_50_SDR_ITAP_DLY {0x15} \
+    CONFIG.PSU__SD1__CLK_50_SDR_OTAP_DLY {0x5} \
+    CONFIG.PSU__SD1__PERIPHERAL__ENABLE {0} \
+    CONFIG.PSU__SD1__RESET__ENABLE {0} \
+    CONFIG.PSU__SPI0__GRP_SS0__IO {EMIO} \
+    CONFIG.PSU__SPI0__GRP_SS1__ENABLE {1} \
+    CONFIG.PSU__SPI0__GRP_SS1__IO {EMIO} \
+    CONFIG.PSU__SPI0__GRP_SS2__ENABLE {1} \
+    CONFIG.PSU__SPI0__GRP_SS2__IO {EMIO} \
+    CONFIG.PSU__SPI0__PERIPHERAL__ENABLE {1} \
+    CONFIG.PSU__SPI0__PERIPHERAL__IO {EMIO} \
+    CONFIG.PSU__SPI1__GRP_SS0__IO {EMIO} \
+    CONFIG.PSU__SPI1__GRP_SS1__ENABLE {1} \
+    CONFIG.PSU__SPI1__GRP_SS1__IO {EMIO} \
+    CONFIG.PSU__SPI1__GRP_SS2__ENABLE {1} \
+    CONFIG.PSU__SPI1__GRP_SS2__IO {EMIO} \
+    CONFIG.PSU__SPI1__PERIPHERAL__ENABLE {1} \
+    CONFIG.PSU__SPI1__PERIPHERAL__IO {EMIO} \
+    CONFIG.PSU__SWDT0__CLOCK__ENABLE {0} \
+    CONFIG.PSU__SWDT0__PERIPHERAL__ENABLE {1} \
+    CONFIG.PSU__SWDT0__RESET__ENABLE {0} \
+    CONFIG.PSU__SWDT1__CLOCK__ENABLE {0} \
+    CONFIG.PSU__SWDT1__PERIPHERAL__ENABLE {1} \
+    CONFIG.PSU__SWDT1__RESET__ENABLE {0} \
+    CONFIG.PSU__TSU__BUFG_PORT_PAIR {0} \
+    CONFIG.PSU__TTC0__CLOCK__ENABLE {0} \
+    CONFIG.PSU__TTC0__PERIPHERAL__ENABLE {1} \
+    CONFIG.PSU__TTC0__WAVEOUT__ENABLE {0} \
+    CONFIG.PSU__TTC1__CLOCK__ENABLE {0} \
+    CONFIG.PSU__TTC1__PERIPHERAL__ENABLE {1} \
+    CONFIG.PSU__TTC1__WAVEOUT__ENABLE {0} \
+    CONFIG.PSU__TTC2__CLOCK__ENABLE {0} \
+    CONFIG.PSU__TTC2__PERIPHERAL__ENABLE {1} \
+    CONFIG.PSU__TTC2__WAVEOUT__ENABLE {0} \
+    CONFIG.PSU__TTC3__CLOCK__ENABLE {0} \
+    CONFIG.PSU__TTC3__PERIPHERAL__ENABLE {1} \
+    CONFIG.PSU__TTC3__WAVEOUT__ENABLE {0} \
+    CONFIG.PSU__UART0__BAUD_RATE {115200} \
+    CONFIG.PSU__UART0__MODEM__ENABLE {0} \
+    CONFIG.PSU__UART0__PERIPHERAL__ENABLE {1} \
+    CONFIG.PSU__UART0__PERIPHERAL__IO {MIO 26 .. 27} \
+    CONFIG.PSU__UART1__PERIPHERAL__ENABLE {0} \
+    CONFIG.PSU__USB0__PERIPHERAL__ENABLE {0} \
+    CONFIG.PSU__USB0__RESET__ENABLE {0} \
+    CONFIG.PSU__USB1__RESET__ENABLE {0} \
+    CONFIG.PSU__USE__IRQ0 {1} \
+    CONFIG.PSU__USE__IRQ1 {1} \
+    CONFIG.PSU__USE__M_AXI_GP0 {0} \
+    CONFIG.PSU__USE__M_AXI_GP1 {0} \
+    CONFIG.PSU__USE__M_AXI_GP2 {1} \
+    CONFIG.PSU__USE__S_AXI_GP0 {1} \
+  ] $sys_ps8
+
+
+  # Create instance: sys_rstgen, and set properties
+  set sys_rstgen [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 sys_rstgen ]
+  set_property CONFIG.C_EXT_RST_WIDTH {1} $sys_rstgen
+
+
+  # Create instance: spi0_csn_concat, and set properties
+  set spi0_csn_concat [ create_bd_cell -type inline_hdl -vlnv xilinx.com:inline_hdl:ilconcat:1.0 spi0_csn_concat ]
+  set_property CONFIG.NUM_PORTS {3} $spi0_csn_concat
+
+
+  # Create instance: VCC_1, and set properties
+  set VCC_1 [ create_bd_cell -type inline_hdl -vlnv xilinx.com:inline_hdl:ilconstant:1.0 VCC_1 ]
+  set_property -dict [list \
+    CONFIG.CONST_VAL {1} \
+    CONFIG.CONST_WIDTH {1} \
+  ] $VCC_1
+
+
+  # Create instance: GND_1, and set properties
+  set GND_1 [ create_bd_cell -type inline_hdl -vlnv xilinx.com:inline_hdl:ilconstant:1.0 GND_1 ]
+  set_property -dict [list \
+    CONFIG.CONST_VAL {0} \
+    CONFIG.CONST_WIDTH {1} \
+  ] $GND_1
+
+
+  # Create instance: spi1_csn_concat, and set properties
+  set spi1_csn_concat [ create_bd_cell -type inline_hdl -vlnv xilinx.com:inline_hdl:ilconcat:1.0 spi1_csn_concat ]
+  set_property CONFIG.NUM_PORTS {3} $spi1_csn_concat
+
+
+  # Create instance: axi_sysid_0, and set properties
+  set axi_sysid_0 [ create_bd_cell -type ip -vlnv analog.com:user:axi_sysid:1.0 axi_sysid_0 ]
+  set_property CONFIG.ROM_ADDR_BITS {9} $axi_sysid_0
+
+
+  # Create instance: rom_sys_0, and set properties
+  set rom_sys_0 [ create_bd_cell -type ip -vlnv analog.com:user:sysid_rom:1.0 rom_sys_0 ]
+  set_property -dict [list \
+    CONFIG.PATH_TO_FILE [file join $sysid_directory mem_init_sys.txt] \
+    CONFIG.ROM_ADDR_BITS {9} \
+  ] $rom_sys_0
+
+
+  # Create instance: axi_hpm0_lpd_interconnect, and set properties
+  set axi_hpm0_lpd_interconnect [ create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect:1.0 axi_hpm0_lpd_interconnect ]
+  set_property -dict [list \
+    CONFIG.NUM_MI {9} \
+    CONFIG.NUM_SI {1} \
+  ] $axi_hpm0_lpd_interconnect
+
+
+  # Create instance: sys_concat_intc_0, and set properties
+  set sys_concat_intc_0 [ create_bd_cell -type inline_hdl -vlnv xilinx.com:inline_hdl:ilconcat:1.0 sys_concat_intc_0 ]
+  set_property CONFIG.NUM_PORTS {8} $sys_concat_intc_0
+
+
+  # Create instance: sys_concat_intc_1, and set properties
+  set sys_concat_intc_1 [ create_bd_cell -type inline_hdl -vlnv xilinx.com:inline_hdl:ilconcat:1.0 sys_concat_intc_1 ]
+  set_property CONFIG.NUM_PORTS {8} $sys_concat_intc_1
+
+
+  # Create instance: axi_adrv9001, and set properties
+  set axi_adrv9001 [ create_bd_cell -type ip -vlnv analog.com:user:axi_adrv9001:1.0 axi_adrv9001 ]
+  set_property -dict [list \
+    CONFIG.CMOS_LVDS_N {0} \
+    CONFIG.USE_RX_CLK_FOR_TX1 {2} \
+    CONFIG.USE_RX_CLK_FOR_TX2 {2} \
+  ] $axi_adrv9001
+
+
+  # Create instance: axi_adrv9001_tx2_dma, and set properties
+  set axi_adrv9001_tx2_dma [ create_bd_cell -type ip -vlnv analog.com:user:axi_dmac:1.0 axi_adrv9001_tx2_dma ]
+  set_property -dict [list \
+    CONFIG.ALLOW_ASYM_MEM {1} \
+    CONFIG.AXI_SLICE_DEST {false} \
+    CONFIG.AXI_SLICE_SRC {false} \
+    CONFIG.CACHE_COHERENT {true} \
+    CONFIG.CYCLIC {true} \
+    CONFIG.DMA_2D_TRANSFER {false} \
+    CONFIG.DMA_DATA_WIDTH_DEST {32} \
+    CONFIG.DMA_TYPE_DEST {1} \
+    CONFIG.DMA_TYPE_SRC {0} \
+    CONFIG.SYNC_TRANSFER_START {false} \
+  ] $axi_adrv9001_tx2_dma
+
+
+  # Create instance: util_dac_2_upack, and set properties
+  set util_dac_2_upack [ create_bd_cell -type ip -vlnv analog.com:user:util_upack2:1.0 util_dac_2_upack ]
+  set_property -dict [list \
+    CONFIG.NUM_OF_CHANNELS {2} \
+    CONFIG.SAMPLE_DATA_WIDTH {16} \
+  ] $util_dac_2_upack
+
+
+  # Create instance: axi_hpc0_interconnect, and set properties
+  set axi_hpc0_interconnect [ create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect:1.0 axi_hpc0_interconnect ]
+  set_property -dict [list \
+    CONFIG.NUM_MI {1} \
+    CONFIG.NUM_SI {1} \
+  ] $axi_hpc0_interconnect
+
+
+  # Create instance: axi_t12_gpio, and set properties
+  set axi_t12_gpio [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 axi_t12_gpio ]
+  set_property -dict [list \
+    CONFIG.C_ALL_INPUTS {0} \
+    CONFIG.C_ALL_INPUTS_2 {0} \
+    CONFIG.C_ALL_OUTPUTS {0} \
+    CONFIG.C_ALL_OUTPUTS_2 {0} \
+    CONFIG.C_DOUT_DEFAULT {0x00000000} \
+    CONFIG.C_DOUT_DEFAULT_2 {0x00000000} \
+    CONFIG.C_GPIO2_WIDTH {27} \
+    CONFIG.C_GPIO_WIDTH {32} \
+    CONFIG.C_INTERRUPT_PRESENT {0} \
+    CONFIG.C_IS_DUAL {1} \
+    CONFIG.C_TRI_DEFAULT {0xFFFFFFFF} \
+    CONFIG.C_TRI_DEFAULT_2 {0xFFFFFFFF} \
+  ] $axi_t12_gpio
+
+
+  # Create instance: axi_t12_aux_gpio, and set properties
+  set axi_t12_aux_gpio [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 axi_t12_aux_gpio ]
+  set_property -dict [list \
+    CONFIG.C_ALL_INPUTS {0} \
+    CONFIG.C_ALL_OUTPUTS {0} \
+    CONFIG.C_DOUT_DEFAULT {0x00000000} \
+    CONFIG.C_GPIO_WIDTH {17} \
+    CONFIG.C_INTERRUPT_PRESENT {0} \
+    CONFIG.C_TRI_DEFAULT {0x0001FFFF} \
+  ] $axi_t12_aux_gpio
+
+
+  # Create instance: axi_quad_spi_lb, and set properties
+  set axi_quad_spi_lb [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_quad_spi:3.2 axi_quad_spi_lb ]
+  set_property -dict [list \
+    CONFIG.C_FIFO_DEPTH {16} \
+    CONFIG.C_NUM_SS_BITS {2} \
+    CONFIG.C_NUM_TRANSFER_BITS {8} \
+    CONFIG.C_SCK_RATIO {16} \
+    CONFIG.C_SPI_MODE {0} \
+    CONFIG.C_USE_STARTUP {0} \
+    CONFIG.FIFO_INCLUDED {1} \
+    CONFIG.Master_mode {1} \
+  ] $axi_quad_spi_lb
+
+
+  # Create instance: axi_quad_spi_hb, and set properties
+  set axi_quad_spi_hb [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_quad_spi:3.2 axi_quad_spi_hb ]
+  set_property -dict [list \
+    CONFIG.C_FIFO_DEPTH {16} \
+    CONFIG.C_NUM_SS_BITS {4} \
+    CONFIG.C_NUM_TRANSFER_BITS {8} \
+    CONFIG.C_SCK_RATIO {16} \
+    CONFIG.C_SPI_MODE {0} \
+    CONFIG.C_USE_STARTUP {0} \
+    CONFIG.FIFO_INCLUDED {1} \
+    CONFIG.Master_mode {1} \
+  ] $axi_quad_spi_hb
+
+
+  # Create interface connections
+
+  ##########################################################################
+  # Ranh gioi voi trx.bd
+  #
+  # system.bd chi chua IP cua Xilinx va ADI; logic tvsdr nam o trx.bd. Hai BD
+  # gap nhau o system_top.v.
+  #
+  # Giai ma dia chi phai o BEN NAY: assign_bd_address chi lam viec trong BD so
+  # huu khong gian dia chi cua PS, khong voi toi slave o BD khac. Vi vay dat
+  # axi_trx_crossbar o day va khai dia chi tung cong bang tham so.
+  ##########################################################################
+  set axi_trx_crossbar [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_crossbar:2.1 axi_trx_crossbar ]
+  set_property -dict [list \
+    CONFIG.NUM_SI {1} \
+    CONFIG.NUM_MI {4} \
+    CONFIG.PROTOCOL {AXI4LITE} \
+    CONFIG.CONNECTIVITY_MODE {SASD} \
+    CONFIG.R_REGISTER {1} \
+    CONFIG.M00_A00_BASE_ADDR {0x0000000081210000} \
+    CONFIG.M00_A00_ADDR_WIDTH {12} \
+    CONFIG.M01_A00_BASE_ADDR {0x0000000081220000} \
+    CONFIG.M01_A00_ADDR_WIDTH {12} \
+    CONFIG.M02_A00_BASE_ADDR {0x0000000081230000} \
+    CONFIG.M02_A00_ADDR_WIDTH {13} \
+    CONFIG.M03_A00_BASE_ADDR {0x0000000081250000} \
+    CONFIG.M03_A00_ADDR_WIDTH {12} \
+  ] $axi_trx_crossbar
+
+  foreach {nm w} {adc_1_data_i0 16 adc_1_data_q0 16 adc_2_data_i0 16 \
+                  adc_2_data_q0 16 \
+                  ps_gpio0_o 32 ps_gpio0_t 32 ps_gpio1_o 27 ps_gpio1_t 27} {
+    create_bd_port -dir O -from [expr {$w-1}] -to 0 $nm
+  }
+  create_bd_port -dir O -type clk init_clk
+  set aurora_sample_clk [create_bd_port -dir O -type clk aurora_sample_clk]
+  set_property CONFIG.FREQ_HZ 250000000 $aurora_sample_clk
+  foreach nm {initclk_rstn adc_1_clk adc_1_rst adc_1_valid \
+              adc_2_clk adc_2_rst adc_2_valid \
+              dac_1_clk dac_1_rst dac_1_rd_en} {
+    create_bd_port -dir O $nm
+  }
+  foreach nm {dac_1_data_i0 dac_1_data_q0 dac_1_data_i1 dac_1_data_q1} {
+    create_bd_port -dir I -from 15 -to 0 $nm
+  }
+
+  foreach {nm aw} {M_AXI_SYS 12 M_AXI_REGS 12} {
+    set ip [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:aximm_rtl:1.0 $nm ]
+    set_property -dict [list CONFIG.ADDR_WIDTH $aw CONFIG.DATA_WIDTH {32} \
+                             CONFIG.PROTOCOL {AXI4LITE}] $ip
+  }
+
+
+  ##########################################################################
+  # [MSDR] Ba khoi nay dam nhiem dung vai tro ma mb_bd cua tvsdr tung lam:
+  # bang tra cau hinh (CFG_LUT), kenh ban tin GFP len CPU (GFP_UB_IN/OUT),
+  # va tu lenh xuong fsm_main (gpio_1_tri).
+  ##########################################################################
+  set trx_cfg_lut_ctrl [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 trx_cfg_lut_ctrl ]
+  set_property -dict [list CONFIG.DATA_WIDTH {32} CONFIG.SINGLE_PORT_BRAM {1} \
+                           CONFIG.PROTOCOL {AXI4LITE}] $trx_cfg_lut_ctrl
+  set trx_cfg_lut_mem [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 trx_cfg_lut_mem ]
+  set_property -dict [list CONFIG.Memory_Type {True_Dual_Port_RAM} \
+                           CONFIG.Enable_B {Use_ENB_Pin} CONFIG.Use_RSTB_Pin {true} \
+                           CONFIG.Port_B_Write_Rate {0} CONFIG.Port_B_Enable_Rate {100}] $trx_cfg_lut_mem
+
+  set trx_gfp_fifo [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_fifo_mm_s:4.3 trx_gfp_fifo ]
+  set_property -dict [list CONFIG.C_USE_TX_CUT_THROUGH {0} CONFIG.C_USE_TX_DATA {1} \
+                           CONFIG.C_USE_RX_DATA {1} CONFIG.C_AXI4_BASEADDR {0x00000000} \
+                           CONFIG.C_DATA_INTERFACE_TYPE {0} \
+                           CONFIG.C_TX_FIFO_DEPTH {512} CONFIG.C_RX_FIFO_DEPTH {512} \
+                           CONFIG.C_TX_FIFO_PF_THRESHOLD {507} \
+                           CONFIG.C_RX_FIFO_PF_THRESHOLD {507}] $trx_gfp_fifo
+
+  set trx_cmd_gpio [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 trx_cmd_gpio ]
+  set_property -dict [list CONFIG.C_IS_DUAL {0} CONFIG.C_ALL_OUTPUTS {0} \
+                           CONFIG.C_GPIO_WIDTH {32}] $trx_cmd_gpio
+
+  # Cong ranh gioi cho ba khoi tren
+  foreach nm {CFG_LUT_clk CFG_LUT_rst CFG_LUT_en GFP_UB_IN_tvalid GFP_UB_IN_tlast \
+              GFP_UB_OUT_tready} { create_bd_port -dir I $nm }
+  foreach nm {GFP_UB_IN_tready GFP_UB_OUT_tvalid GFP_UB_OUT_tlast} { create_bd_port -dir O $nm }
+  create_bd_port -dir I -from 31 -to 0 CFG_LUT_addr
+  create_bd_port -dir I -from 31 -to 0 CFG_LUT_din
+  create_bd_port -dir O -from 31 -to 0 CFG_LUT_dout
+  create_bd_port -dir I -from 3 -to 0 CFG_LUT_we
+  create_bd_port -dir I -from 7 -to 0 GFP_UB_IN_tdata
+  create_bd_port -dir O -from 7 -to 0 GFP_UB_OUT_tdata
+  create_bd_port -dir O -from 31 -to 0 gpio_1_tri_o
+  create_bd_port -dir I -from 31 -to 0 gpio_1_tri_i
+
+  connect_bd_intf_net -intf_net axi_adrv9001_tx2_dma_m_axis [get_bd_intf_pins axi_adrv9001_tx2_dma/m_axis] [get_bd_intf_pins util_dac_2_upack/s_axis]
+  connect_bd_intf_net -intf_net axi_adrv9001_tx2_dma_m_src_axi [get_bd_intf_pins axi_hpc0_interconnect/S00_AXI] [get_bd_intf_pins axi_adrv9001_tx2_dma/m_src_axi]
+  connect_bd_intf_net -intf_net axi_hpc0_interconnect_M00_AXI [get_bd_intf_pins axi_hpc0_interconnect/M00_AXI] [get_bd_intf_pins sys_ps8/S_AXI_HPC0_FPD]
+  connect_bd_intf_net -intf_net axi_hpm0_lpd_interconnect_M00_AXI [get_bd_intf_pins axi_hpm0_lpd_interconnect/M00_AXI] [get_bd_intf_pins axi_sysid_0/s_axi]
+  connect_bd_intf_net -intf_net axi_hpm0_lpd_interconnect_M01_AXI [get_bd_intf_pins axi_hpm0_lpd_interconnect/M01_AXI] [get_bd_intf_pins axi_adrv9001/s_axi]
+  connect_bd_intf_net -intf_net axi_hpm0_lpd_interconnect_M02_AXI [get_bd_intf_pins axi_hpm0_lpd_interconnect/M02_AXI] [get_bd_intf_pins axi_adrv9001_tx2_dma/s_axi]
+  connect_bd_intf_net -intf_net axi_hpm0_lpd_interconnect_M03_AXI [get_bd_intf_pins axi_hpm0_lpd_interconnect/M03_AXI] [get_bd_intf_pins axi_t12_gpio/S_AXI]
+  connect_bd_intf_net -intf_net axi_hpm0_lpd_interconnect_M06_AXI [get_bd_intf_pins axi_hpm0_lpd_interconnect/M06_AXI] [get_bd_intf_pins axi_quad_spi_lb/AXI_LITE]
+  connect_bd_intf_net -intf_net axi_hpm0_lpd_interconnect_M07_AXI [get_bd_intf_pins axi_hpm0_lpd_interconnect/M07_AXI] [get_bd_intf_pins axi_quad_spi_hb/AXI_LITE]
+  connect_bd_intf_net -intf_net axi_hpm0_lpd_interconnect_M08_AXI [get_bd_intf_pins axi_hpm0_lpd_interconnect/M08_AXI] [get_bd_intf_pins axi_t12_aux_gpio/S_AXI]
+  connect_bd_intf_net -intf_net sys_ps8_M_AXI_HPM0_LPD [get_bd_intf_pins axi_hpm0_lpd_interconnect/S00_AXI] [get_bd_intf_pins sys_ps8/M_AXI_HPM0_LPD]
+
+  # Create port connections
+  connect_bd_net -net GND_1_dout [get_bd_pins GND_1/dout] [get_bd_pins sys_concat_intc_1/In7] [get_bd_pins sys_concat_intc_1/In6] [get_bd_pins sys_concat_intc_1/In3] [get_bd_pins sys_concat_intc_1/In1] [get_bd_pins sys_concat_intc_1/In0] [get_bd_pins axi_adrv9001/dac_1_dunf] [get_bd_pins sys_concat_intc_0/In7] [get_bd_pins sys_concat_intc_0/In6] [get_bd_pins sys_concat_intc_0/In5] [get_bd_pins sys_concat_intc_0/In4] [get_bd_pins sys_concat_intc_0/In3] [get_bd_pins sys_concat_intc_0/In2] [get_bd_pins sys_concat_intc_0/In1] [get_bd_pins sys_concat_intc_0/In0] [get_bd_pins sys_ps8/emio_spi0_sclk_i] [get_bd_pins sys_ps8/emio_spi0_s_i] [get_bd_pins sys_ps8/emio_spi1_sclk_i] [get_bd_pins sys_ps8/emio_spi1_s_i] [get_bd_pins sys_concat_intc_1/In5] [get_bd_pins sys_concat_intc_1/In4]
+  connect_bd_net -net Net [get_bd_pins VCC_1/dout] [get_bd_pins sys_ps8/emio_spi0_ss_i_n] [get_bd_pins sys_ps8/emio_spi1_ss_i_n]
+  connect_bd_net -net axi_adrv9001_adc_1_clk [get_bd_pins axi_adrv9001/adc_1_clk] [get_bd_ports adc_1_clk]
+  connect_bd_net -net axi_adrv9001_adc_1_data_i0 [get_bd_pins axi_adrv9001/adc_1_data_i0] [get_bd_ports adc_1_data_i0]
+  connect_bd_net -net axi_adrv9001_adc_1_data_q0 [get_bd_pins axi_adrv9001/adc_1_data_q0] [get_bd_ports adc_1_data_q0]
+  connect_bd_net -net axi_adrv9001_adc_1_rst [get_bd_pins axi_adrv9001/adc_1_rst] [get_bd_ports adc_1_rst]
+  connect_bd_net -net axi_adrv9001_adc_1_valid_i0 [get_bd_pins axi_adrv9001/adc_1_valid_i0] [get_bd_ports adc_1_valid]
+  connect_bd_net -net axi_adrv9001_adc_2_clk [get_bd_pins axi_adrv9001/adc_2_clk] [get_bd_ports adc_2_clk]
+  connect_bd_net -net axi_adrv9001_adc_2_data_i0 [get_bd_pins axi_adrv9001/adc_2_data_i0] [get_bd_ports adc_2_data_i0]
+  connect_bd_net -net axi_adrv9001_adc_2_data_q0 [get_bd_pins axi_adrv9001/adc_2_data_q0] [get_bd_ports adc_2_data_q0]
+  connect_bd_net -net axi_adrv9001_adc_2_rst [get_bd_pins axi_adrv9001/adc_2_rst] [get_bd_ports adc_2_rst]
+  connect_bd_net -net axi_adrv9001_adc_2_valid_i0 [get_bd_pins axi_adrv9001/adc_2_valid_i0] [get_bd_ports adc_2_valid]
+  connect_bd_net -net axi_adrv9001_dac_1_clk [get_bd_pins axi_adrv9001/dac_1_clk] [get_bd_ports dac_1_clk]
+  connect_bd_net -net axi_adrv9001_dac_1_rst [get_bd_pins axi_adrv9001/dac_1_rst] [get_bd_ports dac_1_rst]
+  connect_bd_net -net axi_adrv9001_dac_1_valid_i0 [get_bd_pins axi_adrv9001/dac_1_valid_i0] [get_bd_ports dac_1_rd_en]
+  connect_bd_net -net axi_adrv9001_dac_2_clk [get_bd_pins axi_adrv9001/dac_2_clk] [get_bd_pins axi_adrv9001_tx2_dma/m_axis_aclk] [get_bd_pins util_dac_2_upack/clk]
+  connect_bd_net -net axi_adrv9001_dac_2_enable_i0 [get_bd_pins axi_adrv9001/dac_2_enable_i0] [get_bd_pins util_dac_2_upack/enable_0]
+  connect_bd_net -net axi_adrv9001_dac_2_enable_q0 [get_bd_pins axi_adrv9001/dac_2_enable_q0] [get_bd_pins util_dac_2_upack/enable_1]
+  connect_bd_net -net axi_adrv9001_dac_2_rst [get_bd_pins axi_adrv9001/dac_2_rst] [get_bd_pins util_dac_2_upack/reset]
+  connect_bd_net -net axi_adrv9001_dac_2_valid_i0 [get_bd_pins axi_adrv9001/dac_2_valid_i0] [get_bd_pins util_dac_2_upack/fifo_rd_en]
+  connect_bd_net -net axi_adrv9001_mcs_out [get_bd_pins axi_adrv9001/mcs_out] [get_bd_ports mcs_out]
+  connect_bd_net -net axi_adrv9001_rx1_enable [get_bd_pins axi_adrv9001/rx1_enable] [get_bd_ports rx1_enable]
+  connect_bd_net -net axi_adrv9001_rx2_enable [get_bd_pins axi_adrv9001/rx2_enable] [get_bd_ports rx2_enable]
+  connect_bd_net -net axi_adrv9001_tdd_sync_cntr [get_bd_pins axi_adrv9001/tdd_sync_cntr] [get_bd_ports tdd_sync_cntr]
+  connect_bd_net -net axi_adrv9001_tx1_dclk_out_n_NC [get_bd_pins axi_adrv9001/tx1_dclk_out_n_NC] [get_bd_ports tx1_dclk_out_n]
+  connect_bd_net -net axi_adrv9001_tx1_dclk_out_p_dclk_out [get_bd_pins axi_adrv9001/tx1_dclk_out_p_dclk_out] [get_bd_ports tx1_dclk_out_p]
+  connect_bd_net -net axi_adrv9001_tx1_enable [get_bd_pins axi_adrv9001/tx1_enable] [get_bd_ports tx1_enable]
+  connect_bd_net -net axi_adrv9001_tx1_idata_out_n_idata0 [get_bd_pins axi_adrv9001/tx1_idata_out_n_idata0] [get_bd_ports tx1_idata_out_n]
+  connect_bd_net -net axi_adrv9001_tx1_idata_out_p_idata1 [get_bd_pins axi_adrv9001/tx1_idata_out_p_idata1] [get_bd_ports tx1_idata_out_p]
+  connect_bd_net -net axi_adrv9001_tx1_qdata_out_n_qdata2 [get_bd_pins axi_adrv9001/tx1_qdata_out_n_qdata2] [get_bd_ports tx1_qdata_out_n]
+  connect_bd_net -net axi_adrv9001_tx1_qdata_out_p_qdata3 [get_bd_pins axi_adrv9001/tx1_qdata_out_p_qdata3] [get_bd_ports tx1_qdata_out_p]
+  connect_bd_net -net axi_adrv9001_tx1_strobe_out_n_NC [get_bd_pins axi_adrv9001/tx1_strobe_out_n_NC] [get_bd_ports tx1_strobe_out_n]
+  connect_bd_net -net axi_adrv9001_tx1_strobe_out_p_strobe_out [get_bd_pins axi_adrv9001/tx1_strobe_out_p_strobe_out] [get_bd_ports tx1_strobe_out_p]
+  connect_bd_net -net axi_adrv9001_tx2_dclk_out_n_NC [get_bd_pins axi_adrv9001/tx2_dclk_out_n_NC] [get_bd_ports tx2_dclk_out_n]
+  connect_bd_net -net axi_adrv9001_tx2_dclk_out_p_dclk_out [get_bd_pins axi_adrv9001/tx2_dclk_out_p_dclk_out] [get_bd_ports tx2_dclk_out_p]
+  connect_bd_net -net axi_adrv9001_tx2_dma_irq [get_bd_pins axi_adrv9001_tx2_dma/irq] [get_bd_pins sys_concat_intc_1/In2]
+  connect_bd_net -net axi_adrv9001_tx2_enable [get_bd_pins axi_adrv9001/tx2_enable] [get_bd_ports tx2_enable]
+  connect_bd_net -net axi_adrv9001_tx2_idata_out_n_idata0 [get_bd_pins axi_adrv9001/tx2_idata_out_n_idata0] [get_bd_ports tx2_idata_out_n]
+  connect_bd_net -net axi_adrv9001_tx2_idata_out_p_idata1 [get_bd_pins axi_adrv9001/tx2_idata_out_p_idata1] [get_bd_ports tx2_idata_out_p]
+  connect_bd_net -net axi_adrv9001_tx2_qdata_out_n_qdata2 [get_bd_pins axi_adrv9001/tx2_qdata_out_n_qdata2] [get_bd_ports tx2_qdata_out_n]
+  connect_bd_net -net axi_adrv9001_tx2_qdata_out_p_qdata3 [get_bd_pins axi_adrv9001/tx2_qdata_out_p_qdata3] [get_bd_ports tx2_qdata_out_p]
+  connect_bd_net -net axi_adrv9001_tx2_strobe_out_n_NC [get_bd_pins axi_adrv9001/tx2_strobe_out_n_NC] [get_bd_ports tx2_strobe_out_n]
+  connect_bd_net -net axi_adrv9001_tx2_strobe_out_p_strobe_out [get_bd_pins axi_adrv9001/tx2_strobe_out_p_strobe_out] [get_bd_ports tx2_strobe_out_p]
+  connect_bd_net -net axi_sysid_0_rom_addr [get_bd_pins axi_sysid_0/rom_addr] [get_bd_pins rom_sys_0/rom_addr]
+  connect_bd_net -net axi_t12_gpio_gpio2_io_o [get_bd_pins axi_t12_gpio/gpio2_io_o] [get_bd_ports ps_gpio1_o]
+  connect_bd_net -net axi_t12_gpio_gpio2_io_t [get_bd_pins axi_t12_gpio/gpio2_io_t] [get_bd_ports ps_gpio1_t]
+  connect_bd_net -net axi_t12_gpio_gpio_io_o [get_bd_pins axi_t12_gpio/gpio_io_o] [get_bd_ports ps_gpio0_o]
+  connect_bd_net -net axi_t12_gpio_gpio_io_t [get_bd_pins axi_t12_gpio/gpio_io_t] [get_bd_ports ps_gpio0_t]
+  connect_bd_net -net axi_t12_aux_gpio_gpio_io_i [get_bd_ports t12_aux_gpio_i] [get_bd_pins axi_t12_aux_gpio/gpio_io_i]
+  connect_bd_net -net axi_t12_aux_gpio_gpio_io_o [get_bd_pins axi_t12_aux_gpio/gpio_io_o] [get_bd_ports t12_aux_gpio_o]
+  connect_bd_net -net axi_t12_aux_gpio_gpio_io_t [get_bd_pins axi_t12_aux_gpio/gpio_io_t] [get_bd_ports t12_aux_gpio_t]
+  connect_bd_net -net axi_quad_spi_lb_ss_o [get_bd_pins axi_quad_spi_lb/ss_o] [get_bd_ports lb_tft_csn]
+  connect_bd_net -net axi_quad_spi_lb_io1_i [get_bd_ports lb_tft_sdo] [get_bd_pins axi_quad_spi_lb/io1_i]
+  connect_bd_net -net axi_quad_spi_lb_io0_o [get_bd_pins axi_quad_spi_lb/io0_o] [get_bd_ports lb_tft_sdi]
+  connect_bd_net -net axi_quad_spi_lb_sck_o [get_bd_pins axi_quad_spi_lb/sck_o] [get_bd_ports lb_tft_sclk]
+  connect_bd_net -net axi_quad_spi_hb_ss_o [get_bd_pins axi_quad_spi_hb/ss_o] [get_bd_ports hb_tft_csn]
+  connect_bd_net -net axi_quad_spi_hb_io1_i [get_bd_ports hb_tft_sdo] [get_bd_pins axi_quad_spi_hb/io1_i]
+  connect_bd_net -net axi_quad_spi_hb_io0_o [get_bd_pins axi_quad_spi_hb/io0_o] [get_bd_ports hb_tft_sdi]
+  connect_bd_net -net axi_quad_spi_hb_sck_o [get_bd_pins axi_quad_spi_hb/sck_o] [get_bd_ports hb_tft_sclk]
+  connect_bd_net -net gpio_i_1 [get_bd_ports gpio_i] [get_bd_pins sys_ps8/emio_gpio_i]
+  connect_bd_net -net gpio_rx1_enable_in_1 [get_bd_ports gpio_rx1_enable_in] [get_bd_pins axi_adrv9001/gpio_rx1_enable_in]
+  connect_bd_net -net gpio_rx2_enable_in_1 [get_bd_ports gpio_rx2_enable_in] [get_bd_pins axi_adrv9001/gpio_rx2_enable_in]
+  connect_bd_net -net gpio_tx1_enable_in_1 [get_bd_ports gpio_tx1_enable_in] [get_bd_pins axi_adrv9001/gpio_tx1_enable_in]
+  connect_bd_net -net gpio_tx2_enable_in_1 [get_bd_ports gpio_tx2_enable_in] [get_bd_pins axi_adrv9001/gpio_tx2_enable_in]
+  connect_bd_net -net mcs_in_1 [get_bd_ports mcs_in] [get_bd_pins axi_adrv9001/mcs_in]
+  connect_bd_net -net mssi_sync_1 [get_bd_ports mssi_sync] [get_bd_pins axi_adrv9001/mssi_sync_in]
+  connect_bd_net -net ref_clk_1 [get_bd_ports ref_clk] [get_bd_pins axi_adrv9001/ref_clk]
+  connect_bd_net -net rom_sys_0_rom_data [get_bd_pins rom_sys_0/rom_data] [get_bd_pins axi_sysid_0/sys_rom_data]
+  connect_bd_net -net rx1_dclk_in_n_1 [get_bd_ports rx1_dclk_in_n] [get_bd_pins axi_adrv9001/rx1_dclk_in_n_NC]
+  connect_bd_net -net rx1_dclk_in_p_1 [get_bd_ports rx1_dclk_in_p] [get_bd_pins axi_adrv9001/rx1_dclk_in_p_dclk_in]
+  connect_bd_net -net rx1_idata_in_n_1 [get_bd_ports rx1_idata_in_n] [get_bd_pins axi_adrv9001/rx1_idata_in_n_idata0]
+  connect_bd_net -net rx1_idata_in_p_1 [get_bd_ports rx1_idata_in_p] [get_bd_pins axi_adrv9001/rx1_idata_in_p_idata1]
+  connect_bd_net -net rx1_qdata_in_n_1 [get_bd_ports rx1_qdata_in_n] [get_bd_pins axi_adrv9001/rx1_qdata_in_n_qdata2]
+  connect_bd_net -net rx1_qdata_in_p_1 [get_bd_ports rx1_qdata_in_p] [get_bd_pins axi_adrv9001/rx1_qdata_in_p_qdata3]
+  connect_bd_net -net rx1_strobe_in_n_1 [get_bd_ports rx1_strobe_in_n] [get_bd_pins axi_adrv9001/rx1_strobe_in_n_NC]
+  connect_bd_net -net rx1_strobe_in_p_1 [get_bd_ports rx1_strobe_in_p] [get_bd_pins axi_adrv9001/rx1_strobe_in_p_strobe_in]
+  connect_bd_net -net rx2_dclk_in_n_1 [get_bd_ports rx2_dclk_in_n] [get_bd_pins axi_adrv9001/rx2_dclk_in_n_NC]
+  connect_bd_net -net rx2_dclk_in_p_1 [get_bd_ports rx2_dclk_in_p] [get_bd_pins axi_adrv9001/rx2_dclk_in_p_dclk_in]
+  connect_bd_net -net rx2_idata_in_n_1 [get_bd_ports rx2_idata_in_n] [get_bd_pins axi_adrv9001/rx2_idata_in_n_idata0]
+  connect_bd_net -net rx2_idata_in_p_1 [get_bd_ports rx2_idata_in_p] [get_bd_pins axi_adrv9001/rx2_idata_in_p_idata1]
+  connect_bd_net -net rx2_qdata_in_n_1 [get_bd_ports rx2_qdata_in_n] [get_bd_pins axi_adrv9001/rx2_qdata_in_n_qdata2]
+  connect_bd_net -net rx2_qdata_in_p_1 [get_bd_ports rx2_qdata_in_p] [get_bd_pins axi_adrv9001/rx2_qdata_in_p_qdata3]
+  connect_bd_net -net rx2_strobe_in_n_1 [get_bd_ports rx2_strobe_in_n] [get_bd_pins axi_adrv9001/rx2_strobe_in_n_NC]
+  connect_bd_net -net rx2_strobe_in_p_1 [get_bd_ports rx2_strobe_in_p] [get_bd_pins axi_adrv9001/rx2_strobe_in_p_strobe_in]
+  connect_bd_net -net spi0_csn_concat_dout [get_bd_pins spi0_csn_concat/dout] [get_bd_ports spi0_csn]
+  connect_bd_net -net spi0_miso_1 [get_bd_ports spi0_miso] [get_bd_pins sys_ps8/emio_spi0_m_i]
+  connect_bd_net -net spi1_csn_concat_dout [get_bd_pins spi1_csn_concat/dout] [get_bd_ports spi1_csn]
+  connect_bd_net -net spi1_miso_1 [get_bd_ports spi1_miso] [get_bd_pins sys_ps8/emio_spi1_m_i]
+  connect_bd_net -net sys_500m_clk [get_bd_pins sys_ps8/pl_clk2] [get_bd_pins axi_adrv9001/delay_clk]
+  connect_bd_net -net sys_concat_intc_0_dout [get_bd_pins sys_concat_intc_0/dout] [get_bd_pins sys_ps8/pl_ps_irq0]
+  connect_bd_net -net sys_concat_intc_1_dout [get_bd_pins sys_concat_intc_1/dout] [get_bd_pins sys_ps8/pl_ps_irq1]
+  connect_bd_net -net sys_cpu_clk [get_bd_pins sys_ps8/pl_clk0] [get_bd_pins axi_adrv9001/s_axi_aclk] [get_bd_pins axi_adrv9001_tx2_dma/s_axi_aclk] [get_bd_pins axi_adrv9001_tx2_dma/m_src_axi_aclk] [get_bd_pins axi_hpc0_interconnect/aclk] [get_bd_pins axi_hpm0_lpd_interconnect/aclk] [get_bd_pins axi_sysid_0/s_axi_aclk] [get_bd_pins rom_sys_0/clk] [get_bd_pins sys_ps8/maxihpm0_lpd_aclk] [get_bd_pins sys_ps8/saxihpc0_fpd_aclk] [get_bd_pins sys_rstgen/slowest_sync_clk] [get_bd_pins axi_t12_gpio/s_axi_aclk] [get_bd_pins axi_t12_aux_gpio/s_axi_aclk] [get_bd_pins axi_quad_spi_lb/s_axi_aclk] [get_bd_pins axi_quad_spi_lb/ext_spi_clk] [get_bd_pins axi_quad_spi_hb/s_axi_aclk] [get_bd_pins axi_quad_spi_hb/ext_spi_clk] [get_bd_pins axi_trx_crossbar/aclk] [get_bd_ports init_clk] [get_bd_pins trx_cfg_lut_ctrl/s_axi_aclk] [get_bd_pins trx_gfp_fifo/s_axi_aclk] [get_bd_pins trx_cmd_gpio/s_axi_aclk]
+  connect_bd_net -net aurora_sample_clk [get_bd_pins sys_ps8/pl_clk1] [get_bd_ports aurora_sample_clk]
+  connect_bd_net -net sys_cpu_resetn [get_bd_pins sys_rstgen/peripheral_aresetn] [get_bd_pins axi_adrv9001/s_axi_aresetn] [get_bd_pins axi_adrv9001_tx2_dma/s_axi_aresetn] [get_bd_pins axi_adrv9001_tx2_dma/m_src_axi_aresetn] [get_bd_pins axi_hpc0_interconnect/aresetn] [get_bd_pins axi_hpm0_lpd_interconnect/aresetn] [get_bd_pins axi_sysid_0/s_axi_aresetn] [get_bd_pins axi_t12_gpio/s_axi_aresetn] [get_bd_pins axi_t12_aux_gpio/s_axi_aresetn] [get_bd_pins axi_quad_spi_lb/s_axi_aresetn] [get_bd_pins axi_quad_spi_hb/s_axi_aresetn] [get_bd_pins axi_trx_crossbar/aresetn] [get_bd_ports initclk_rstn] [get_bd_pins trx_cfg_lut_ctrl/s_axi_aresetn] [get_bd_pins trx_gfp_fifo/s_axi_aresetn] [get_bd_pins trx_cmd_gpio/s_axi_aresetn]
+  connect_bd_net -net sys_ps8_emio_gpio_o [get_bd_pins sys_ps8/emio_gpio_o] [get_bd_ports gpio_o]
+  connect_bd_net -net sys_ps8_emio_gpio_t [get_bd_pins sys_ps8/emio_gpio_t] [get_bd_ports gpio_t]
+  connect_bd_net -net sys_ps8_emio_spi0_m_o [get_bd_pins sys_ps8/emio_spi0_m_o] [get_bd_ports spi0_mosi]
+  connect_bd_net -net sys_ps8_emio_spi0_sclk_o [get_bd_pins sys_ps8/emio_spi0_sclk_o] [get_bd_ports spi0_sclk]
+  connect_bd_net -net sys_ps8_emio_spi0_ss1_o_n [get_bd_pins sys_ps8/emio_spi0_ss1_o_n] [get_bd_pins spi0_csn_concat/In1]
+  connect_bd_net -net sys_ps8_emio_spi0_ss2_o_n [get_bd_pins sys_ps8/emio_spi0_ss2_o_n] [get_bd_pins spi0_csn_concat/In2]
+  connect_bd_net -net sys_ps8_emio_spi0_ss_o_n [get_bd_pins sys_ps8/emio_spi0_ss_o_n] [get_bd_pins spi0_csn_concat/In0]
+  connect_bd_net -net sys_ps8_emio_spi1_m_o [get_bd_pins sys_ps8/emio_spi1_m_o] [get_bd_ports spi1_mosi]
+  connect_bd_net -net sys_ps8_emio_spi1_sclk_o [get_bd_pins sys_ps8/emio_spi1_sclk_o] [get_bd_ports spi1_sclk]
+  connect_bd_net -net sys_ps8_emio_spi1_ss1_o_n [get_bd_pins sys_ps8/emio_spi1_ss1_o_n] [get_bd_pins spi1_csn_concat/In1]
+  connect_bd_net -net sys_ps8_emio_spi1_ss2_o_n [get_bd_pins sys_ps8/emio_spi1_ss2_o_n] [get_bd_pins spi1_csn_concat/In2]
+  connect_bd_net -net sys_ps8_emio_spi1_ss_o_n [get_bd_pins sys_ps8/emio_spi1_ss_o_n] [get_bd_pins spi1_csn_concat/In0]
+  connect_bd_net -net sys_ps8_pl_resetn0 [get_bd_pins sys_ps8/pl_resetn0] [get_bd_pins sys_rstgen/ext_reset_in]
+  connect_bd_net -net t12_gpio0_i_1 [get_bd_ports t12_gpio0_i] [get_bd_pins axi_t12_gpio/gpio_io_i]
+  connect_bd_net -net t12_gpio1_i_1 [get_bd_ports t12_gpio1_i] [get_bd_pins axi_t12_gpio/gpio2_io_i]
+  connect_bd_net -net tdd_sync_1 [get_bd_ports tdd_sync] [get_bd_pins axi_adrv9001/tdd_sync]
+  connect_bd_net -net tx1_dclk_in_n_1 [get_bd_ports tx1_dclk_in_n] [get_bd_pins axi_adrv9001/tx1_dclk_in_n_NC]
+  connect_bd_net -net tx1_dclk_in_p_1 [get_bd_ports tx1_dclk_in_p] [get_bd_pins axi_adrv9001/tx1_dclk_in_p_dclk_in]
+  connect_bd_net -net tx2_dclk_in_n_1 [get_bd_ports tx2_dclk_in_n] [get_bd_pins axi_adrv9001/tx2_dclk_in_n_NC]
+  connect_bd_net -net tx2_dclk_in_p_1 [get_bd_ports tx2_dclk_in_p] [get_bd_pins axi_adrv9001/tx2_dclk_in_p_dclk_in]
+  connect_bd_net -net tx_output_enable_1 [get_bd_ports tx_output_enable] [get_bd_pins axi_adrv9001/tx_output_enable]
+  connect_bd_net -net util_dac_2_upack_fifo_rd_data_0 [get_bd_pins util_dac_2_upack/fifo_rd_data_0] [get_bd_pins axi_adrv9001/dac_2_data_i0]
+  connect_bd_net -net util_dac_2_upack_fifo_rd_data_1 [get_bd_pins util_dac_2_upack/fifo_rd_data_1] [get_bd_pins axi_adrv9001/dac_2_data_q0]
+  connect_bd_net -net util_dac_2_upack_fifo_rd_underflow [get_bd_pins util_dac_2_upack/fifo_rd_underflow] [get_bd_pins axi_adrv9001/dac_2_dunf]
+
+
+  ##########################################################################
+  # Ranh gioi voi trx.bd - noi day
+  ##########################################################################
+  connect_bd_intf_net -intf_net axi_hpm0_lpd_interconnect_M04_AXI \
+    [get_bd_intf_pins axi_hpm0_lpd_interconnect/M04_AXI] [get_bd_intf_pins axi_trx_crossbar/S00_AXI]
+  connect_bd_intf_net -intf_net axi_hpm0_lpd_interconnect_M05_AXI \
+    [get_bd_intf_pins axi_hpm0_lpd_interconnect/M05_AXI] [get_bd_intf_pins trx_cmd_gpio/S_AXI]
+  connect_bd_intf_net -intf_net axi_trx_crossbar_M00_AXI \
+    [get_bd_intf_pins axi_trx_crossbar/M00_AXI] [get_bd_intf_ports M_AXI_SYS]
+  connect_bd_intf_net -intf_net axi_trx_crossbar_M03_AXI \
+    [get_bd_intf_pins axi_trx_crossbar/M03_AXI] [get_bd_intf_ports M_AXI_REGS]
+  connect_bd_intf_net -intf_net axi_trx_crossbar_M01_AXI \
+    [get_bd_intf_pins axi_trx_crossbar/M01_AXI] [get_bd_intf_pins trx_gfp_fifo/S_AXI]
+  connect_bd_intf_net -intf_net axi_trx_crossbar_M02_AXI \
+    [get_bd_intf_pins axi_trx_crossbar/M02_AXI] [get_bd_intf_pins trx_cfg_lut_ctrl/S_AXI]
+  connect_bd_intf_net -intf_net trx_cfg_lut_ctrl_BRAM_PORTA \
+    [get_bd_intf_pins trx_cfg_lut_ctrl/BRAM_PORTA] [get_bd_intf_pins trx_cfg_lut_mem/BRAM_PORTA]
+  connect_bd_net -net trx_dac1_data_i0_1 [get_bd_ports dac_1_data_i0] [get_bd_pins axi_adrv9001/dac_1_data_i0]
+  connect_bd_net -net trx_dac1_data_q0_1 [get_bd_ports dac_1_data_q0] [get_bd_pins axi_adrv9001/dac_1_data_q0]
+  connect_bd_net -net trx_dac1_data_i1_1 [get_bd_ports dac_1_data_i1] [get_bd_pins axi_adrv9001/dac_1_data_i1]
+  connect_bd_net -net trx_dac1_data_q1_1 [get_bd_ports dac_1_data_q1] [get_bd_pins axi_adrv9001/dac_1_data_q1]
+
+
+  # [MSDR] Noi ba khoi thay mb_bd ra bien gioi
+  connect_bd_net -net CFG_LUT_clk_1  [get_bd_ports CFG_LUT_clk]  [get_bd_pins trx_cfg_lut_mem/clkb]
+  connect_bd_net -net CFG_LUT_rst_1  [get_bd_ports CFG_LUT_rst]  [get_bd_pins trx_cfg_lut_mem/rstb]
+  connect_bd_net -net CFG_LUT_en_1   [get_bd_ports CFG_LUT_en]   [get_bd_pins trx_cfg_lut_mem/enb]
+  connect_bd_net -net CFG_LUT_we_1   [get_bd_ports CFG_LUT_we]   [get_bd_pins trx_cfg_lut_mem/web]
+  connect_bd_net -net CFG_LUT_addr_1 [get_bd_ports CFG_LUT_addr] [get_bd_pins trx_cfg_lut_mem/addrb]
+  connect_bd_net -net CFG_LUT_din_1  [get_bd_ports CFG_LUT_din]  [get_bd_pins trx_cfg_lut_mem/dinb]
+  connect_bd_net -net trx_cfg_lut_mem_doutb [get_bd_pins trx_cfg_lut_mem/doutb] [get_bd_ports CFG_LUT_dout]
+
+  connect_bd_net -net GFP_UB_IN_tdata_1  [get_bd_ports GFP_UB_IN_tdata]  [get_bd_pins trx_gfp_fifo/s_axis_tdata]
+  connect_bd_net -net GFP_UB_IN_tvalid_1 [get_bd_ports GFP_UB_IN_tvalid] [get_bd_pins trx_gfp_fifo/s_axis_tvalid]
+  connect_bd_net -net GFP_UB_IN_tlast_1  [get_bd_ports GFP_UB_IN_tlast]  [get_bd_pins trx_gfp_fifo/s_axis_tlast]
+  connect_bd_net -net trx_gfp_fifo_s_axis_tready [get_bd_pins trx_gfp_fifo/s_axis_tready] [get_bd_ports GFP_UB_IN_tready]
+  connect_bd_net -net trx_gfp_fifo_m_axis_tdata  [get_bd_pins trx_gfp_fifo/m_axis_tdata]  [get_bd_ports GFP_UB_OUT_tdata]
+  connect_bd_net -net trx_gfp_fifo_m_axis_tvalid [get_bd_pins trx_gfp_fifo/m_axis_tvalid] [get_bd_ports GFP_UB_OUT_tvalid]
+  connect_bd_net -net trx_gfp_fifo_m_axis_tlast  [get_bd_pins trx_gfp_fifo/m_axis_tlast]  [get_bd_ports GFP_UB_OUT_tlast]
+  connect_bd_net -net GFP_UB_OUT_tready_1 [get_bd_ports GFP_UB_OUT_tready] [get_bd_pins trx_gfp_fifo/m_axis_tready]
+
+  connect_bd_net -net trx_cmd_gpio_gpio_io_o [get_bd_pins trx_cmd_gpio/gpio_io_o] [get_bd_ports gpio_1_tri_o]
+  connect_bd_net -net gpio_1_tri_i_1 [get_bd_ports gpio_1_tri_i] [get_bd_pins trx_cmd_gpio/gpio_io_i]
+
+  # Create address segments
+  assign_bd_address -offset 0x84A00000 -range 0x00010000 -with_name SEG_data_axi_adrv9001 -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_adrv9001/s_axi/axi_lite] -force
+  assign_bd_address -offset 0x84A60000 -range 0x00001000 -with_name SEG_data_axi_adrv9001_tx2_dma -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_adrv9001_tx2_dma/s_axi/axi_lite] -force
+  assign_bd_address -offset 0x85000000 -range 0x00010000 -with_name SEG_data_axi_sysid_0 -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_sysid_0/s_axi/axi_lite] -force
+  assign_bd_address -offset 0x81240000 -range 0x00001000 -with_name SEG_data_trx_cmd_gpio -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs trx_cmd_gpio/S_AXI/Reg] -force
+  assign_bd_address -offset 0x81200000 -range 0x00001000 -with_name SEG_data_axi_t12_gpio -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_t12_gpio/S_AXI/Reg] -force
+  assign_bd_address -offset 0x81270000 -range 0x00001000 -with_name SEG_data_axi_quad_spi_lb -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_quad_spi_lb/AXI_LITE/Reg] -force
+  assign_bd_address -offset 0x81280000 -range 0x00001000 -with_name SEG_data_axi_quad_spi_hb -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_quad_spi_hb/AXI_LITE/Reg] -force
+  assign_bd_address -offset 0x81260000 -range 0x00001000 -with_name SEG_data_axi_t12_aux_gpio -target_address_space [get_bd_addr_spaces sys_ps8/Data] [get_bd_addr_segs axi_t12_aux_gpio/S_AXI/Reg] -force
+  assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces axi_adrv9001_tx2_dma/m_src_axi] [get_bd_addr_segs sys_ps8/SAXIGP0/HPC0_DDR_LOW] -force
+
+
+  # Restore current instance
+  current_bd_instance $oldCurInst
+
+  source [file join $script_folder fix_gfp_clock_v2.tcl]
+}
+# End of create_root_design()
+
+
+##################################################################
+# MAIN FLOW
+##################################################################
+
+create_root_design "" $mem_init_sys_file_path

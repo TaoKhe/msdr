@@ -1,0 +1,18 @@
+open_system('HDLCrestFactorReduction');
+open_system('gm_HDLCrestFactorReduction');
+cs.HiliteType = 'user1';
+cs.ForegroundColor = 'black';
+cs.BackgroundColor = 'cyan';
+set_param(0, 'HiliteAncestorsData', cs);
+hilite_system('gm_HDLCrestFactorReduction/CrestFactorReduction/CrestFactorReduction/signum/Divide/Divide', 'user1');
+annotate_port('gm_HDLCrestFactorReduction/CrestFactorReduction/CrestFactorReduction/signum/Divide/Divide', 0, 1, 'Blocks delay absorption: 1 cycles');
+hilite_system('HDLCrestFactorReduction/CrestFactorReduction/CrestFactorReduction/signum/Divide', 'user1');
+annotate_port('HDLCrestFactorReduction/CrestFactorReduction/CrestFactorReduction/signum/Divide', 0, 1, 'Blocks delay absorption: 1 cycles');
+cs.HiliteType = 'user1';
+cs.ForegroundColor = 'black';
+cs.BackgroundColor = 'cyan';
+set_param(0, 'HiliteAncestorsData', cs);
+hilite_system('gm_HDLCrestFactorReduction/CrestFactorReduction/CrestFactorReduction/signum/Divide2/Divide2', 'user1');
+annotate_port('gm_HDLCrestFactorReduction/CrestFactorReduction/CrestFactorReduction/signum/Divide2/Divide2', 0, 1, 'Blocks delay absorption: 1 cycles');
+hilite_system('HDLCrestFactorReduction/CrestFactorReduction/CrestFactorReduction/signum/Divide2', 'user1');
+annotate_port('HDLCrestFactorReduction/CrestFactorReduction/CrestFactorReduction/signum/Divide2', 0, 1, 'Blocks delay absorption: 1 cycles');
